@@ -1,0 +1,115 @@
+{% comment %} Please don’t update this content {% endcomment %}
+
+{% layout none %}
+{% paginate collection.products by 50 %}
+  {
+    "products":
+      [
+        {% for product in collection.products %}
+          {
+            "id":{{ product.id }},
+            "position":{{ forloop.index }},
+            "metafields":[
+              
+              {% comment %}
+                Single Metafield
+              {% endcomment %}
+              {% assign v_notify = product.metafields.variant_attrs["notify"] %}
+              {% if v_notify != blank %}
+                {
+                  "namespace": "variant_attrs",
+                  "key": "notify",
+                  "value": {{ v_notify | json }}
+                },
+              {% endif %}
+        
+              {% comment %}
+                Single Metafield
+              {% endcomment %}
+              {% assign v_ball_and_arm = product.metafields.variant_attrs["ball_and_arm"] %}
+              {% if v_ball_and_arm != blank %}
+                {
+                  "namespace": "variant_attrs",
+                  "key": "ball_and_arm",
+                  "value": {{ v_ball_and_arm | json }}
+                },
+              {% endif %}
+        
+              {% comment %}
+                Variant Metafield
+              {% endcomment %}
+              {% assign l_variants = product.variants %}
+              {% for v_variant in l_variants %}
+                {
+                  "namespace": {{ v_variant.id }},
+                  "key": "notify",
+                  "value": {{ v_variant.metafields.variant_attrs["notify"] | json }}
+                },
+              {% endfor %}
+        
+              {% comment %}
+                Variant Metafield
+              {% endcomment %}
+              {% assign l_variants = product.variants %}
+              {% for v_variant in l_variants %}
+                {
+                  "namespace": {{ v_variant.id }},
+                  "key": "ball_and_arm",
+                  "value": {{ v_variant.metafields.variant_attrs["ball_and_arm"] | json }}
+                },
+              {% endfor %}
+        
+              {% comment %}
+                Single Metafield
+              {% endcomment %}
+              {% assign v_eng_date = product.metafields.variant_attrs["eng_date"] %}
+              {% if v_eng_date != blank %}
+                {
+                  "namespace": "variant_attrs",
+                  "key": "eng_date",
+                  "value": {{ v_eng_date | json }}
+                },
+              {% endif %}
+        
+              {% comment %}
+                Variant Metafield
+              {% endcomment %}
+              {% assign l_variants = product.variants %}
+              {% for v_variant in l_variants %}
+                {
+                  "namespace": {{ v_variant.id }},
+                  "key": "eng_date",
+                  "value": {{ v_variant.metafields.variant_attrs["eng_date"] | json }}
+                },
+              {% endfor %}
+        
+              {% comment %}
+                Single Metafield
+              {% endcomment %}
+              {% assign v_web_title = product.metafields.variant_attrs["web_title"] %}
+              {% if v_web_title != blank %}
+                {
+                  "namespace": "variant_attrs",
+                  "key": "web_title",
+                  "value": {{ v_web_title | json }}
+                },
+              {% endif %}
+        
+              {% comment %}
+                Variant Metafield
+              {% endcomment %}
+              {% assign l_variants = product.variants %}
+              {% for v_variant in l_variants %}
+                {
+                  "namespace": {{ v_variant.id }},
+                  "key": "device_make_model",
+                  "value": {{ v_variant.metafields.variant_attrs["device_make_model"] | json }}
+                },
+              {% endfor %}
+        
+            ]
+          },
+        {% endfor %}
+      ]
+  }
+{% endpaginate %}
