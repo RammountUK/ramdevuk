@@ -1,0 +1,85 @@
+<div class="container p-2 py-16 customer account grid grid-cols-4">
+  <div class="col-span-4 font-heading ">
+    <h1 class="text-4xl font-bold">{{ 'customer.account.title' | t }}</h1>
+    <div class="w-full flex justify-between items-center">
+      <p class="text-xl">Welcome {{ customer.first_name }}</p>
+      <a class="btn border border-dark btn-dark" href="{{ routes.account_logout_url }}">
+        {{ 'customer.log_out' | t }}
+      </a>
+    </div>
+    <hr class="my-8"/>
+  </div>
+  <div class="col-span-4 md:col-span-1 font-heading border-r">
+    <div>
+      <h2 class="text-2xl font-bold">{{ 'customer.account.details' | t }}</h2>
+
+      {% if customer.default_address != blank %}
+        <div class="py-4">
+          {{ customer.default_address | format_address }}
+        </div>
+      {% endif %}
+
+      <a class="underline" href="{{ routes.account_addresses_url }}">
+        {{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})
+      </a>
+    </div>
+  </div>
+
+  <div class="col-span-4 md:col-span-3 md:px-16">
+    <hr class="my-8 md:hidden"/>
+    <h2 class="text-2xl font-bold font-heading">{{ 'customer.orders.title' | t }}</h2>
+    <div class="overflow-scroll">
+      {% paginate customer.orders by 10 %}
+        {%- if customer.orders.size > 0 -%}
+          <table role="table" class="order-history w-full text-left border-t border-b my-4">
+            <caption class="sr-only">{{ 'customer.orders.title' | t }}</caption>
+            <thead role="rowgroup">
+              <tr role="row">
+                <th class="p-2 border-l border-r" id="ColumnOrder" scope="col" role="columnheader">{{ 'customer.orders.order_number' | t }}</th>
+                <th class="p-2 border-r" id="Colu1mnDate" scope="col" role="columnheader">{{ 'customer.orders.date' | t }}</th>
+                <th class="p-2 border-r" id="ColumnPayment" scope="col" role="columnheader">{{ 'customer.orders.payment_status' | t }}</th>
+                <th class="p-2 border-r" id="ColumnFulfillment" scope="col" role="columnheader">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th class="p-2 border-r" id="ColumnTotal" scope="col" role="columnheader">{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              {%- for order in customer.orders -%}
+                <tr class="border-t" role="row">
+                  <td
+                    class="border-r p-2"
+                    id="RowOrder"
+                    role="cell"
+                    headers="ColumnOrder"
+                    data-label="{{ 'customer.orders.order_number' | t }}"
+                  >
+                    <a class="underline" href="{{ order.customer_url }}" aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}">
+                      {{ order.name }}
+                    </a>
+                  </td>
+                  <td class="border-r p-2" headers="RowOrder ColumnDate" role="cell" data-label="{{ 'customer.orders.date' | t }}">
+                    {{ order.created_at | time_tag: format: 'date' }}
+                  </td>
+                  <td class="border-r p-2" headers="RowOrder ColumnPayment" role="cell" data-label="{{ 'customer.orders.payment_status' | t }}">
+                    {{ order.financial_status_label }}
+                  </td>
+                  <td  class="border-r p-2" headers="RowOrder ColumnFulfillment" role="cell" data-label="{{ 'customer.orders.fulfillment_status' | t }}">
+                    {{ order.fulfillment_status_label }}
+                  </td>
+                  <td class="p-2" headers="RowOrder ColumnTotal" role="cell" data-label="{{ 'customer.orders.total' | t }}">
+                    {{ order.total_price | money_with_currency }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        {%- else -%}
+          <p>{{ 'customer.orders.none' | t }}</p>
+        {%- endif -%}
+
+        {% render 'pagination' with paginate as paginate %}
+      {% endpaginate %}
+    </div>
+
+    
+
+  </div>
+</div>
