@@ -1,0 +1,43 @@
+<qty-selector class="flex flex-grow border mx-auto border-[#b7b7b7] rounded h-full items-center">
+    <button
+        {% if item != blank %}
+            data-qty="{{ item.quantity | minus: 1 }}"
+            data-update="{{ item.key }}"
+        {% else %}
+            data-decrement
+        {% endif %}
+        type="button"
+        class="h-full bg-[#eee] flex-grow flex items-center justify-center w-5 h-full p-1 py-2.5"
+        aria-label="Increment Quantity"
+    >
+        <span class="block w-2">
+            {% render 'icons' icon: 'minus' %}
+        </span>
+    </button>
+    <input
+        class="flex-grow w-10 h-full font-heading font-bold text-lg text-center md:px-2 uppercase tracking-wide bg-transparent"
+        data-qty
+        {% if item != blank %}
+            value="{{ item.quantity }}"
+        {% else %}
+            value="1"
+        {% endif %}
+        id="product_qty-{{ product.handle }}"
+    >
+    <label class="sr-only" for="product_qty-{{ product.handle }}">Quantity of {{ product.title }} to Add</label>
+    <button
+        {% if item != blank %}
+            data-qty="{{ item.quantity | plus: 1 }}"
+            data-update="{{ item.key }}"
+        {% else %}
+            data-increment
+        {% endif %}
+        type="button"
+        class="flex-grow flex items-center justify-center h-full bg-[#eee] w-5 p-1 py-2.5"
+        aria-label="Increment Quantity"
+    >
+        <span class="block w-2">
+            {% render 'icons' icon: 'plus' %}
+        </span>
+    </button>
+</qty-selector>

@@ -1,0 +1,37 @@
+{% if product_variant %}
+  {% assign current_variant = product_variant %}
+{% else %}
+  {% liquid
+      assign url = request.path
+      assign url =  url | replace: product.url , "" | replace: "/" , ""
+      assign url = url| plus: 0
+      if url
+        for variant in product.variants
+          if variant.id == url
+            assign has_variant = variant
+          endif
+        endfor
+      endif
+  %}
+
+  {% if has_variant %}
+    {%- assign current_variant = has_variant -%}
+  {% else %}
+    {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {% endif %}
+{% endif %}
+
+{% if current_variant.metafields.variant_attrs.web_title != blank %}
+  {%- assign title = current_variant.metafields.variant_attrs.web_title -%}
+{% else %}
+  {%- assign title = current_variant.title -%}
+{% endif %}
+<div class="hidden md:block product-title text-2xl font-medium font-heading leading-tight">{{ title }}</div>
+<div class="hidden md:block sku-barcode py-4 text-sm">
+  <span class="font-medium">Part#:</span><span class="ml-1 mr-2 font-light" itemprop="sku">{{ current_variant.sku }}</span>
+  <span class="font-medium">UPC:</span><span class="ml-1 font-light" itemprop="sku mr-2">{{ current_variant.barcode }}</span>
+  {% if current_variant.metafields.variant_attrs.patented %}<span class="ml-2 font-medium">{{current_variant.metafields.variant_attrs.patented}}</span>{% endif %}
+</div>
+{% unless current_variant.metafields.variant_attrs.notify.value.NOTIFY_ME == "true" and current_variant.metafields.variant_attrs.notify.value.HIDE_PRICE == 'true' %}
+  <div class="py-1 text-xl mb-6">  {% unless product.tags contains 'Coming Soon' %} {{ current_variant.price | money }} {% else %}Price Coming Soon {% endunless %}</div>
+{% endunless %}

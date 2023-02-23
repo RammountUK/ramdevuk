@@ -1,0 +1,25 @@
+<content-accordion class="container relative border-t border-current w-full h-100">
+    {% for block in section.blocks %} 
+        {% if block.type == 'info-block' %}  
+            <div class="flex flex-col border-b border-current items-center font-sans">
+                {% if block.settings.heading != blank %}
+                    <button data-toggle="{{ block.id }}" class="flex items-center justify-between px-8 w-full font-semibold font-sans py-6">
+                        {{ block.settings.heading }}
+                        <div data-icon class="relative w-6 h-6">
+                            <span class="bg-black absolute w-full h-0.5 top-1/2 transition duration-500 transform -translate-y-1/2 rotate-90"></span>
+                            <span class="bg-black absolute w-full h-0.5 top-1/2 transition duration-500 transform -translate-y-1/2"></span>
+                        </div>
+                    </button>
+                {% endif %}
+                {% if block.settings.content != blank %}
+                    <div style="height: 0px; transition: 0.5s;" class="overflow-hidden font-light text-left items-center w-full" data-content="{{ block.id }}">
+                        <div class="p-8 pt-0 text-left font-sans">
+                            {{ block.settings.content }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</content-accordion>
+

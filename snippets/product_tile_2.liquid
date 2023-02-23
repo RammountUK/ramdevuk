@@ -1,0 +1,57 @@
+
+
+<product-tile {% if family %} data-family="{{ family.handle }}" {% endif %} class="flex flex-col h-full border solid border-[#eee] bg-[#eee] rounded overflow-hidden relative group">
+    <span class="block group md:p-5 p-[5%] flex flex-col h-full">
+      <div class="p-container w-full pt-2  mb-auto">
+        <div class="tags text-left">
+          {% if product.tags contains 'New' %}
+            <span class="new-product text-red font-bold md:text-sm text-xs">NEW</span>
+          {% endif %}
+          {% if product.tags contains 'Coming Soon' %}
+            <span class="new-product text-[#343a40] font-bold text-sm">COMING SOON</span>
+          {% endif %}
+        </div>
+
+        <a href="{{ shop.url }}{{ product.url }}" class="block group-hover:underline duration-500 text-xs md:text-[19px] pb-2 py-1  transition text-left text-[#000] font-light md:leading-6">
+            {{ product.title }}
+        </a>
+      </div>
+        <div class="w-full pt-3/4 h-0 relative my-5">
+            <a href="{{ shop.url }}{{ product.url }}" class="absolute -z-1 {% unless product.featured_image %}bg-gray-300{% endunless %} top-0 left-0 w-full h-full duration-500 transition">
+                {% liquid
+                    if product.featured_image
+                        render 'optimized-image', imageObject: product.featured_image, square: true
+                    endif
+                %}
+            </a>
+
+            <a href="{{ shop.url }}{{ product.url }}"  class="absolute top-0 left-0 w-full h-max flex flex-wrap">
+                {% for tag in product.tags %}
+                    {% if tag contains 'label::' %}
+                        {% liquid
+                            assign tag_segments = tag | split: '::'
+                            assign label = tag_segments[1]
+                            assign color = tag_segments[2] | default: '#ffffff'
+                            assign color_difference = color | color_difference: '#000000'
+                        %}
+                        <span class="m-2 shadow py-3 px-5 text-[10px] uppercase tracking-[3.5px] opacity-90 {% if color_difference < 500 %}text-white{% endif %} w-max" style="background-color: {{ color }};">{{ label }}</span>
+                    {% endif %}
+                {% endfor %}
+            </a>
+
+        </div>
+
+        <div data-info class="hidden md:flex flex-col pt-2 pb-2 text-left w-full mt-auto  ">
+
+            <div class="p-content flex items-center justify-center ">
+
+              <div class="w-full ">
+                    <a  href="{{ shop.url }}{{ product.url }}" class="font-body bg-[#dfdfdf] text-[#343a40] tracking-wide w-full mx-auto h-full text-center  px-4 py-3 flex items-center justify-center transition-all duration-300 ease-in " >
+                       LEARN MORE
+                    </a>
+              </div>
+
+            </div>
+        </div>
+    </span>
+</product-tile>

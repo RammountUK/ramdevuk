@@ -1,0 +1,62 @@
+
+{% capture drawer_item_classes %}
+    {{ settings.drawer_font }}
+    {{ settings.drawer_font_weight }}
+    {{ settings.drawer_font_size_mb }}
+    {{ settings.drawer_font_size_dt }}
+{% endcapture %}
+
+<div class="flex flex-col h-full py-4 {{ drawer_item_classes }}">
+
+    <div class="flex">
+
+      {%
+        render 'mobile-navmenu',
+        menu: section.settings.mobile_menu
+      %}
+
+    </div>
+
+    <div class="flex flex-col flex-grow">
+        <div class="flex flex-col">
+            {% if section.settings.product_menu_footer != blank %}
+                <ul class="pb-4">
+                    <li class="w-full">
+                        <div class="flex items-center py-2">
+                            <span class="block">Explore</span>
+                            <span aria-hidden="true" class="block border-t flex-grow ml-4"></span>
+                        </div>
+                    </li>
+                    {% for link in section.settings.product_menu_footer.links %}
+                        <li>
+                            <a href="{{ link.url }}" class="group flex items-center py-1">
+                                {% if link.url contains 'product/' or link.url contains 'collections/' %}
+                                    {% liquid
+                                        if grandchild_link.url contains 'product/'
+                                            assign product = collections.all-products.products | where: "url", grandchild_link.url | first
+                                            assign bg_image = product.featured_image
+                                        elsif grandchild_link.url contains 'collections/'
+                                            assign collection = collections | where: "url", grandchild_link.url | first
+                                            assign bg_image = collection.featured_image
+                                        endif
+                                    %}
+                                    <div aria-hidden="true" class="bg-gray-500 rounded-full h-6 mr-2 w-6"></div>
+                                {% endif %}
+                                <span class="group-hover:underline transition-short">{{ link.title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if section.settings.show_social %}
+                <div class="pb-6 px-4">
+                    <div class="flex items-center py-4">
+                        <span class="block">Community</span>
+                        <span aria-hidden="true" class="block border-t flex-grow ml-4"></span>
+                    </div>
+                    {% render 'social_icons' %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

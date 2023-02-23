@@ -1,0 +1,153 @@
+<div class="overview">
+  {% if product_variant %}
+    {% assign current_variant = product_variant %}
+  {% else %}
+    {% liquid
+        assign url = request.path
+        assign url =  url | replace: product.url , "" | replace: "/" , ""
+        assign url = url| plus: 0
+        if url
+          for variant in product.variants
+            if variant.id == url
+              assign has_variant = variant
+            endif
+          endfor
+        endif
+    %}
+    {% if has_variant %}
+      {%- assign current_variant = has_variant -%}
+    {% else %}
+      {%- assign current_variant = product.selected_or_first_available_variant -%}
+    {% endif %}
+  {% endif %}
+  {% if current_variant.metafields.variant_attrs.overview != blank %}
+    <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+      <h4 class="font-medium mb-2 md:mb-0 w-full md:w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Overview</h4>
+      <div class="flex-1">
+        {{current_variant.metafields.variant_attrs.overview}}
+      </div>
+    </div>
+  {% endif %}
+  <div class="flex flex-wrap">
+    <div class="w-full md:w-1/2">
+        {% if current_variant.metafields.variant_attrs.specs %}
+          {% for field in current_variant.metafields.variant_attrs.specs.value %}
+            {% assign label =  field | first %}
+              {% if label != 'part_id' %}
+                  <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+
+                    {% if label == 'ball_socket_size'%}
+                      {% assign label = "ball/socket_size"%}
+                    {% endif %}
+
+                    <h4 class="font-medium mb-2 md:mb-0 w-full md:w-2/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">{{ label |  replace: "_" , " " }}</h4>
+                    <div class="flex-1">
+
+                      <p>{{ field | last | replace: "|", "<br>" | newline_to_br}}</p>
+                    </div>
+                  </div>
+                {% endif %}
+          {% endfor %}
+        {% endif %}
+        {% if current_variant.metafields.variant_attrs.warranty != blank %}
+            <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+              <h4 class="font-medium mb-2 md:mb-0 w-full md:w-2/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Warranty</h4>
+              <div class="flex-1 ">
+                <p>{{ current_variant.metafields.variant_attrs.warranty }}</p>
+              </div>
+            </div>
+          {% endif %}
+          {% if current_variant.weight != blank %}
+              <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+                <h4 class="font-medium mb-2 md:mb-0 w-full md:w-2/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Weight</h4>
+                <div class="flex-1 ">
+                  <p>{{ current_variant.weight | weight_with_unit }}</p>
+                </div>
+              </div>
+            {% endif %}
+
+      </div>
+      <div class="w-full md:w-1/2 items-center flex ">
+        {% if current_variant.metafields.variant_attrs.video != blank %}
+           <div class="w-full" id="video-container">
+            {{ current_variant.metafields.variant_attrs.video }}
+           </div>
+        {% endif %}
+
+
+          <!-- {% if current_variant.metafields.variant_attrs.graphics != blank %}
+          <img src="{{ current_variant.metafields.variant_attrs.graphics }}"/>
+          {% endif %} -->
+      </div>
+    </div>
+
+    {% if current_variant.metafields.variant_attrs.add_info != blank %}
+        <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+          <h4 class="font-medium mb-2 md:mb-0 w-full md:w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Additional Information</h4>
+          <div class="flex-1 additional-info ">
+
+            {% for field in current_variant.metafields.variant_attrs.add_info.value %}
+              {% assign label =  field | first %}
+
+                  <div>{{ field | last | replace: "|", "<br>" | newline_to_br}}</div>
+
+            {% endfor %}
+
+          </div>
+        </div>
+    {% endif %}
+    {% if current_variant.metafields.variant_attrs.components != blank %}
+        <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+          <h4 class="font-medium mb-2 md:mb-0 w-full md:w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Components</h4>
+          <div class="flex-1 additional-info ">
+            <div class="auto-rows-min md:col-span-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-center">
+              {% for field in current_variant.metafields.variant_attrs.components.value %}
+                {% assign label =  field | first %}
+                  {% assign componentHandle = field | first  %}
+                  {% assign component = all_products[componentHandle] %}
+                  {% if component %}
+                      {% render 'product_tile_3', product: component %}
+                  {% endif %}
+              {% endfor %}
+              </div>
+          </div>
+        </div>
+      {% endif %}
+</div>
+
+<script>
+  function getYoutubeId(url) {
+    var ID = '';
+    url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+    if(url[2] !== undefined) {
+      ID = url[2].split(/[^0-9a-z_\-]/i);
+      ID = ID[0];
+      return ID;
+    }
+
+
+  }
+
+  function getVimeoIdFromUrl(url) {
+    // Look for a string with 'vimeo', then whatever, then a
+    // forward slash and a group of digits.
+    const match = /vimeo.*\/(\d+)/i.exec(url);
+    // If the match isn't null (i.e. it matched)
+    if (match) {
+      // The grouped/matched digits from the regex
+      return match[1];
+    }
+  };
+
+  var link = document.getElementById("video-container").innerHTML;
+  var myYoutubeId = getYoutubeId(link);
+  var myVimeoId = getVimeoIdFromUrl(link);
+  if(myYoutubeId){
+    document.getElementById("video-container").innerHTML ='<iframe class="w-full" width="560" height="315" src="//www.youtube.com/embed/' + myYoutubeId + '" frameborder="0" allowfullscreen></iframe>';
+  }
+
+  if(myVimeoId){
+    document.getElementById("video-container").innerHTML ='<iframe class="w-full" width="560" height="315" src="//player.vimeo.com/video/'+ myVimeoId +'?&utoplay=1&loop=1&title=0&byline=0&portrait=0&muted=1" frameborder="0" allowfullscreen></iframe>';
+  }
+
+</script>

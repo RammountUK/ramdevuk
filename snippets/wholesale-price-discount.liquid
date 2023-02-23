@@ -1,0 +1,46 @@
+{% comment %}
+	in Theme Settings, the collections that have wholesale prices are listed and they have a prefix of either 'wholesale_price_' or 'oak_rev_price_'
+
+	- the 'joint-sleeves-braces' collection is a percent based discount
+	- as of 11/18/20 it is the only collection with a percent based discount
+	- if more are added, update the condition or create a new condition
+	- other collections get a specific wholesale price applied
+{% endcomment %}
+{% liquid
+	assign setting_prefix = 'wholesale_price_'
+	assign wholesale_collections = 'marathon|marathon-elite|pc-dress|calf-sleeves|arm-sleeves|pc-racer|trainer-low|no-show|pc-runner|pro-compression-by-william-tucker|joint-sleeves-braces|pc-lifestyle'
+	if customer.tags contains 'Oak Rev'
+		assign setting_prefix = 'oak_rev_price_'
+	endif
+
+	assign wholesale_collections = wholesale_collections | split : '|'
+	assign wholesale_price = ''
+	assign wholesale_price_found = false
+
+	for tag in product.tags
+		assign tag_handle = tag | handle
+
+		if wholesale_collections contains tag_handle
+
+			assign setting_id = setting_prefix | append: tag_handle | downcase | replace: '-', '_'
+
+			if tag_handle == 'joint-sleeves-braces'
+				assign discount = product.price | divided_by: 100 | times: settings[setting_id]
+				assign wholesale_price = product.price | minus: discount
+			else
+				assign wholesale_price = settings[setting_id] | times: 100
+			endif
+
+			assign wholesale_price_found = true
+			break
+		endif
+	endfor
+
+	unless wholesale_price_found
+		assign wholesale_price = product.price
+	endunless
+%}
+
+<span class="price">
+	<span class="money">{{ wholesale_price | money }}</span>
+</span>

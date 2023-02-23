@@ -1,0 +1,64 @@
+<div class="compatibility">
+    {% if product_variant %}
+      {% assign current_variant = product_variant %}
+    {% else %}
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+    {% endif %}
+    {% if current_variant.metafields.variant_attrs.compatible != blank %}
+          <div class="flex max-w-[450px] flex-col">
+              <tab-accordion class="container relative">
+                  {% if current_variant.metafields.variant_attrs.compatible.value.compatible_devices != blank %}
+                  <h2 class="font-medium w-full md:w-1/5 uppercase md:text-lg text-lg mb-6">Compatible Devices </h2>
+
+                    {% for field in current_variant.metafields.variant_attrs.compatible.value.compatible_devices %}
+                      {% assign label =  field | first %}
+                        <div class="flex flex-col border border-[#ddd] items-center shadow-sm mb-5">
+                            <button data-accordion="{{ label | handleize }}" class="flex items-center justify-between px-4 w-full font-sans py-2.5 text-center text-[#333] border-b border-[#ddd]">
+                                <span class="block w-full">{{ label }}</span>
+                                <div data-icon class="relative w-6 h-6">
+                                    <span class=" absolute w-full h-0.5 top-1/2 transition duration-500 transform -translate-y-1/2 flex justify-center items-center">  {% render 'icons' icon: 'down' %}</span>
+                                </div>
+                            </button>
+                            <div style="height: 0px; transition: 0.5s;" class="overflow-hidden font-light text-left items-center w-full" data-accordion-content="{{ label | handleize }}">
+                                <div class="p-6 pb-0 text-left rte">
+                                    <div class="flex flex-wrap">
+                                    {% for item in current_variant.metafields.variant_attrs.compatible.value.compatible_devices[label] %}
+                                      <div class="w-1/2 px-2.5 text-center mb-6">
+                                        <p>{{item}}</p>
+                                      </div>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                  {% endif %}
+                  {% if current_variant.metafields.variant_attrs.compatible.value.compatible_vehicles != blank %}
+                    <h2 class="font-medium w-full md:w-1/5 uppercase md:text-lg text-lg mb-6 mt-6">Compatible Vehicles</h2>
+                      {% for field in current_variant.metafields.variant_attrs.compatible.value.compatible_vehicles %}
+                        {% assign label =  field | first %}
+                          <div class="flex flex-col border border-[#ddd] items-center shadow-sm mb-5">
+                              <button data-accordion="{{ label | handleize }}" class="flex items-center justify-between px-4 w-full font-sans py-2.5 text-center text-[#333] border-b border-[#ddd]">
+                                  <span class="block w-full">{{ label }}</span>
+                                  <div data-icon class="relative w-6 h-6">
+                                      <span class=" absolute w-full h-0.5 top-1/2 transition duration-500 transform -translate-y-1/2">  {% render 'icons' icon: 'down' %}</span>
+                                  </div>
+                              </button>
+                              <div style="height: 0px; transition: 0.5s;" class="overflow-hidden font-light text-left items-center w-full" data-accordion-content="{{ label | handleize }}">
+                                  <div class="p-6 pb-0 text-left rte">
+                                      <div class="flex flex-wrap">
+                                      {% for item in current_variant.metafields.variant_attrs.compatible.value.compatible_vehicles[label] %}
+                                        <div class="w-1/2 px-2.5 text-center mb-6">
+                                          <p>{{item}}</p>
+                                        </div>
+                                      {% endfor %}
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  {% endif %}
+              </tab-accordion>
+          </div>
+    {% endif %}
+  </div>

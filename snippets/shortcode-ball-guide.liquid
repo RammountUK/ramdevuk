@@ -1,0 +1,28 @@
+{% capture column %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% capture title %}{% include 'shortcode-render' render:'title' %}{% endcapture %}
+{% capture red %}{% include 'shortcode-render' render:'red' %}{% endcapture %}
+{% capture holds %}{% include 'shortcode-render' render:'holds' %}{% endcapture %}
+{% capture ball %}{% include 'shortcode-render' render:'ball' %}{% endcapture %}
+{% capture img %}{% include 'shortcode-render' render:'img' %}{% endcapture %}
+{% capture attributes %}{% include 'shortcode-render' render:'attributes' %}{% endcapture %}
+{% assign items = attributes | split: ", " %}
+{% case column %}
+    {% when 'start' %}
+      <div class="w-full flex  mt-5 overflow-x-scroll mb-10 md:mb-0">
+    {% when 'end' %}
+      </div>
+    {% else %}
+    <div class="md:flex-1 flex-none w-[175px] md:w-auto" >
+        <div class="text-center">
+          <img class="max-h-64 object-fit mx-auto" src="{{img}}" alt="{{title}}">
+          <h3 class="mt-5  mb-2 font-medium text-xl"><span class="text-red">{{red}}</span> {{ title }}</h3>
+          <p class="text-center font-bold mt-2 ">Holds {{holds}}</p>
+          <p class="text-center mt-2 font-light">{{ball}} Ball</p>
+          <p class="text-center mt-2 font-light">
+          {% for item in items %}
+            {{ item }} <br>
+          {% endfor %}
+          </p>
+        </div>
+    </div>
+  {% endcase %}

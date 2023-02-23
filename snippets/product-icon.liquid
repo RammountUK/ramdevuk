@@ -1,0 +1,20 @@
+<div class="flex flex-row">
+  {% for tag in product.tags %}
+    {% if tag contains 'component:' %}
+            <div class="pr-ball-size flex flex-row pr-4">
+                  <img src="{{'ball-icon.jpg' | asset_url }}" alt="Ball Icon" class="object-contain mr-2 w-4">
+                  <span class="text-uppercase vertical-align-middle font-medium">
+                    {{ tag | remove : "component:"}}
+                  </span>
+            </div>
+    {% endif %}
+    {% if tag contains 'part:' %}
+      <div class="pr-arm-length flex flex-row">
+          <img src="{{'arm-icon.jpg' | asset_url }}" alt="Arm Icon" class="object-contain mr-2 w-4">
+          <span class="text-uppercase vertical-align-middle font-medium">
+              {{ tag | remove : "part:"}}
+          </span>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

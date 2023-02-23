@@ -1,0 +1,240 @@
+<!-- cart upsell vars -->
+{% assign black_friday = false %}
+{% assign date_month = 'now' | date: '%m' %}
+{% assign date_day = 'now' | date: '%d' | abs %}
+{% comment %} {% assign date_hour = 'now' | date: '%k' | abs %} {% endcomment %}
+
+{% comment %}
+    Run promotion from November 26 through December 4.
+    Remember that times are calculated in Shopify in the time zone of the store.
+    For ProCompression, this means all dates/times are in the Pacific Time Zone.
+{% endcomment %}
+
+{% if date_day >= 26 and date_month == '11' %}
+    {% assign black_friday = true %}
+{% endif %}
+{% if date_day <= 4 and date_month == '12' %}
+    {% assign black_friday = true %}
+{% endif %}
+{% if black_friday %}
+    {% assign apsure_upsell_products = "bf-mystery-marathon-sock,2x-mystery-marathon-sock,bf-mystery-calf-sleeve,pro-compression-bottleneck-gaiter" | split: "," %}
+{% else %}
+    {% assign apsure_upsell_products = "mystery-marathon-sock,2x-mystery-marathon-sock,mystery-calf-sleeve,mystery-lifestyle-sock" | split: "," %}
+{% endif %}
+
+{% liquid
+    assign upsells_available = false
+    for handle in apsure_upsell_products
+        assign product = all_products[handle]
+        assign upsell_product_in_cart = false
+        for item in cart.items
+            if item.product.id == product.id
+                assign upsell_product_in_cart = true
+            endif
+        endfor
+        if product != empty and product.available and upsell_product_in_cart == false
+            assign upsells_available = true
+        endif
+    endfor
+%}
+<!-- end vars -->
+
+<div class="bg-white flex border-b items-center justify-between px-8 py-4 w-full fixed z-10 w-96">
+    <strong class="font-montserrat ">Your Cart {% if cart.items.size > 0 %}({{ cart.items.size }}){% endif %}</strong>
+    <button class="w-6" data-continue-shopping aria-label="Close mini cart">{% render 'icons' icon: 'close' %}</div>
+</div>
+<div class="p-8 flex flex-col bg-white pt-16 pb-0 ">
+    {% if cart.items.size > 0 %}
+        <div class="relative flex-shrink">
+            <div class="flex flex-col h-max {% if upsells_available %}max-h-56{% endif %} overflow-y-scroll scrollbar-hide relative pb-8">
+                {% for item in cart.items %}
+                    <div class="flex flex-col {% unless forloop.last %}border-b{% endunless %} pb-2 border-current w-full">
+                        <div class="py-2 flex items-center w-full">
+                            <a href="{{ item.url }}" class="flex items-center w-3/12">
+                                <img
+                                    class="mr-6"
+                                    loading="lazy"
+                                    alt="{{ item.featured_image.alt | default: item.title }}"
+                                    width="100"
+                                    height="100"
+                                    src="{{ item | img_url: '100x' }}"
+                                >
+                            </a>
+                            <div class="flex flex-col w-9/12 ml-8">
+                                <a href="{{ item.url }}" class="flex flex-col pb-4">
+                                    <h3 class="font-bold">{{ item.title }}</h3>
+                                    <span class="text-base opacity-60">
+                                        {{ item.product.metafields.descriptors.subtitle }}
+                                    </span>
+                                    <span class="font-light">{{ item.price | money }}</span>
+                                </a>
+                                <div class="flex items-stretch flex-wrap ">
+                                    {% unless item.product.has_only_default_variant %}
+                                        {% for option in item.product.options_with_values %}
+                                            <div class="flex border rounded border-current mr-4 overflow-hidden w-full mb-1.5">
+                                                <select
+                                                    data-variants='{{ item.product.variants | json }}'
+                                                    data-change-variant="{{ item.key }}"
+                                                    data-qty="{{ item.quantity }}"
+                                                    class="font-heading font-bold h-full px-2 text-sm uppercase bg-transparent w-full py-1.5 px-2.5"
+                                                >
+                                                    {% for value in option.values %}
+                                                        <option {% if item.variant.options contains value %}selected{% endif %} value="{{ value }}">{{ value }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        {% endfor %}
+                                    {% endunless %}
+                                    {% render 'product-qty-selector' product: item.product, item: item %}
+                                    <div class="flex items-center pl-3 pr-1">
+                                        <button data-delete="{{ item.key }}" class="disabled:opacity-20 w-5 h-5 ml-auto">
+                                            {% render 'icons' icon: 'delete' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- cart upsells -->
+        {%- if settings.show-cart-upsells and upsells_available -%}
+            <div class="border-t border-gray flex flex-col-reverse">
+                <swiper-carousel data-pagination="true" class="w-full relative opacity-0 overflow-hidden">
+                    <div class="swiper-wrapper">
+                        {%- assign upsell_header_shown = false %}
+                        {% for handle in apsure_upsell_products %}
+                            {%- assign product = all_products[handle] -%}
+                            {%- if product != empty and product.available -%}
+                                {% assign upsells_available = true %}
+                                {%- assign upsell_product_in_cart = false -%}
+                                {%- for item in cart.items -%}
+                                    {%- if item.product.id == product.id -%}
+                                        {%- assign upsell_product_in_cart = true -%}
+                                    {%- endif -%}
+                                {%- endfor -%}
+                                {%- unless upsell_product_in_cart -%}
+                                    <div class="items-center swiper-slide">
+                                        <div data-product-handle="{{ product.handle }}" class="upsell-item flex flex-col pb-2 w-full">
+                                            <div class="py-2 flex items-center w-full">
+                                                <a href="{{ item.url }}" class="flex items-center">
+                                                    <img
+                                                        class="mr-6"
+                                                        loading="lazy"
+                                                        alt="{{ product.featured_image.alt | default: product.title }}"
+                                                        width="100"
+                                                        height="100"
+                                                        src="{{ product.featured_image | img_url: '100x' }}"
+                                                    >
+                                                </a>
+                                                <div class="flex flex-col w-full ml-8">
+                                                    <a href="{{ product.url }}" class="flex flex-col">
+                                                        <h3 class="font-bold">{{ product.title }}</h3>
+                                                        <span class="text-base opacity-60">
+                                                            {{ product.metafields.descriptors.subtitle }}
+                                                        </span>
+                                                        <div class="flex flex-wrap">
+                                                            {% if black_friday %}
+                                                                <span style="color: #DA432F;">HOLIDAY DEAL: </span>
+                                                                &nbsp;
+                                                            {% endif %}
+                                                            Only <span class="money font-light px-2"><s>{{ product.price | money }}</s></span>
+                                                            <span class="money"{% if black_friday %} style="color: #DA432F;"{% endif %}>
+                                                                {%- if product.handle == 'mystery-marathon-sock' -%}
+                                                                    $18.99
+                                                                {%- elsif product.handle == '2x-mystery-marathon-sock' -%}
+                                                                    $32.00
+                                                                {%- elsif product.handle == 'mystery-lifestyle-sock' -%}
+                                                                    $9.99
+                                                                {%- elsif product.handle == 'bf-mystery-marathon-sock' -%}
+                                                                    $16.99
+                                                                {%- elsif product.handle == 'bf-mystery-calf-sleeve' -%}
+                                                                    $13.99
+                                                                {%- elsif product.handle == 'bf-mystery-lifestyle-sock' -%}
+                                                                    $8.99
+                                                                {%- elsif product.handle == 'pro-compression-bottleneck-gaiter' -%}
+                                                                    $12.99
+                                                                {%- else -%}
+                                                                    $14.99
+                                                                {%- endif -%}
+                                                            </span>!!
+                                                        </div>
+                                                    </a>
+                                                    <product-form class="w-52 text-left">
+                                                        <div class="flex flex-row items-stretch py-2">
+                                                            {% render 'product-variants' product: product, compact: true %}
+                                                            <div class="flex items-stretch w-full">
+                                                                <button
+                                                                    data-variants='{{ product.variants | json }}'
+                                                                    data-add-to-cart="{{ product.selected_or_first_available_variant.id }}"
+                                                                    class="btn btn-full btn-sm btn-dark"
+                                                                >
+                                                                    Add
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </product-form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {%- endunless -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button class="flex items-center transition duration-200 disabled:opacity-0" data-prev>
+                            <span class="block h-6 w-8 transform -rotate-180">{% render 'icons' icon: 'arrow' %}</span>
+                        </button>
+                        <div data-pagination class="flex w-full justify-center items-center"></div>
+                        <button class="flex items-center transition duration-200 disabled:opacity-0" data-next>
+                            <span class="block h-6 w-8 transform">{% render 'icons' icon: 'arrow' %}</span>
+                        </button>
+                    </div>
+                </swiper-carousel>
+
+                {%- unless upsell_header_shown -%}
+                    {% assign upsell_header_shown = true %}
+                    <div class="py-4 font-bold">
+                        Special offers available with any order
+                    </div>
+                {%- endunless -%}
+            </div>
+        {%- endif -%}
+
+        <!-- end upsells -->
+    {% else %}
+        Your cart is empty.
+    {% endif %}
+        <div class="checkout-container sticky bottom-0 bg-white w-full left-0 pb-4">
+            {% if cart.items.size > 0 %}
+            <div class="flex justify-between pt-4">
+                <div class="font-bold">Subtotal</div>
+                <div class="font-bold"> {{ cart.items_subtotal_price | money }}</div>
+            </div>
+            {% endif %}
+        {% if customer.tags contains "b2b" %}
+                {% capture variants %}
+                {% if cart.items.size > 0 %}
+                    {% for item in cart.items %}{{item.variant_id}}:{{item.quantity}}{% if forloop.last == false %},{% endif%}{% endfor %}
+                {% endif %}
+                {% endcapture %}
+                <a href="/cart/{{variants | strip }}" class="text-center btn-dark w-full mt-4 py-2.5  btn-full">Proceed to Checkout</a>
+            {% else %}
+                <form action="{{ routes.cart_url }}" method="post" id="cart" class="flex flex-grow w-full pt-4">
+                        <button
+                            {% if cart.items.size == 0 %} disabled {% endif %}
+                            class=" text-center btn-dark w-full mt-4 py-2.5  btn-full"
+                            name="checkout"
+                            form="cart"
+                        >
+                        {{ 'sections.cart.checkout' | t }}
+                        </button>
+                </form>
+        {% endif %}
+        <a href="{{routes.cart_url}}" class="text-center btn-transparent hover:bg-black w-full mt-4 py-2.5  btn-full block">View Cart </a>
+    </div>
+   
+</div>
+

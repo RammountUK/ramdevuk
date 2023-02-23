@@ -1,0 +1,26 @@
+{% paginate collection.products by section.settings.products_per_page %}
+    <div class="auto-rows-min md:col-span-2 grid grid-cols-1 {% if collection.products.size > 0 %}sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3{% endif %} gap-4 text-center">      
+    {% liquid
+        if collection.products.size > 0
+            assign renderedFamilies = ''
+            for product in collection.products
+                assign family = false
+                for collection in product.collections
+                  if collection.title contains 'Family'
+                    assign family = collection
+                  endif
+                endfor
+                unless renderedFamilies contains family.handle and section.settings.hide_duplicated_families
+                    render 'product_tile' with product as product, brand: true
+                endunless
+                assign renderedFamilies = renderedFamilies | append: 'hi' | append: family.handle
+            endfor
+        else
+            echo 'Sorry, no products match your filters.'
+        endif
+     %}
+    </div>
+    <div class="col-span-1 md:col-span-4">
+        {% render 'pagination' with paginate as paginate %}
+    </div>
+{% endpaginate %}

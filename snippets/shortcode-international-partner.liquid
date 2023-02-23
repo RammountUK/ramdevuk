@@ -1,0 +1,34 @@
+{% capture column %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% capture country %}{% include 'shortcode-render' render:'country' %}{% endcapture %}
+{% capture company %}{% include 'shortcode-render' render:'company' %}{% endcapture %}
+{% capture city %}{% include 'shortcode-render' render:'city' %}{% endcapture %}
+{% capture company_url %}{% include 'shortcode-render' render:'company_url' %}{% endcapture %}
+{% case column %}
+    {% when 'start' %}
+      <div class="w-full flex flex-wrap ">
+        <h3 class="w-full">{{country}}</h3>
+        <div class="md:inline-block hidden w-1/2 px-4 text-base"><strong>Company</strong></div>
+        <div class="md:inline-block hidden w-1/2 text-base"><strong>City</strong></div>
+        <ul class="international-list w-full mt-0">
+    {% when 'item' %}
+      <li class="w-full flex p-2.5 md:p-4 border-b border-solid border-black flex-col md:flex-row">
+        <div class="w-full md:w-1/2 text-base flex flex-row items-baseline">
+          <span class="font-bold w-1/3 md:hidden"><strong>Company</strong></span>
+          {% if company_url != blank %}
+            <a class="px-2.5 md:px-0 flex-1 leading-none"  href="{{ company_url }}">
+          {% endif %}
+            {{ company }}
+          {% if company_url != blank %}
+            </a>
+          {% endif %}
+        </div>
+        <div class="w-full md:w-1/2 text-base flex flex-row items-center">
+          <span class="font-bold w-1/3 md:hidden"><strong>City</strong></span>
+            <span class="px-2.5 md:px-0 flex-1">{{ city }}</span>
+        </div>
+      </li>
+    {% when 'end' %}
+        </ul>
+      </div>
+    {% else %}
+  {% endcase %}

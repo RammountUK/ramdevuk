@@ -1,0 +1,18 @@
+{% capture title %}{% include 'shortcode-render' render:'title' %}{% endcapture %}
+{% capture items %}{% include 'shortcode-render' render:'products' %}{% endcapture %}
+{% assign products = items | split: ", " %}
+<div class="product-cards container md:py-8 py-6 px-4 md:px-0 ">
+  {% if title != blank %}
+    <div class="transform transition-short font-heading text-xl md:text-xl font-medium mb-8">
+        <h2>{{ title }}</h2>
+    </div>
+  {% endif %}
+    <div class="auto-rows-min grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+      {% for item in products %}
+        {% assign product = all_products[item] %}
+        {% if product %}
+        {% render 'product_tile' product:product %}
+        {% endif %}
+      {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,149 @@
+<custom-cart>
+    <div class="bg-[#eee]">
+        <div class="container max-w-7xl mx-auto py-14 md:px-12 px-4 flex flex-wrap " >
+            <div class="flex flex-row w-full h-50 pt-8 pb-5 border-b border-[#bcbcbc] border-solid items-baseline mb-10">
+                <div class="flex w-2/3 md:w-1/2">
+                    <h1 class="float-left text-3xl font-medium px-3.5">Your Cart</h1>
+                </div>
+                <div class="flex w-1/3 md:w-1/2 justify-end">
+                    <div class="float-right text-[#333] text-md">Step 1 of 2</div>
+                </div>
+            </div>
+            <div class="cart-container w-full lg:w-4/6 mb-7 lg:mb-0 bg-white">
+                <!-- line item info -->
+                <div class="flex flex-col w-full m-auto px-4 pt-5 pb-10 md:pb-0">
+                    <h2 class="pb-5 border-b border-[#bcbcbc] border-solid mb-2.5 text-black text-[25px] pb-5">Items ({{cart.items.size}})</h2>
+                    {% if cart.items.size > 0 %}
+                        {% for item in cart.items %}
+                            <div class="grid grid-cols-12 items-center pb-8 md:pb-0">
+                                <div class="product flex items-center py-2 md:col-span-2 col-span-3">
+                                    <div class="float-left">
+                                        <a href="{{ item.url }}" class="flex items-center justify-center">
+                                            <img class="w-32 h-32 object-contain" loading="lazy" alt="{{ item.featured_image.alt | default: item.title }}" width="100" height="100" src="{{ item | img_url: '100x' }}">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="price flex flex-wrap w-full md:col-span-9 col-span-8">
+                                    <div class="w-full md:w-7/12 px-5">
+                                        <a href="{{ item.url }}" class="flex flex-col hover:text-red hover:underline ">
+                                            <h3 class="font-bold">{{ item.title }}</h3>
+                                        </a>
+                                        <span class="text-xs text-[#707070]">{{ item.sku }}</span>
+                                    </div>
+                                    <div class="w-full md:w-2/12 px-5 md:px-0">
+                                        <div class="total flex w-full font-bold text-[#333]">
+                                            {{ item.price | times: item.quantity | money }}
+                                        </div>
+                                        <span class="{% if item.quantity == 1 %}hidden{% endif %} text-sm text-[#707070] mt-1.5" data-price-each="{{ item.key }}" >Each {{ item.price | money }}</span>
+                                    </div>
+                                    <div class="quantity items-start flex w-full md:w-3/12 justify-left mt-2.5 md:mt-0 pl-7 md:pl-0 md:justify-center col-span-1">
+                                        <div class="float-left font-light text-xs">
+                                            {% render 'cart-qty-selector' item: item %}
+                                            <div id="variant-inventory" class="text-center {% unless item.variant.available %} hide {% endunless %}">
+                                                {% if item.variant.inventory_management == "shopify" and item.variant.inventory_policy != "continue" %}
+                                                    {% if item.variant.inventory_quantity < item.quantity %}
+                                                        There are not enough items in stock.
+                                                    {% endif %}
+                                                    {% if item.variant.inventory_quantity <= 10 %}
+                                                        {{ item.variant.inventory_quantity }} in stock.
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center md:items-start items-center ">
+                                    <div class="flex w-full mx-auto md:mb-8 mb-0">
+                                        <button data-delete="{{ item.key }}" class=" w-5 w-5 text-[#707070] m-auto ">
+                                            {% render 'icons' icon: 'close' %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="w-full text-center py-8">Shopping Cart Empty...</div>
+                    {% endif %}
+                </div>
+            </div>
+
+                <div class="w-full lg:w-2/6 lg:pl-7">
+                  <div class="bg-white p-5 mb-7">
+                    <h2 class="pb-7 text-black text-[25px] pb-5">Order Summary</h2>
+                    <div class="flex flex-row row-auto cart-costs push-up-20 text-[#333]">
+                      <div class="w-full flex flex-row pb-3">
+                         {% if customer.tags contains "b2b" %} 
+                            <div class="w-2/3 pad-zero leading-5">
+                                Estimated Ship Date <br>
+                                (30 business days +/- 2 days)
+                          </div>
+                          {% assign seconds = 30 | times: 24 | times: 60 | times: 60 %}
+                          <div id="cart-subtotal" class="w-1/3 text-right font-bold">{{ "now" | date: "%s" | plus: seconds | date: "%m/%d/%Y" }}</div>
+
+                         {% else %}
+                            <div class="w-2/3 pad-zero leading-5">
+                                Estimated Ship Date <br>
+                                (3 business days +/- 2 days)
+                          </div>
+                          {% assign seconds = 3 | times: 24 | times: 60 | times: 60 %}
+                          <div id="cart-subtotal" class="w-1/3 text-right font-bold">{{ "now" | date: "%s" | plus: seconds | date: "%m/%d/%Y" }}</div>
+                         {% endif %}
+                          
+                      </div>
+                    </div>
+                    <div class="flex flex-row row-auto cart-costs push-up-20 text-[#333]">
+                      <div class="w-2/3 pad-zero">
+                        Subtotal
+                      </div>
+                      <div id="cart-subtotal" class="w-1/3 text-right font-bold">{{ cart.total_price | money }}</div>
+                    </div>
+                    {% if cart.items.size > 0 %}
+                    <div class="flex mt-4 mx-auto">
+                        {% if customer.tags contains "b2b" %}
+                            {% capture variants %}
+                            {% if cart.items.size > 0 %}
+                                {% for item in cart.items %}{{item.variant_id}}:{{item.quantity}}{% if forloop.last == false %},{% endif%}{% endfor %}
+                            {% endif %}
+                            {% endcapture %}
+                            <a href="/cart/{{variants | strip }}" class="bg-red text-white border-2 border-red hover:bg-white text-center hover:text-red w-full rounded-3xl p-2.5 block transition-all duration-300 ease-in ">Proceed to Checkout</a>
+                        {% else %}
+                        <button
+                            {% if cart.items.size == 0 %} disabled {% endif %}
+                            class="bg-red text-white border-2 border-red hover:bg-white hover:text-red w-full rounded-3xl p-2.5 block transition-all duration-300 ease-in "
+                            name="checkout"
+                            form="cart"
+                        >
+                            Proceed to Checkout
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                  </div>
+                  <div class="bg-white p-5 mb-7" style="box-shadow: 1px 1px #F79720, 0em 0 .5em #F79720;">
+                    <div class="flex flex-col w-full m-auto px-4 pt-1 pb-10 md:pb-0">
+                      <h2 class="pb-3 border-b border-[#bcbcbc] border-solid mb-2.5 text-black text-[25px] pb-5" style="color: #F79720;">Tax-Exempt Order?</h2>
+                      <div class="grid-rows-1 content-center mb-2.5">
+                        <span>
+                          Please reach out to Customer Service at <a href="mailto:support@rammount.com?subject=Tax-exempt questions"><strong><u>support@rammount.com</u></strong></a> before placing an order. We are not able to remove sales tax from an order after it has been placed.
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="bg-white p-5">
+                    <div class="discount­code­field">
+                      <h2 class="pb-7 text-black text-[25px] pb-5">Promo Code or Gift Card</h2>
+                      <div class="flex flex-wrap">
+                          <input autocomplete="off" type="text" name="discount" placeholder="Enter Promo Code" class="flex border border-lightGray items-center rounded px-2 py-1 my-0 mb-2.5" />
+                          <a data-discount class="w-auto bg-white text-red border-2 border-red hover:bg-red hover:text-white w-full text-center rounded-3xl px-4 cursor-pointer mb-2.5 focus:border-[#000] focus:shadow outline-0 ml-2 flex items-center transition-all duration-300 ease-in ">Apply</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+        </div>
+
+    </div>
+</custom-cart>

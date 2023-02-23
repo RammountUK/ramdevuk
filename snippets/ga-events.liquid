@@ -1,0 +1,258 @@
+<!-- GA4 Events -->
+<script>
+/**
+* The following events are sent during steps in the checkout process
+* when the user performs some action.
+*/
+//Google Analytics Items In Cart
+const GaEventGetItemsInCart = function(){
+    var condensedItemsList = '';
+    const currentCart = $.getJSON('/cart.js', callbackFuncWithData);
+    function callbackFuncWithData(data)
+    {
+        // do some thing with data
+        const items = data.items;
+        const condensedItems = items.map((item) => {
+            return {
+                'items_id': item.product_id,
+                'item_name': item.title,
+                'quantity': item.quantity,
+                'affiliation': item.vendor,
+                'item_variant': item.variant_id,
+                'variant_id': item.variant_id
+            }
+        });
+        condensedItemsList = JSON.stringify(condensedItems);
+        return condensedItemsList;
+    }
+}
+
+//Google Analytics Add To Cart
+const GaEventAddToCart = () => {
+    const currentCart = $.getJSON('/cart.js', callbackFuncWithData);
+    function callbackFuncWithData(data)
+    {
+    const items = data.items;
+    const totalPrice = parseFloat((data.total_price/100).toFixed(2));
+    const currency = data.currency;
+    const condensedItems = items.map((item) => {
+        return {
+            'item_id': item.product_id,
+            'item_name': item.title,
+            'quantity': item.quantity,
+            'affiliation': item.vendor,
+            'item_variant': item.variant_id,
+            'variant_id': item.variant_id
+            }
+    });
+    condensedItemsList = JSON.stringify(condensedItems);
+    gtag('event', 'add_to_cart', {
+        'currency': currency,
+        'value': totalPrice,
+        'items': condensedItems,
+    });
+    }
+}
+//Google Analytics View Cart
+const GaEventViewCart = () => {
+    const currentCart = $.getJSON('/cart.js', callbackFuncWithData);
+    function callbackFuncWithData(data)
+    {
+    const items = data.items;
+    const totalPrice = parseFloat((data.total_price).toFixed(2));
+    const currency = data.currency;
+    const condensedItems = items.map((item) => {
+        return {
+            'item_id': item.product_id,
+            'item_name': item.title,
+            'quantity': item.quantity,
+            'affiliation': item.vendor,
+            'item_variant': item.variant_id,
+            'variant_id': item.variant_id
+            }
+    });
+    condensedItemsList = JSON.stringify(condensedItems);
+    gtag('event', 'view_cart', {
+        'currency': currency,
+        'value': totalPrice,
+        'items': condensedItems,
+    });
+    }
+}
+//Google Analytics Remove From Cart
+const GaEventRemoveFromCart = () => {
+    const currentCart = $.getJSON('/cart.js', callbackFuncWithData);
+    function callbackFuncWithData(data)
+    {
+    const items = data.items;
+    const totalPrice = parseFloat((data.total_price).toFixed(2));
+    const currency = data.currency;
+    const condensedItems = items.map((item) => {
+        return {
+            'item_id': item.product_id,
+            'item_name': item.title,
+            'quantity': item.quantity,
+            'affiliation': item.vendor,
+            'item_variant': item.variant_id,
+            'variant_id': item.variant_id
+            }
+    });
+    condensedItemsList = JSON.stringify(condensedItems);
+    gtag('event', 'remove_from_cart', {
+        'currency': currency,
+        'value': totalPrice,
+        'items': condensedItems,
+    });
+    }
+}
+//Google Analytics Add To Wishlist
+const GaEventAddToWishlist = () => {
+    gtag('event', 'add_to_wishlist', {
+    'currency': '{{ checkout.currency }}',
+    'value': '{{ checkout.total_price }}',
+    'coupon': '{{ discount_application.title }}',
+    'items': GaEventGetItemsInCart
+    });
+}
+//Google Analytics Cart Links
+const cartLinks = document.querySelectorAll('a[href*="/cart"]');
+if(cartLinks.length !== 0 ){
+    for(var cLinkCount = 0; cLinkCount < cartLinks.length; cLinkCount++){
+        cartLinks[cLinkCount].addEventListener('click', function(){
+                GaEventViewCart();
+        });
+    }
+}
+  const cartLinksSecondary = document.querySelectorAll('button[onclick*="/cart"]');
+if(cartLinksSecondary.length !== 0 ){
+    for(var cLinkCount = 0; cLinkCount < cartLinksSecondary.length; cLinkCount++){
+        cartLinksSecondary[cLinkCount].addEventListener('click', function(){
+                GaEventViewCart();
+        });
+    }
+}
+//Google Analytics Product Links
+const productLinks = document.querySelectorAll('a[href*="{{ shop.url }}/products"]');
+if(productLinks.length !== 0 ){
+    var productTarget = null;
+    for(var pLinkCount = 0; pLinkCount < productLinks.length; pLinkCount++){
+        productLinks[pLinkCount].addEventListener('click', function(){
+                var productTarget = this.href;
+                var linkLocation = this.parentNode.className;
+                sessionStorage.setItem('Product Clicked', linkLocation);
+        });
+    }
+}
+//Google Analytics Product Add To Cart
+const addToCartBtns = document.querySelectorAll('[data-add-to-cart]');
+if(addToCartBtns.length !== 0 ){
+    for(var atcLinkCount = 0; atcLinkCount < addToCartBtns.length; atcLinkCount++){
+        addToCartBtns[atcLinkCount].addEventListener('click', function(){
+                setTimeout(GaEventAddToCart, 500);
+
+        });
+    }
+}
+//Google Analytics Product Add To Cart
+const addToCartBtnsSecondary = document.querySelectorAll('button[aria-label="Add To Cart"]');
+if(addToCartBtnsSecondary.length !== 0 ){
+    for(var atcLinkCount = 0; atcLinkCount < addToCartBtnsSecondary.length; atcLinkCount++){
+        addToCartBtnsSecondary[atcLinkCount].addEventListener('click', function(){
+                setTimeout(GaEventAddToCart, 500);
+
+        });
+    }
+}
+const plusQtyBtns = document.querySelectorAll('[data-plus-qtt]');
+if(plusQtyBtns.length !== 0 ){
+    for(var atcLinkCount = 0; atcLinkCount < plusQtyBtns.length; atcLinkCount++){
+        plusQtyBtns[atcLinkCount].addEventListener('click', function(){
+                setTimeout(GaEventAddToCart, 500);
+        });
+    }
+}
+// Google Anaytics Product Remove from Cart
+const minusQtyBtns = document.querySelectorAll('[data-minus-qtt]');
+if(minusQtyBtns.length !== 0 ){
+    for(var atcLinkCount = 0; atcLinkCount < minusQtyBtns.length; atcLinkCount++){
+        minusQtyBtns[atcLinkCount].addEventListener('click', function(){
+                setTimeout(GaEventRemoveFromCart, 500);
+        });
+    }
+}
+{% if template.name contains 'cart' %}
+const removeBtns = document.querySelectorAll('button[data-delete]');
+if(removeBtns.length !== 0 ){
+    for(var atcLinkCount = 0; atcLinkCount < removeBtns.length; atcLinkCount++){
+        removeBtns[atcLinkCount].addEventListener('click', function(){
+                setTimeout(GaEventRemoveFromCart, 500);
+        });
+    }
+}
+{% endif %}
+{% if template.name contains 'product' %}
+    const GaEventViewItem = () => {
+        gtag('event', 'view_item', {
+        'currency': '{{ checkout.currency }}',
+        'value': '{{ checkout.total_price }}',
+        'items': [
+            {
+                    'item_id': {{ product.id }},
+                    'item_name': '{{ product.title }}',
+                    {% for collection in product.collections %}'item_category{%- unless forloop.first -%}{{ forloop.index }}{%- endunless -%}': '{{ collection.title }}',
+                    {% endfor %}
+                    'affiliation': '{{ product.vendor }}',
+                    'item_variant': '{{ product.variant.title }}',
+                    'price': {{product.price | divided_by: 100.00}},
+            }
+        ],
+        });
+    }
+    const GaEventsProductClicked = () => {
+        var trackProduct = sessionStorage['Product Clicked'];
+        if(trackProduct){
+        gtag('event', 'select_item', {
+            'item_list_id': '{{ product.id }}',
+                'item_list_name': trackProduct,
+                'items': [
+                {
+                    'item_id': {{ product.id }},
+                    'item_name': '{{ product.title }}',
+                    {% for collection in product.collections %}'item_category{%- unless forloop.first -%}{{ forloop.index }}{%- endunless -%}': '{{ collection.title }}',
+                {% endfor %}
+                    'affiliation': '{{ product.vendor }}',
+                    'price': {{product.price | divided_by: 100.00}},
+                }
+                ]
+        });
+        }
+        sessionStorage.removeItem('Product Clicked');
+    }
+    //Google Analytics Variants
+    const GaEventItemVariants = () => {
+          gtag('event', 'item_variants', {
+              'variant_id': {{ product.selected_or_first_available_variant.id }}
+          });
+    }
+
+    setTimeout(GaEventsProductClicked, 500);
+    setTimeout(GaEventViewItem, 1000);
+    setTimeout(GaEventItemVariants, 1000);
+{% endif %}
+
+{% if template.name contains 'search' %}
+  $( document ).ready(function() {
+  const GaEventsSearch = () => {
+      const search = document.querySelector('input[type="search"]');
+      const searchTerm = search.value;
+      const zeroResults = document.querySelector('.product-list-no-search-result-text');
+          if(zeroResults){
+            gtag("event", "zero_results", {
+              search_term: searchTerm          
+            });
+          }
+      }
+      setTimeout(GaEventsSearch, 500);
+  });
+{% endif %}
+</script>

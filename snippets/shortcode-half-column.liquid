@@ -1,0 +1,29 @@
+{% capture column %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% capture size %}{% include 'shortcode-render' render:'size' %}{% endcapture %}
+{% case column %}
+    {% when 'start row' %}
+      <div class="w-full flex flex-wrap  mt-8 md:mt-12">
+    {% when 'start column' %}
+      <div class="w-full md:w-1/2 {% if size != blank %} max-h{% endif %}">
+       {% if size != blank  %}
+      <style>
+        .max-h{
+          max-height:{{size}}px;
+        }
+        .max-h p{
+          height: 100%;
+          padding:0!important;
+        }
+        .max-h img{
+          object-fit: contain;
+          height: 100%;
+          width: 100%;
+        }
+      </style>
+      {% endif %}
+    {% when 'end column' %}
+      </div>
+    {% when 'end row' %}
+      </div>
+    {% else %}
+  {% endcase %}

@@ -1,0 +1,57 @@
+{% capture column %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% capture linkcolor %}{% include 'shortcode-render' render:'linkcolor' default:'' %}{% endcapture %}
+{% capture type %}{% include 'shortcode-render' render:'type' default:'default' %}{% endcapture %}
+{% capture mobile %}{% include 'shortcode-render' render:'mobile' default:'' %}{% endcapture %}
+
+{% case column %}
+    {% when 'start row' %}
+
+      <style>
+        .item-quart  h3{
+          color:black;
+        }
+        .item-icon .item-quart{
+           padding: 0 15px;
+        }
+
+        .item-icon img{
+          height:150px;
+          object-fit: contain;
+          max-width: 160px;
+          object-position: center;
+          margin: auto;
+        }
+        @media screen and (max-width: 680px) {
+          .item-icon img{
+            height:auto;
+          }
+          .item-icon .item-quart{
+             padding:15px;
+          }
+          {% if mobile == 'half' %}
+            .item-quart  p {
+              padding-bottom: 0!important;
+              padding-top:0!important;
+            }
+          {%endif%}
+        }
+        {% if linkcolor != blank %}
+          .link-color a{
+            color: {{ linkcolor}}!important;
+            text-decoration:none!important;
+            font-weight:400;
+          }
+        {%endif%}
+
+      </style>
+
+
+      <div class="item-{{ type }} w-full flex flex-wrap  mt-4 {%if linkcolor != blank %}link-color{%endif%}">
+    {% when 'start column' %}
+      <div class="item-quart {% if mobile == 'half' %} w-1/2 {% else %} w-full {% endif %} md:w-1/4">
+    {% when 'end column' %}
+      </div>
+    {% when 'end row' %}
+      </div>
+    {% else %}
+  {% endcase %}

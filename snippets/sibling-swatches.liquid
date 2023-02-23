@@ -1,0 +1,45 @@
+{% if family %}
+    {% assign child_products = family.products %}
+    {% if type == "carousel" %}
+        <div class="flex items-center overflow-hidden">
+            <swiper-carousel data-slides-per-view="6" class="w-full h-28 relative opacity-0 overflow-hidden">
+                <div class="swiper-wrapper items-center">
+                    {% for product in child_products %}
+                        <div class="swiper-slide flex items-center justify-center">
+                            <a aria-label="{{ product.title }}" href="{{ product.url }}" class="w-full">
+                                {% render 'optimized-image', imageObject: product.featured_image, imageSizes: '100, 200', breakpoints: '480px, 1440px' %}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 transition duration-200 disabled:opacity-0" data-next>
+                    <span class="block h-6 w-6 transform -rotate-90">{% render 'icons' icon: 'chevron' %}</span>
+                </button>
+                <button class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 transition duration-200 disabled:opacity-0" data-prev>
+                    <span class="block h-6 w-6 transform rotate-90">{% render 'icons' icon: 'chevron' %}</span>
+                </button>
+            </swiper-carousel>
+        </div>
+    {% else %}
+        <expand-content class="grid grid-cols-7 gap-2">
+            {% for product in child_products limit: 6 %}
+                <a aria-label="{{ product.title }}" href="{{ product.url }}" class="w-full">
+                    {% render 'optimized-image', imageObject: product.featured_image, imageSizes: '100, 200', breakpoints: '480px, 1440px' %}
+                </a>
+            {% endfor %}
+            {% for product in child_products offset: 6 %}
+                <a data-hidden aria-label="{{ product.title }}" href="{{ product.url }}" class="w-full hidden">
+                    {% render 'optimized-image', imageObject: product.featured_image, imageSizes: '100, 200', breakpoints: '480px, 1440px' %}
+                </a>
+            {% endfor %}
+            {% if child_products.size > 6 %}
+                <button data-toggle class="flex items-center">
+                    <span class="flex items-center font-thin text-xl">+</span>
+                    <span class="flex items-center font-bold px-2">
+                        {{ child_products.size | minus: 6 }}
+                    </span>
+                </button>
+            {% endif %}
+        </expand-content>
+    {% endif %}
+{% endif %}

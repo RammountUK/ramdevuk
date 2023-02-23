@@ -1,0 +1,47 @@
+<content-accordion>
+    <div class="flex flex-col text-xs pt-6 sm:pt-0 w-full">
+      {% for block in section.blocks %}
+          {% if block.type == 'column_block' %}
+              <div class="w-full">
+                  <div class="flex flex-col border-gray border-b border-current text-xs">
+                      <button data-toggle="{{ block.settings.text }}" class="flex items-center justify-between text-left w-full font-semibold pt-[20px] border-gray border-t text-[16px]">
+                          <span class="block w-4/5 uppercase font-med font-base pb-2">{{ block.settings.text}}</span>
+                          <div data-icon class="relative w-3 h-3">
+                              <span class="bg-gray absolute w-full h-[1px] top-1/2 transition duration-500 transform -translate-y-1/2 rotate-90"></span>
+                              <span class="bg-gray absolute w-full h-[1px] top-1/2 transition duration-500 transform -translate-y-1/2"></span>
+                          </div>
+                      </button>
+                      <ul data-content="{{ block.settings.text }}" class="flex flex-col h-0 menu overflow-hidden text-[#bcbcbc] pl-[12px] pr-[8px] mb-[12px]">
+                          {% if checkout %}
+                            {% assign menu = linklists[block.settings.column_menu].links %}
+                          {% else %}
+                            {% assign menu = block.settings.column_menu.links %}
+                          {% endif %}
+                          {% for link in menu %}
+                          <li class="py-2">
+                              {% if link.levels == 0 %}
+                              <a class="transition-short text-sm border-b border-transparent hover:border-current"
+                                  href="{{ link.url }}">{{ link.title }}</a>
+                              {% endif %}
+                              {% if link.levels > 0 %}
+                              <a class="uppercase font-bold text-white pb-2">{{ link.title }}</a>
+                              {% endif %}
+                              {% if link.levels > 0 %}
+                              <ul class="pb-[12px]" data-content>
+                                  {% for child_link in link.links %}
+                                  <li class="block">
+                                      <a class="inline-block my-1 transition-short border-b border-transparent hover:border-current"
+                                          href="{{ child_link.url }}">{{ child_link.title }}</a>
+                                  </li>
+                                  {% endfor %}
+                              </ul>
+                              {% endif %}
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+            {% endif %}
+      	{% endfor %}
+    </div>
+</content-accordion>

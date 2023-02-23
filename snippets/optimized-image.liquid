@@ -1,0 +1,124 @@
+{% comment %}
+
+Optimized Image
+This is a snippet which attempts to show the most appropriate sized image to the user.
+
+Properties
+The following properties are able to be passed into the snippet as variables.
+
+
+
+Property
+Type
+Description
+
+imageObject
+Shopify Image
+Normal shopify image object
+
+imageSizes
+String
+Comma seperated list of intrinsic image sizes(no px). ie, integers. ex: "350, 450, 550"
+
+media
+Boolean
+determines if media will be used to change image sources. It uses sizes by default
+
+breakpoints
+String
+Comma seperated list of media queries. Can accept any number of queries but Mobile, Tablet, and Desktop is recommended
+
+reserveSpace
+Boolean
+Determines if padding should be added to correct CLS. True by default. You may want to turn this off if you're already correcting CLS another way or if it is causing style issues.
+
+Usage/Examples
+{% render 'ambaum-image', imageObject: product.featured_image, imageSizes: '350, 500, 650', media: true, breakpoints: '480px, 960px, 1440px' %}
+From a metafield CDN:
+    {% assign filename =  METAFIELD_CDN | split: 'files/' | last | split: '?' | first %}
+    {% assign imageObject = images[filename] %}
+    {% render 'ambaum-image', imageObject: imageObject, imageSizes: '350, 500, 650', breakpoints: '480px, 960px, 1440px' %}
+
+{% endcomment %}
+
+{% liquid
+    unless breakpoints
+      assign breakpoints = '480px, 960px, 1440px'
+    endunless
+    unless imageSizes
+      assign imageSizes = '480, 960, 1440'
+    endunless
+
+    if reserveSpace == nil
+      assign reserveSpace = true
+    endif
+
+    assign imageSizesArr = imageSizes | remove: " " | split: ','
+    assign breakpointsArr = breakpoints | remove: " " | split: ','
+
+    assign aspect_ratio = imageObject.aspect_ratio
+    if square
+      assign aspect_ratio = 1
+    endif
+  %}
+
+    <div {% if reserveSpace %}style=" position: relative; width: 100%;" {% endif %} class="h-full">
+      <picture {% if reserveSpace %}style="position:absolute; top:0; left: 0; width: 100%; {% if square %} height: 100%;{% endif %}"{% endif %}>
+        {% if media %}
+
+          {% for imageSize in imageSizesArr %}
+            {% assign imageSizeFormatted = imageSize | append: 'x' %}
+            <source media="(max-width: {{ breakpointsArr[forloop.index0] }})" srcset="{{ imageObject.src | img_url: imageSizeFormatted }}">
+          {% endfor %}
+          {% assign lastSize = imageSizesArr | last | append: 'x' %}
+          {% assign lastBreakpoint = breakpointsArr | last %}
+          <source media="(min-width: {{ lastBreakpoint }})" srcset="{{ imageObject.src | img_url: lastSize }}">
+          <img
+            width="{{ imageSizesArr | last }}"
+            height="{{ imageSizesArr | last }}"
+            src="{{ imageObject.src | img_url: 'master' }}"
+            alt="{% if alt != blank %}alt{% else %}imageObject.alt | escape {% endif %}"
+            style="width: 100%; {% if square %} height: 100%; object-fit: contain;{% endif %}"
+            class="{{ imageClasses }}"
+            loading="lazy"
+          >
+
+        {% else %}
+
+          {% liquid
+            assign srcsetString = ''
+            for imageSize in imageSizesArr
+              assign imageSizeFormatted = imageSize | append: 'x'
+              assign imageSrc = imageObject.src | img_url: imageSizeFormatted
+              assign imageWidth = imageSize | append: 'w'
+              assign srcsetPart = imageSrc | append: ' ' | append: imageWidth | append: ','
+              assign srcsetString = srcsetString | append: srcsetPart
+            endfor
+            assign srcsetStringSize = srcsetString | size | minus: 1
+            assign srcsetString = srcsetString | slice: 0, srcsetStringSize
+
+            assign sizesString = ''
+            for breakpoint in breakpointsArr
+              assign queryString = '(max-width: ' | append: breakpoint | append: ') ' | append: imageSizesArr[forloop.index0] | append: 'px,'
+              assign sizesString = sizesString | append: queryString
+            endfor
+
+            assign sizesStringSize = sizesString | size | minus: 1
+            assign sizesString = sizesString | slice: 0, sizesStringSize
+          %}
+          <div class="swiper-zoom-container">
+          <img
+            width="350"
+            height="350"
+            srcset="{{ srcsetString }}"
+            sizes="{{ sizesString }}"
+            src="{{ imageObject.src | img_url: '350x' }}"
+            alt="{% if alt != blank %}{{ alt | escape }}{% else %}{{ imageObject.alt | replace: "®", "" | replace: '"', "&#34;"}}{% endif %}"
+            style="width: 100%; {% if square %} height: 100%; object-fit: contain;{% endif %}"
+            class="{{ imageClasses }}"
+            loading="lazy"
+          />
+          </div>
+        {% endif %}
+      </picture>
+    </div>

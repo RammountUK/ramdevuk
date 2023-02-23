@@ -1,0 +1,380 @@
+{% if shop.metafields.cws_ymm.enable_app == "yes" %}
+{% if template.name == "product" %}
+{% comment %} YMM APP Compatible List - 786/ASK {% endcomment %}
+{{ 'ymm-compatible.css' | asset_url | stylesheet_tag }}
+
+{%- assign select_lbl_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.select_label' -%}
+
+<div class="page-width container ymm_comptbl_list">
+  {% comment %} DO NOT EDIT BELOW LINES [ DYNAMIC TABLE WILL BE WRITTEN IN THIS PART ] {% endcomment %}
+  <div id="ymm_data_desktop" class="ymm_data_desktop">             
+  </div>
+  {% comment %} ENDS HERE {% endcomment %}
+  
+  {% comment %} DO NOT EDIT BELOW LINES [ DYNAMIC MOBILE LIST WILL BE WRITTEN IN THIS PART ] {% endcomment %}
+  <div id="ymm_data_mobile" class="ymm_data_mobile">
+    <div class="ymm_mobile_list">
+    </div>
+    <div class="ymm-mobile-loader" style="display: none;"><img src="{{ 'loader.png' | asset_url }}" width="32" height="auto" alt="Loading..." loading="lazy"></div>
+  </div>
+  {% comment %} ENDS HERE {% endcomment %}
+  
+  <div class="clearfix paging-outr ymm_paging" style="display: none;">
+    <span class="paging_data" data-ymm-curr-page="" data-ymm-limit="" data-ymm-total=""></span>
+    <ul class="pagination ymm_paginate"></ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+var shop_domain = '{{ shop.permanent_domain }}';
+var data_url = 'https://www.ymmshopify.capacitywebservices.com/ajax/get_dropdowns_pro_plan.php';
+var ymm_paging_js = "{{ 'ymm-custompage.js' | asset_url }}";
+var current_productid = "{{ product.id }}";
+var select_lbl = "{{ 'ymm_app.select_label' | t | strip | replace: select_lbl_err, 'Select' | replace: '&#39;', "'" }}";
+ 
+/*** 
+This function ensures that ymm JS of script ID: "ymm_script" will be loaded once.
+Whenever there will be ymmbox and compatible list present on the same page and on the ymm result page if ymm searchbox included then also this will ensure that it will be called one time only.
+***/
+if(typeof removeYMMJS === 'undefined') {
+window.removeYMMJS = function(filename){
+    var allsuspects = document.getElementsByTagName("script");
+  
+    for (var i=allsuspects.length; i>=0; i--)
+    {
+   	 	if(allsuspects[i] && allsuspects[i].getAttribute("src")!=null && allsuspects[i].getAttribute("src").indexOf(filename)!=-1 && allsuspects[i].getAttribute("id") == "ymm_script") {
+      		allsuspects[i].parentNode.removeChild(allsuspects[i]);
+    	}
+    }
+};
+}
+  
+//Define Load Javascript Function If Not Exists
+if(typeof ymmLoadScript === 'undefined') {
+window.ymmLoadScript = function(url, id,callback){
+  	var script = document.createElement("script")
+  	script.type = "text/javascript";
+
+  	if (script.readyState) { //IE
+   		 	script.onreadystatechange = function () {
+      		if (script.readyState == "loaded" || script.readyState == "complete" || script.readyState == "loading" || dom.readyState == "uninitialized") {
+        		script.onreadystatechange = null;
+        		callback();
+     	 	}
+    		};
+  	} else { //Others
+    		script.onload = function () {
+      			callback();
+    		};
+  	}
+
+  	script.type = 'text/javascript';
+  	script.defer = true;
+  	script.src = url;
+  
+  	if(id != "") {
+  	script.id = id;
+  	}
+  
+  	var head = document.getElementsByTagName('head')[0];
+  	head.appendChild(script);
+}; 
+}
+  
+function isInViewport(element)
+{
+	if(jQuery(".ymm_comptbl_list").length > 0) {
+   		var hT = jQuery(element).offset().top,
+       	hH = jQuery(element).outerHeight(),
+       	wH = jQuery(window).height(),
+       	wS = jQuery(this).scrollTop();
+      
+  		return wS > (hT+hH-wH);
+      
+	} else {
+		return false;
+	}
+}
+  
+function ymmCompatibleJSInclude()
+{  
+  jQuery.getScript(ymm_paging_js).done(function(script,textStatus) {
+    	
+    	var loading = false;
+    	
+    	//Check on page load if compatible div is in viewport then we need to show the list (LAZY LOAD AJAX DIV). - 786
+    	var check_comp_exist = isInViewport(".ymm_comptbl_list");
+      
+      	if(check_comp_exist) {
+          
+      		if(!loading) {
+              
+               	loading = true;
+            
+          		if(jQuery(window).width() <=767) {
+    				mobileCompatibleInit();
+      			} else {
+  					desktopCompatibleInit();
+      			}              
+        	}
+      }
+    
+      //On scroll event check if compatible div is in viewport or not then show it accordingly (LAZY LOAD AJAX DIV). - 786
+      jQuery(window).on('scroll', function() {
+       		var check_comp_exist = isInViewport(".ymm_comptbl_list");
+
+      		if(check_comp_exist) {
+          
+      			if(!loading) {
+              
+               		loading = true;
+            
+          			if(jQuery(window).width() <=767) {
+    					mobileCompatibleInit();
+      				} else {
+  						desktopCompatibleInit();
+      				}              
+        		}
+    		}
+		});
+    
+  }).fail(function( jqxhr, settings, exception ) {
+     console.log("ymm pagination JS not called...");//786/ASK 
+  });
+}
+  
+//Desktop Compatible Table - 786
+function desktopCompatibleInit()
+{
+(function($){
+  jQuery('.ymm_paginate').pagination({
+   	 	current: 1, 
+   	 	size: 2,
+    	length: 10,
+   		prev: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-left" viewBox="0 0 20 8"><path d="M4.814 7.555C3.95 6.61 3.2 5.893 2.568 5.4 1.937 4.91 1.341 4.544.781 4.303v-.44a9.933 9.933 0 0 0 1.875-1.196c.606-.485 1.328-1.196 2.168-2.134h.752c-.612 1.309-1.253 2.315-1.924 3.018H19.23v.986H3.652c.495.632.84 1.1 1.036 1.406.195.306.485.843.869 1.612h-.743z" fill="#000" fill-rule="evenodd"></path></svg>',
+    	next: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-right" viewBox="0 0 20 8"><path d="M15.186.445c.865.944 1.614 1.662 2.246 2.154.631.491 1.227.857 1.787 1.098v.44a9.933 9.933 0 0 0-1.875 1.196c-.606.485-1.328 1.196-2.168 2.134h-.752c.612-1.309 1.253-2.315 1.924-3.018H.77v-.986h15.577c-.495-.632-.84-1.1-1.035-1.406-.196-.306-.486-.843-.87-1.612h.743z" fill="#000" fill-rule="evenodd"></path></svg>',
+    	ajax: function(options,refresh,$target){
+    		jQuery.ajax({
+    	  		url: data_url,
+          		type: "GET",
+        		data: "domain="+shop_domain+"&load=all&version=updated&action=get_compatible&current_productid="+current_productid+"&current_ymmpage="+options.current+"&ymm_limit="+options.length,
+			  	dataType: 'jsonp'
+    		}).done(function(res){
+        
+                	if(res.html != null) {
+                    	
+                       	jQuery("#ymm_data_desktop").html(res.html);
+                      
+          				if(res.total_ymmrows > res.no_of_ymm_records) {
+                          	
+                          	jQuery(".paging_data").attr("data-ymm-curr-page",res.current_pageno);
+                    		jQuery(".paging_data").attr("data-ymm-limit",res.total_ymmrows);
+                    		jQuery(".paging_data").attr("data-ymm-total",res.no_of_ymm_records);
+                          
+            				jQuery(".ymm_paging").show();
+                        } else {
+                          	jQuery(".ymm_paging").hide();
+                        }
+                      
+        				if(res.html != null && res.total_ymmrows >= res.no_of_ymm_records) {
+    						refresh({
+    							total: res.total_ymmrows,
+    							length: res.no_of_ymm_records
+    						});
+            			} 
+                    } else {
+                    	jQuery(".ymm_comptbl_list").remove();
+                    }
+              
+    	}).fail(function(error){ });
+    	}
+     });
+})(jQuery);  
+}
+
+//Mobile Compatible List - 786
+//Get compatible list for mobile view. - 786
+function getCompatibleMobileList(page_no,total_rec,rec_limit)
+{ 
+  	jQuery('.ymm_paginate').pagination({
+      	current: page_no,
+   	 	size: 2,
+    	total: total_rec,
+        length: rec_limit,
+   		prev: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-left" viewBox="0 0 20 8"><path d="M4.814 7.555C3.95 6.61 3.2 5.893 2.568 5.4 1.937 4.91 1.341 4.544.781 4.303v-.44a9.933 9.933 0 0 0 1.875-1.196c.606-.485 1.328-1.196 2.168-2.134h.752c-.612 1.309-1.253 2.315-1.924 3.018H19.23v.986H3.652c.495.632.84 1.1 1.036 1.406.195.306.485.843.869 1.612h-.743z" fill="#000" fill-rule="evenodd"></path></svg>',
+    	next: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-right" viewBox="0 0 20 8"><path d="M15.186.445c.865.944 1.614 1.662 2.246 2.154.631.491 1.227.857 1.787 1.098v.44a9.933 9.933 0 0 0-1.875 1.196c-.606.485-1.328 1.196-2.168 2.134h-.752c.612-1.309 1.253-2.315 1.924-3.018H.77v-.986h15.577c-.495-.632-.84-1.1-1.035-1.406-.196-.306-.486-.843-.87-1.612h.743z" fill="#000" fill-rule="evenodd"></path></svg>',
+    	ajax: function(options,refresh,$target){
+    
+      	jQuery.ajax({
+   			url: data_url,
+        	type: "GET",
+        	data: "domain="+shop_domain+"&action=get_compatible_mobile_list&current_productid="+current_productid+"&current_ymmpage="+options.current+"&ymm_limit="+options.length,
+			dataType: 'jsonp',
+   		}).done(function(res){
+        
+          	jQuery("html").css("opacity",1);
+        	jQuery("body").css("opacity",1);
+          
+      		if(res.html != null) {
+                    	
+            	jQuery("#ymm_data_mobile").find(".ymm_mobile_list").html(res.html);
+         	
+            	var ymm_nested_title = jQuery(".ymm_nested_title").text();
+            	var final_ymm_nested_title = ymm_nested_title.replace('Select',select_lbl);
+            	jQuery(".ymm_nested_title").text(final_ymm_nested_title);
+         
+          		if(res.total_ymmrows > res.no_of_ymm_records) {
+                  
+                  	jQuery(".paging_data").attr("data-ymm-curr-page",res.current_pageno);
+                    jQuery(".paging_data").attr("data-ymm-limit",res.total_ymmrows);
+                    jQuery(".paging_data").attr("data-ymm-total",res.no_of_ymm_records);
+                  
+           			jQuery(".ymm_paging").show();
+                } else {
+                   	jQuery(".ymm_paging").hide();
+                }
+                      
+        		if(res.html != null && res.total_ymmrows >= res.no_of_ymm_records) {
+    				refresh({
+    					total: res.total_ymmrows,
+    					length: res.no_of_ymm_records
+    				});
+            	}
+              
+            } else {
+            	jQuery(".ymm_comptbl_list").remove();
+            }
+     
+   	}).fail(function(error){ 
+   	});
+    }
+  	});
+}
+    
+function mobileCompatibleInit()
+{
+(function($){
+  
+  	//Get compatible list onpage load. - 786/92
+  	getCompatibleMobileList(1,10,10);
+  
+   	//Get Next YMM Data List in Sequencial order by click on Next icon - 786/ASK
+   	jQuery(document).on('click','.get_next_ymm',function(e) {
+      	
+      	e.preventDefault();
+     
+       	var arr = jQuery(this).parent("ul").attr("id").split("-");
+  		var current_field = arr[1];
+      	var current_val = jQuery(this).attr("data-"+current_field);
+      	var ymm_curr_lbl = jQuery(this).find(".ymm_curr_lbl").text();
+     	var ymm_query = jQuery(this).attr("data-ymm-query");
+      	var prev_lbls = jQuery("#ymm_data_mobile").find(".ymm_data").html();
+     	var field_val_Arr = [];
+      	field_val_Arr = ymm_query.split("~");
+     	
+       	jQuery.ajax({
+				type: "GET",
+    			dataType: 'jsonp',
+      			url: data_url,
+				data: "domain="+shop_domain+"&action=onclick&subaction=next&current_field="+current_field+"&prev_val="+encodeURIComponent(field_val_Arr)+"&current_val="+encodeURIComponent(current_val)+"&current_lbl="+encodeURIComponent(ymm_curr_lbl)+"&prev_lbls="+encodeURIComponent(prev_lbls),
+				beforeSend: function() {
+                  	jQuery("#ymm_data_mobile").find(".ymm_mobile_list").html("");
+                  	
+                  	jQuery('.ymm-mobile-loader').show();
+                  
+       				if(jQuery("#ymm_data_mobile").hasClass("active") == false) {
+      					jQuery("#ymm_data_mobile").addClass("active");
+        			}
+    			},
+          		success: function(res) {             
+                    
+                  	jQuery('.ymm-mobile-loader').hide();
+                  
+                  	var prev_lbls = res.prev_lbls_arr.join("~");
+              
+                  	jQuery("#ymm_data_mobile").find(".ymm_mobile_list").html(res.html);
+                   	jQuery("#ymm_data_mobile").find(".ymm_data").html(prev_lbls);
+				}	
+	 	});	
+    });
+    
+    //Get Previous YMM Data List in Sequencial order by click on Go Back icon - 786/ASK
+ 	jQuery(document).on('click','.prev_ymm',function(e) {
+      
+      	e.preventDefault();
+      
+      	if(jQuery(this).attr("data-action") == "prev") {
+          
+  			var current_field = jQuery(this).attr("data-ymm-field");
+      		var current_val = jQuery(this).attr("data-"+current_field);
+     		var ymm_query = jQuery(this).attr("data-ymm-query");
+        	var prev_lbls_Arr = [];
+     		var current_lbl ="";
+        	var prev_lbls = jQuery("#ymm_data_mobile").find(".ymm_data").html();
+        
+        	if(prev_lbls != "") {
+        		prev_lbls_Arr = prev_lbls.split("~");
+      			prev_lbls_Arr.pop();
+          		var prev_lbls = prev_lbls_Arr.join("~");
+       			current_lbl = prev_lbls_Arr[prev_lbls_Arr.length-1];
+        	}
+        
+      		var field_val_Arr = [];
+            field_val_Arr = ymm_query.split("~");
+
+           	jQuery.ajax({
+				type: "GET",
+    			dataType: 'jsonp',
+      			url: data_url,
+				data: "domain="+shop_domain+"&action=onclick&subaction=prev&current_field="+current_field+"&prev_val="+encodeURIComponent(field_val_Arr)+"&current_val="+encodeURIComponent(current_val)+"&current_lbl="+encodeURIComponent(current_lbl),
+              	beforeSend: function() {
+                  jQuery("#ymm_data_mobile").find(".ymm_mobile_list").html("");
+                  jQuery('.ymm-mobile-loader').show();	
+    			},
+              	success: function(res) {
+                	jQuery('.ymm-mobile-loader').hide();
+                  	jQuery("#ymm_data_mobile").find(".ymm_mobile_list").html(res.html);
+                	jQuery("#ymm_data_mobile").find(".ymm_data").html(prev_lbls);
+				}	
+	 		});	
+          
+      } else {
+        
+        jQuery("#ymm_data_mobile").removeClass("active");
+        
+        var curr_page_no = jQuery(".paging_data").attr("data-ymm-curr-page");
+        var ymm_total_rec = jQuery(".paging_data").attr("data-ymm-limit");
+        var ymm_limit = jQuery(".paging_data").attr("data-ymm-total");
+        
+        jQuery("html").css("opacity",0.5);
+        jQuery("body").css("opacity",0.5);
+        
+  		jQuery.getScript(ymm_paging_js).done(function( script, textStatus ) {
+    			
+           getCompatibleMobileList(curr_page_no,ymm_total_rec,ymm_limit); //786 - Onload action need to call here.
+  			
+        }).fail(function( jqxhr, settings, exception ) {
+     		console.log("ymm pagination JS not called...");//786/ASK 
+  		});
+   
+      }
+    });
+})(jQuery); 
+}
+  
+//Check jquery lib. is already included or not and if version is less then call jquery lib through our App.
+if ((typeof jQuery === "undefined") || (jQuery.fn.jquery.replace(/\.(\d)/g,".0$1").replace(/\.0(\d{2})/g,".$1") < "1.08.01")) { 
+  
+  	removeYMMJS("https://code.jquery.com/jquery-1.12.4.min.js"); //!IMPORTANT
+  
+  	window.ymmLoadScript("https://code.jquery.com/jquery-1.12.4.min.js","ymm_script", function (){
+     	jQuery.noConflict();
+        ymmCompatibleJSInclude();
+   	});
+  
+} else {
+   	ymmCompatibleJSInclude();
+}
+</script>
+{% endif %}
+{% endif %}

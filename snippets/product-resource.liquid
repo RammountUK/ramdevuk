@@ -1,0 +1,64 @@
+<div class="resources">
+  {% if product_variant %}
+    {% assign current_variant = product_variant %}
+  {% else %}
+    {% liquid
+        assign url = request.path
+        assign url =  url | replace: product.url , "" | replace: "/" , ""
+        assign url = url| plus: 0
+        if url
+          for variant in product.variants
+            if variant.id == url
+              assign has_variant = variant
+            endif
+          endfor
+        endif
+    %}
+    {% if has_variant %}
+      {%- assign current_variant = has_variant -%}
+    {% else %}
+      {%- assign current_variant = product.selected_or_first_available_variant -%}
+    {% endif %}
+  {% endif %}
+
+    {% if current_variant.metafields.variant_attrs.resources.value.INSTRUCTIONS != blank %}
+    <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+      <h4 class="font-medium  mb-2 md:mb-0 w-full md:w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Instructions</h4>
+      <div class="flex-1">
+          {% for doc in current_variant.metafields.variant_attrs.resources.value.INSTRUCTIONS %}
+            <div class="mb-4">
+              <a target="blank" href="{{doc.url}}" class="flex flex-row items-center hover:underline">
+                <img src="{{'pdf.png' | asset_url }}" alt="PDF Icon" class="object-contain mr-2 w-[50px] h-[50px]">
+                <span class="text-sm text-black">{{ doc.title }}</span>
+              </a>
+            </div>
+          {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+  
+  {% if current_variant.metafields.variant_attrs.resources.value.DOCUMENTS != blank %}
+    <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+      <h4 class="font-medium mb-2 md:mb-0 w-full md:w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Documents</h4>
+      <div class="flex-1">
+        {% for doc in current_variant.metafields.variant_attrs.resources.value.DOCUMENTS %}
+          <div class="mb-4">
+            <a target="blank" href="{{doc.url}}" class="flex flex-row items-center hover:underline">
+              <img src="{{'pdf.png' | asset_url }}" alt="PDF Icon" class="object-contain mr-2 w-[50px] h-[50px]">
+              <span class="text-sm text-black">{{ doc.title }}</span>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if product.metafields.resources.instruction_videos != blank %}
+    <div class="product-info-wrapper flex flex-col md:flex-row items-top py-4">
+      <h4 class="font-medium  mb-2 md:mb-0 w-full md:w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Instruction Videos</h4>
+      <div class="flex-1">
+          <iframe src="{{ product.metafields.resources.instruction_videos }}" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen title="Instructional Video"></iframe>
+      </div>
+    </div>
+  {% endif %}
+</div>

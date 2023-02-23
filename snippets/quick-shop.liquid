@@ -1,0 +1,32 @@
+<product-form>
+   <quick-buy>
+      {% if product.variants.size > 1 and product.variants.size < 10 %}
+      <div data-menu style="height: 0;" class="overflow-hidden z-10 absolute w-full bottom-0">
+         <div class="bg-[#fafafa] p-4 bottom-0 grid grid-cols-6 gap-1 w-full md:w-[90%] mx-auto">
+            {% for variant in product.variants %}
+               {% for option in variant.options %}
+                  <button {% unless variant.available %} disabled {% endunless %} type="button" data-add-to-cart='{{ variant.id }}' value='{{ variant.id }}' data-options class="disabled:opacity-40 flex col-span-2 p-4 justify-center text-center text-sm text-white bg-red {% if variant.available %} hover:shadow-inner hover:[#dcdcdc] {% endif %}">
+                     {{ variant.title }}
+                  </button>
+               {% endfor %}
+            {% endfor %}
+
+            <!-- button aria-label="Size Chart" type="button" data-add-to-cart='{{ variant.id }}' class="flex flex-col col-span-6 py-2 text-center text-sm font-light bg-[#d1d1d1] hover:shadow-inner hover:[#dcdcdc]">
+               {% render 'icons' icon: 'measure' %}
+            </button -->
+         </div>
+      </div>
+      {% endif %}
+      <div class="w-full mx-auto overflow-hidden opacity">
+        {% if product.variants.size > 9 %}
+         <a  href="{{ collection.url }}{{ product.url }}" class="font-body bg-red text-white tracking-wide w-full mx-auto h-full text-center  px-4 py-3 flex items-center justify-center hover:bg-white transition-all duration-300 ease-in hover:text-red border border-2 border-red" >
+            Add to cart
+         </a>
+         {% else %}
+         <button data-hover class="font-body bg-red text-white tracking-wide w-full mx-auto h-full text-center  px-4 py-3 flex items-center justify-center hover:bg-white transition-all duration-300 ease-in hover:text-red border border-2 border-red" {% if product.variants.size == 1 %}data-add-to-cart='{{ product.selected_or_first_available_variant.id }}' value='{{ product.selected_or_first_available_variant.id }}' {% endif %} >
+            Add to cart
+         </button>
+         {% endif %}
+      </div>
+   </quick-buy>
+</product-form>

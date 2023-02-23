@@ -1,0 +1,87 @@
+<product-gallery class="product-gallery w-full md:my-4 md:px-8 flex flex-col text-gray-200">
+    <div class="product-gallery-overlay"></div>
+    <div class="block md:hidden product-title text-2xl font-medium font-heading leading-tight">{{ product.title }}</div>
+    <div class="sku-barcode py-4 text-sm block md:hidden ">
+    {% if product_variant %}
+      {% assign current_variant = product_variant %}
+    {% else %}
+      {% liquid
+          assign url = request.path
+          assign url =  url | replace: product.url , "" | replace: "/" , ""
+          assign url = url| plus: 0
+          if url
+            for variant in product.variants
+              if variant.id == url
+                assign has_variant = variant
+              endif
+            endfor
+          endif
+      %}
+      {% if has_variant %}
+        {%- assign current_variant = has_variant -%}
+      {% else %}
+        {%- assign current_variant = product.selected_or_first_available_variant -%}
+      {% endif %}
+    {% endif %}
+      <span class="font-medium">Part#:</span><span class="ml-1 mr-2 font-light" itemprop="sku">{{ current_variant.sku }}</span>
+      <span class="font-medium">UPC:</span><span class="ml-1 font-light" itemprop="sku mr-2">{{ current_variant.barcode }}</span>
+      {% if current_variant.metafields.variant_attrs.patented %}<span class="mt-2 font-medium">Patented</span>{% endif %}
+    </div>
+    <div class="gallery-container h-0 pt-3/4 relative w-full  ">
+      <div
+        class="absolute h-full left-0 top-0 w-full overflow-hidden"
+        data-main-gallery
+      >
+        <div class="swiper-wrapper ">
+
+          {% for image in product.images %}
+              {% assign altArray = image.alt | split: ":"  %}
+              {% if altArray[0] == current_variant.sku %}
+                  <div class="swiper-slide gallery-slide w-full h-full bg-cover bg-center">
+                    {% render 'optimized-image', imageObject: image, square: true , alt: altArray[2]  %}
+                  </div>
+              {% endif %}
+          {% endfor %}
+        </div>
+
+      </div>
+
+    </div>
+    <div class="absolute transform -translate-y-2/4 top-1/2 right-0 w-[80%] left-[10%] flex items-center justify-between z-10">
+        <button class="gallery-nav w-10 mx-2 text-white hidden disabled:opacity-0" data-swiper-button-prev>
+            <span class="block transform w-8 h-8  rotate-90 flex items-center justify-center ">{% render 'icons' icon: 'down' %}</span>
+        </button>
+        <button class="gallery-nav w-10 mx-2 text-white hidden disabled:opacity-0" data-swiper-button-next>
+            <span class="block transform w-8 h-8 -rotate-90 flex items-center justify-center">{% render 'icons' icon: 'down' %}</span>
+        </button>
+    </div>
+    <div class="mt-8">
+      <div class="relative swipe-thumbs md:flex hidden  {% if product.images.size  > 1 %} has-thumbs {% endif %}">
+        <div class="overflow-hidden w-full h-full transition duration-200 "  data-thumbnails>
+          <div class="swiper-wrapper">
+            {% if product.images.size  > 1 %}
+            {% for image in product.images %}
+              {% assign altArray = image.alt | split: ":"  %}
+              {% if altArray[0] == current_variant.sku %}
+                  <button class="swiper-slide h-max " data-index="{{forloop.index }}">
+                    <div class="slide-container">
+                      {% render 'optimized-image', imageObject: image, square: true, alt: altArray[2] %}
+                    </div>
+                  </button>
+              {% endif %}
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="absolute transform -translate-y-2/4 top-1/2 xl:-right-[5%] xl:w-[110%] -right-[10%] w-[120%] flex items-center justify-between -z-1">
+            <button class="gallery-nav w-8  text-black disabled:opacity-0" data-swiper-prev>
+                <span class="block transform w-8 h-8  rotate-90 flex items-center justify-center ">{% render 'icons' icon: 'down' %}</span>
+            </button>
+            <button class="gallery-nav w-8 text-black disabled:opacity-0" data-swiper-next>
+                <span class="block transform w-8 h-8 -rotate-90 flex items-center justify-center">{% render 'icons' icon: 'down' %}</span>
+            </button>
+        </div>
+      </div>
+    </div>
+
+  </product-gallery>

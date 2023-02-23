@@ -1,0 +1,27 @@
+<div class="flex w-full flex-wrap justify-center items-center p-4 col-span-3">
+    {% if paginate.previous.is_link %}
+        <span class="px-2 hover:underline">
+            <a href="{{ paginate.previous.url }}">{{ paginate.previous.title }}</a>
+        </span>
+    {% endif %}
+    <div class="flex items-end">
+        {% for part in paginate.parts %}
+            {% liquid
+                assign classes = 'p-2 m-1 hover:bg-red hover:text-white'
+                if part.title == paginate.current_page
+                    assign classes = classes | append: ' font-bold border-current'
+                endif
+            %}
+            {% if part.is_link %}
+                {{ part.title | link_to: part.url, class: classes }}
+            {% else %}
+                <span class="p-2 m-1 {% if part.title == paginate.current_page %}font-bold bg-red text-white{% endif %} hover:bg-red hover:text-white">{{ part.title }}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% if paginate.next.is_link %}
+        <span class="px-2 hover:underline">
+            <a href="{{ paginate.next.url }}">{{ paginate.next.title }}</a>
+        </span>
+    {% endif %}
+</div>

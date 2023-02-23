@@ -1,0 +1,505 @@
+{% comment %} YMM APP Searchbox - 786/ASK {% endcomment %}
+{% if shop.metafields.cws_ymm.enable_app == "yes" %}
+{{ 'ymm-searchbox.css' | asset_url | stylesheet_tag }}
+{%- assign ymmbox_title_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.searchbox_title' -%}
+{%- assign search_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.search_button' -%}
+{%- assign reset_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.reset_button' %}
+{%- assign select_lbl_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.select_label' -%}
+{%- assign none_txt_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.none_txt' -%}
+
+<div class="page-width container ymm_app" data-ymm-theme-type="vintage">
+<div id="ymm_searchbox" class="{{ searchbox_style }}">
+  	<h2 id="ymm_label" style="display: none;">{{ 'ymm_app.searchbox_title' | t | replace: ymmbox_title_err, searchbox_title | replace: '&#39;', "'" }}</h2>
+	<form name="ymm" id="ymm_form">
+    {% comment %} DO NOT EDIT BELOW LINES [ DYNAMIC FORM FIELDS ARE WRITTEN IN THIS PART ] {% endcomment %}<div class="formFields clearfix"><ul class="dropdowns" style="display:none;">{%- capture the_fields_content -%}{%- render "ymm_fields" -%}{%- endcapture -%}{%- unless the_fields_content contains "Liquid error" -%}{%- render "ymm_fields" -%}{%- endunless -%}</ul></div>{% comment %} ENDS HERE {% endcomment %}
+	</form>
+</div>
+  
+{%- comment -%} Item Fits/Unfits Block {%- endcomment -%}
+{%- if template.name == "product" -%}
+<div class="ymm_fitment_block" style="display: none;">
+	<div class="ymm-fitment-loading" style="display: none;"></div>
+	<div class="ymm_fitment_inner">
+		<div class="item_fits"></div>
+		<div class="item_unfits"></div>
+ 	</div> 
+</div>
+{%- endif -%}
+</div>
+<!-- SEARCH FILTER YMM JS  -->
+<script type="text/javascript">
+var shop_domain = '{{ shop.permanent_domain }}';
+var front_domain = '{{ shop.domain }}';
+var img_src= '{{ "loader.png" | asset_url }}';
+var data_url = 'https://www.ymmshopify.capacitywebservices.com/ajax/get_dropdowns_pro_plan.php';
+var searchURL = 'https://'+front_domain+'/pages/product-result';
+var search_bttn = "{{ 'ymm_app.search_button' | t | strip | replace: search_err, 'SEARCH' | replace: '&#39;', "'" }}";
+var reset_bttn = "{{ 'ymm_app.reset_button' | t | strip | replace: reset_err, 'RESET' | replace: '&#39;', "'" }}";
+var select_lbl = "{{ 'ymm_app.select_label' | t | strip | replace: select_lbl_err, 'Select' | replace: '&#39;', "'" }}";
+var none_lbl = "{{ 'ymm_app.none_txt' | t | strip | replace: none_txt_err, 'None' | replace: '&#39;', "'" }}";
+var template_name = "{{ template.name }}";
+var item_fit_icon = "{{ 'ymm_exact_fit.png' | asset_img_url: '20X' }}";
+var item_not_fit_icon = "{{ 'ymm_not_fit.png' | asset_img_url: '20X' }}";
+var uni_item_fit_icon = "{{ 'ymm_universal_fit.png' | asset_img_url: '20X' }}";
+var ymm_product_id = "{{ product.id }}";
+ 
+/*** 
+This function ensures that ymm JS of script ID: "ymm_script" will be loaded once.
+Whenever there will be ymmbox and compatible list present on the same page and on the ymm result page if ymm searchbox included then also this will ensure that it will be called one time only.
+***/
+if(typeof removeYMMJS === 'undefined') {
+window.removeYMMJS = function(filename){
+    var allsuspects = document.getElementsByTagName("script");
+  
+    for (var i=allsuspects.length; i>=0; i--)
+    {
+   	 	if(allsuspects[i] && allsuspects[i].getAttribute("src")!=null && allsuspects[i].getAttribute("src").indexOf(filename)!=-1 && allsuspects[i].getAttribute("id") == "ymm_script") {
+      		allsuspects[i].parentNode.removeChild(allsuspects[i]);
+    	}
+    }
+};
+}
+  
+//Define Load Javascript Function If Not Exists
+if(typeof ymmLoadScript === 'undefined') {
+window.ymmLoadScript = function(url, id,callback){
+  	var script = document.createElement("script")
+  	script.type = "text/javascript";
+
+  	if (script.readyState) { //IE
+   		 	script.onreadystatechange = function () {
+      		if (script.readyState == "loaded" || script.readyState == "complete" || script.readyState == "loading" || dom.readyState == "uninitialized") {
+        		script.onreadystatechange = null;
+        		callback();
+     	 	}
+    		};
+  	} else { //Others
+    		script.onload = function () {
+      			callback();
+    		};
+  	}
+
+  	script.type = 'text/javascript';
+  	script.defer = true;
+  	script.src = url;
+  
+  	if(id != "") {
+  	script.id = id;
+  	}
+  
+  	var head = document.getElementsByTagName('head')[0];
+  	head.appendChild(script);
+}; 
+}
+  
+//YMM Functions
+window.getYMMParameter = function(name,url) {
+   if (!url) url = window.location.href;
+     name = name.replace(/[\[\]]/g, "\\$&");
+     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+         results = regex.exec(url);
+     if (!results) return null;
+     if (!results[2]) return '';
+     return decodeURIComponent(results[2].replace(/\+/g, " "));
+};
+
+function removeLastSign(myUrl)
+{
+    if(myUrl.substring(myUrl.length-1) == "~") {
+    myUrl = myUrl.substring(0,myUrl.length-1);
+    }
+    return myUrl;
+}
+  
+function disableSearch()
+{
+    jQuery("#ymm_search").prop('disabled',true);
+}
+  
+function enableSearch()
+{
+  	jQuery("#ymm_search").prop('disabled',false);
+}
+  
+function showLoader(current_field)
+{
+  if(jQuery("li."+current_field).is(':not(:nth-last-child(2))')) {
+    var next_lbl = jQuery("li."+current_field).next().find(".ymm_label").html();
+    jQuery( "#ymm_searchbox .formFields ul.dropdowns li."+current_field).next("#ymm_searchbox .formFields ul.dropdowns li:not(.ymm_bttns)").remove();
+   	jQuery( "<li id='ymm_loader'><label class='ymm_label'>"+next_lbl+"</label><div class='ymm_loading'><img src='"+img_src+"' height='20px' width='20px'/></div></li>" ).insertAfter( "#ymm_searchbox .formFields ul.dropdowns li."+current_field);
+  }
+}
+  
+function hideLoader()
+{
+    jQuery('#ymm_loader').remove();
+}
+  
+//Reset YMM dropdowns. - 786
+function resetYMMDropdowns()
+{
+  	disableSearch();
+     
+    var c = 0;
+    
+  	jQuery("#ymm_searchbox .formFields .dropdowns select[id^=dropdown]").each(function(i, e) {
+        
+      	c++;
+        
+      	var dropdown_id = jQuery(this).attr("id");
+          	
+      	if(c == 1) {
+        	jQuery("#"+dropdown_id).val("-1");
+        } else {
+        	jQuery("#"+dropdown_id).val("-1");
+            jQuery("#"+dropdown_id).prop('disabled',true);
+        }
+   });
+}
+ 
+function getDropdownsOnload()
+{
+   //786
+   //Empty fitment block is required if it's set - 786
+   jQuery(".ymm_fitment_block").hide();
+   jQuery(".ymm_fitment_block").find(".item_fits").html("");
+   jQuery(".ymm_fitment_block").find(".item_unfits").html("");
+   
+  //Show YMMbox if it's hidden.
+  jQuery("#ymm_label").css("display","block"); 
+  jQuery("#ymm_searchbox").css("display","block");
+  	 
+  jQuery.ajax({
+			type: "GET",
+    		dataType: 'jsonp',
+      		url: data_url,
+			data: "domain="+shop_domain+"&action=onload&load=all&version=updated&ver_no=2",
+			success: function(res) {
+                
+                  if(res.html != null) {
+                    
+                    jQuery(".formFields ul.dropdowns").show().append(res.html);
+                    
+                    var $dropdowns = jQuery(res.html).find('.ymm-filter');
+         
+                    $dropdowns.find('option:first').each(function () {
+                      var curr_drop_id = jQuery(this).parent().attr("id");
+                      var curr_text = jQuery(this).text();
+                      var final_lbl = curr_text.replace('Select',select_lbl);
+                      var final_lbl_arr = final_lbl.split("--");
+                      
+                      jQuery("#"+curr_drop_id+" option:first").text(final_lbl_arr[0]+" "+final_lbl_arr[1]);
+                    });
+                     
+                    jQuery(".ymm-filter").find("option[value*='none']").html(none_lbl);  
+                    
+                    var li_element = jQuery(".formFields ul.dropdowns").find('li.ymm_bttns');
+					
+                    if (!li_element.length) {
+      					jQuery(".formFields ul.dropdowns").append('<li class="ymm_bttns"><div id="ymm_actions" class="button-action" align="center"><input type="button" name="submit" id="ymm_search" value="'+search_bttn+'" class="btn ymm_search" disabled="disabled" /><input type="button" name="reset" id="ymm_reset" value="'+reset_bttn+'" class="btn btn--secondary" /></div> </li>');
+					} 
+                  }
+			}	
+	});	
+}
+  
+//YMM Product Fitment Function - 786.
+function getYMMFitmentData(tags)
+{ 
+  	jQuery.ajax({
+		type: "GET",
+    	dataType: 'jsonp',
+      	url: data_url,
+		data: "domain="+shop_domain+"&product_id="+ymm_product_id+"&action=get_fitment_data&version=updated&tags="+encodeURIComponent(tags),
+		beforeSend: function() {
+			jQuery('.ymm-fitment-loading').html('<img src="'+img_src+'" width="32" height="auto" alt="Loading..." loading="lazy">').show();
+    	},
+      	success: function(res) { 
+              //786
+              if(typeof res.product_page_response != "undefined") {
+              //Hide YMMbox and show fitments data- 786.
+      		  jQuery('.ymm-fitment-loading').fadeOut("fast");
+              jQuery("#ymm_searchbox").hide();
+              jQuery("#ymm_searchbox").find(".dropdowns").html("");
+              jQuery(".ymm_fitment_block").show();
+              
+              //If Item Fits
+              if(res.product_page_response.status == "yes") {
+              	jQuery(".ymm_fitment_block").find(".item_unfits").html("");
+                
+                if(res.product_page_response.fit_type == "exact_fit") {
+                jQuery(".ymm_fitment_block").find(".item_fits").html('<div class="item_fits_cont"><div class="fit_title"><p><img src="'+item_fit_icon+'"/><span class="ymm_text">'+res.product_page_response.ymm_fit_title+'</span></p></div><div class="fit_desc">'+res.product_page_response.ymm_fit_desc+': '+res.searched_ymm+'</div><div class="reset_fitment_data"><input type="button" name="reset_ymm_fitment" id="reset_ymm_fitment" value="'+res.product_page_response.ymm_reset_fitment_lbl+'" /></div></div>');
+                } 
+                  
+                if(res.product_page_response.fit_type == "universal_fit") {
+                jQuery(".ymm_fitment_block").find(".item_fits").html('<div class="item_fits_cont"><div class="fit_title"><p><img src="'+uni_item_fit_icon+'"/><span class="ymm_text">'+res.product_page_response.ymm_uni_fit_title+'</span></p></div><div class="fit_desc">'+res.product_page_response.ymm_fit_desc+': '+res.searched_ymm+'</div><div class="reset_fitment_data"><input type="button" name="reset_ymm_fitment" id="reset_ymm_fitment" value="'+res.product_page_response.ymm_reset_fitment_lbl+'" /></div></div>');
+                }
+               } 
+                                                                    
+              //If Item Does Not Fits
+              if(res.product_page_response.status == "no"){
+              	jQuery(".ymm_fitment_block").find(".item_fits").html("");  
+              	jQuery(".ymm_fitment_block").find(".item_unfits").html('<div class="item_unfits_cont"><div class="unfit_desc"><div class="unfit-icon"><img src="'+item_not_fit_icon+'"/><span class="unfit_title">'+res.product_page_response.ymm_unfit_title+'</span></div><span class="ymm_text">'+res.product_page_response.ymm_unfit_desc+': '+res.searched_ymm+'</span></div><div class="fitment_buttons"><input type="button" name="view_fitments" id="view_fitments" value="'+res.product_page_response.ymm_view_fitments_lbl+'" /><input type="button" name="reset_ymm_fitment" id="reset_ymm_fitment" value="'+res.product_page_response.ymm_reset_fitment_lbl+'" /></div></div>');
+              }
+              }
+          }
+   	  });
+}
+ 
+//YMM Init. - 786
+function ymmInit()
+{ 	
+(function($){
+	var tags = window.getYMMParameter('rq'); //786
+  	
+  	if(tags != null) {
+    	tags = tags.toString().split("~");
+ 	} else {
+    	tags = "";
+ 	}
+  
+    if(search_bttn == "") {
+      search_bttn = "Search";
+    } 
+  
+ 	if(reset_bttn == "") {
+      reset_bttn = "Reset";
+  	}
+  
+  	if(none_lbl == "") {
+      none_lbl = "None";
+  	}
+  
+   	if(tags == "") {
+   	 	jQuery("#ymm_label").css("display","block"); 
+    	jQuery(".formFields ul.dropdowns").show();
+    }
+	          
+   	//Get First Dropdown onload
+	{% comment %} Start First Dropdown Onload Here {% endcomment %}{% comment %}
+   	if(tags == "") {
+    	getDropdownsOnload();
+   	}
+    {% endcomment %}{% comment %} Ended First Dropdown Onload Here {% endcomment %}
+ 
+	//Get Next Dropdowns on change in Sequencial order
+ 	jQuery(document).on('change','select[id^=dropdown]:not(:last)',function() {
+       	var arr = jQuery(this).attr("id").split("-");
+  		var current_field = arr[1];
+     	var dropdown_val = jQuery(this).val();
+     	var field_val_Arr = [];
+      	var next_all = jQuery("li."+current_field).nextAll().find("select");
+      	next_all.prop("disabled", true);
+     	next_all.val("-1");
+       	
+       	jQuery("#ymm_searchbox .formFields .dropdowns select[id^=dropdown]:visible").each(function(i, e) 
+      	{
+           if(e.value != -1){
+       		var dropval = e.value;
+            field_val_Arr.push(dropval);
+           } 
+          
+            var first_field = jQuery('#ymm_searchbox .formFields .dropdowns > li:nth-child(1) select[id^=dropdown]').val();
+            var second_field = jQuery('#ymm_searchbox .formFields .dropdowns > li:nth-child(2) select[id^=dropdown]').val();
+       
+           	if(first_field==-1 || second_field==-1) {
+               disableSearch();
+            } else {
+               enableSearch();
+            }
+        });
+      
+      	if(dropdown_val != "-1") {
+          
+           showLoader(current_field);
+          
+           jQuery.ajax({
+				type: "GET",
+    			dataType: 'jsonp',
+      			url: data_url,
+				data: "domain="+shop_domain+"&load=all&data_filter=updated&action=onchange&version=updated&ver_no=2&current_field="+current_field+"&prev_val="+encodeURIComponent(field_val_Arr)+"&current_val="+encodeURIComponent(dropdown_val),
+				success: function(res) {             
+                 
+                  if(res.html != "last_element~"){
+                
+                    	var returned_fieldname = res.html.split("~");
+                  	 	jQuery(".formFields ul.dropdowns ."+returned_fieldname[1]).remove();
+                   		jQuery(returned_fieldname[0]).insertAfter(".formFields ul.dropdowns ."+current_field);
+                   
+                    	var $dropdowns = jQuery(res.html).find('.ymm-filter');
+         
+                    	$dropdowns.find('option:first').each(function () {
+                      		var curr_drop_id = jQuery(this).parent().attr("id");
+                      		var curr_text = jQuery(this).text();
+                            var final_lbl = curr_text.replace('Select',select_lbl);
+                      		var final_lbl_arr = final_lbl.split("--");
+                      
+                      		jQuery("#"+curr_drop_id+" option:first").text(final_lbl_arr[0]+" "+final_lbl_arr[1]);
+                    	});
+                     
+                    	jQuery(".ymm-filter").find("option[value*='none']").html(none_lbl);
+                    
+                 		var li_element = jQuery(".formFields ul.dropdowns").find('li.ymm_bttns');
+						
+                    	if (!li_element.length) {
+    					  jQuery(".formFields ul.dropdowns").append('<li class="ymm_bttns"><div id="ymm_actions" class="button-action" align="center"><input type="button" name="submit" id="ymm_search" value="'+search_bttn+'" class="btn ymm_search" disabled="disabled" /><input type="button" name="reset" id="ymm_reset" value="'+reset_bttn+'" class="btn btn--secondary" /></div></li>');
+						} 
+                  
+                  } 
+                  
+                  hideLoader();
+				}	
+	 		});	
+        } 
+    });
+  
+  	//After Search Filter performs show selected dropdowns values
+  	if(tags != "") {
+      	
+      if(template_name != "product") {
+   		
+        jQuery.ajax({
+			type: "GET",
+    		dataType: 'jsonp',
+      		url: data_url,
+			data: "domain="+shop_domain+"&load=all&subaction=show_all&action=getdropdowns&version=updated&ver_no=2&tags="+encodeURIComponent(tags),
+          	success: function(res) { 
+              
+              	 jQuery(".formFields ul.dropdowns").html(res.html);
+                 
+              	 jQuery("#ymm_label").show();
+			     jQuery(".formFields ul.dropdowns").show();
+				 
+                 var $dropdowns = jQuery(res.html).find('.ymm-filter');
+         
+                 $dropdowns.find('option:first').each(function () {
+                      var curr_drop_id = jQuery(this).parent().attr("id");
+                      var curr_text = jQuery(this).text();
+                      var final_lbl = curr_text.replace('Select',select_lbl);
+                      var final_lbl_arr = final_lbl.split("--");
+                     
+                      jQuery("#"+curr_drop_id+" option:first").text(final_lbl_arr[0]+" "+final_lbl_arr[1]);
+                });
+                
+              	jQuery(".ymm-filter").find("option[value*='none']").html(none_lbl);
+              
+               	var li_element = jQuery(".formFields ul.dropdowns").find('li.ymm_bttns');
+				
+              	if (!li_element.length) {
+      				jQuery(".formFields ul.dropdowns").append('<li class="ymm_bttns"><div id="ymm_actions" class="button-action" align="center"><input type="button" name="submit" id="ymm_search" value="'+search_bttn+'" class="btn ymm_search" disabled="disabled" /><input type="button" name="reset" id="ymm_reset" value="'+reset_bttn+'" class="btn btn--secondary" /></div> </li>');
+				} 
+             
+             	enableSearch();
+			}
+        });
+        
+      } else {
+         //786/92 - get ymm product fitment data and display it on the product details page.
+         getYMMFitmentData(tags);
+      }
+    }
+  
+  	//On click of Search button build search filter URL
+  	jQuery(document).on('click','#ymm_search',function() 
+    {
+      var dropval = "";
+      var loop_cnt = 0;
+      var append_tag = "";
+  
+      jQuery("#ymm_searchbox .formFields .dropdowns select[id^=dropdown]:visible").each(function(i, e) 
+      {
+       		dropval = e.value;
+        	loop_cnt++;
+          
+        	if(dropval != "-1") {
+            	if(loop_cnt >= 1) {
+                     if(dropval != "") {
+                       if(dropval.indexOf("_none")== -1) {
+                           append_tag += dropval+"~";
+                       }
+                     }
+            	}
+          	}
+   		});
+          
+      append_tag = removeLastSign(append_tag);
+      
+      if(template_name != "product") {
+        
+        	//Redirect to shopify Product for this searched ymm entry
+      		jQuery.ajax({
+				type: "GET",
+          		jsonp: "callback",
+    			dataType: 'jsonp',
+      			url: data_url,
+				data: "domain="+shop_domain+"&front_domain="+front_domain+"&action=get_single_product&tags="+encodeURIComponent(append_tag),
+            	success: function(res) {  
+            		window.location.href = res.prd_handle;//786
+				}
+        	});
+        
+      } else {
+          
+          	//Hide YMMbox and show fitments data- 786.
+          	jQuery("#ymm_searchbox").hide();
+           	jQuery("#ymm_searchbox").find(".dropdowns").html("");
+          
+          	//If search button clicked on product page then show product fitments data. - 786
+            tags = append_tag.toString().replace(/~/g, ",");
+          
+          	//Update ymm query parameter value in URL without page reload.
+        	const ymm_new_url = new URL(window.location);
+			ymm_new_url.searchParams.set("rq", append_tag);
+			window.history.replaceState({}, '', ymm_new_url);
+          
+          	//Get YMM fitment data on page load of product details page for this searched ymm entry. - 786
+          	getYMMFitmentData(tags);
+      }
+    });
+  
+  	//Reset function
+  	jQuery(document).on('click','#ymm_reset',function()  
+	{
+      	resetYMMDropdowns();
+    }); 
+   
+    //Reset YMM product fitment means clicked on "check diff. vehicle" btn on product page. - 786
+  	jQuery(document).on('click','#reset_ymm_fitment',function(e)  
+	{
+      getDropdownsOnload();  //786
+    });
+   
+    //On Click of view other fitments data - 786/92/313/ASM
+    jQuery(document).on('click','#view_fitments',function() 
+   	{      
+      tags = tags.toString().replace(/,/g, "~");
+      window.location.href = searchURL+"?rq="+tags;
+    });
+	
+	//When back/forward button is pressed and coming to the page where ymmbox exists then first dropdown value will be resetted not on ymm result page. - 786
+ 	jQuery(window).bind("pageshow", function() {
+        if(tags == "") {
+        var form = jQuery('#ymm_form');
+       	form.trigger("reset");
+    	form.find("select.ymm-filter:first").val("-1").trigger('change');
+        }
+	});
+})(jQuery);  
+}
+  
+//Check jquery lib. is already included or not and if version is less then call jquery lib through our App.
+if ((typeof jQuery === "undefined") || (jQuery.fn.jquery.replace(/\.(\d)/g,".0$1").replace(/\.0(\d{2})/g,".$1") < "1.08.01")) { 
+ 
+ 	removeYMMJS("https://code.jquery.com/jquery-1.12.4.min.js"); //!IMPORTANT
+ 
+  	window.ymmLoadScript("https://code.jquery.com/jquery-1.12.4.min.js","ymm_script", function (){
+     	jQuery.noConflict();
+      
+		ymmInit();
+   	}); 
+  
+} else {
+	ymmInit();
+}
+</script>
+{% endif %}

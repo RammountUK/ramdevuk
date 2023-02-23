@@ -1,0 +1,34 @@
+{% if settings.enable_minicart %}
+
+    <button style="min-width:40px;"  onclick="location.href='/cart'" aria-label="Cart"  class="lg:ml-4 relative   duration-500 transition-short text-sm flex bg-grayBtn border-[#3e3e3e] border-2 hover:border-red text-white p-[6px] md:py-2 md:px-3 rounded hover:bg-grayBtn">
+        <img class="w-5 mr-2" src="https://cdn.shopify.com/s/files/1/0593/5346/4982/files/ram-cart.webp?v=1652386602" alt="cart icon" />
+        <span class="hidden lg:block">CART</span>
+        {% if cart.item_count >= 0 %}
+            <span data-items-count class=" absolute flex items-center justify-center rounded-full bg-cartBubble text-headerBg w-6 h-6 shadow top-0 right-0 transform translate-x-1/2 -translate-y-1/4 text-xs">{{ cart.item_count }}</span>
+        {% endif %}
+        {% if checkout %}
+          {% assign itemCount = 0 %}
+            {% for item in checkout.line_items %}
+              {% assign itemCount = itemCount | plus: item.quantity %}
+            {% endfor %}
+           <span data-items-count class=" absolute flex items-center justify-center rounded-full bg-cartBubble text-headerBg w-6 h-6 shadow top-0 right-0 transform translate-x-1/2 -translate-y-1/4 text-xs">{{ itemCount }}</span>
+        {% endif %}
+    </button>
+    <!-- <a href="/cart"  class="lg:ml-6 relative   duration-500 transition-short text-sm flex bg-grayBtn border-[#3e3e3e] border-2 hover:border-red text-white py-2 px-3 rounded hover:bg-grayBtn ">
+        <img class="w-5 mr-2" src="https://cdn.shopify.com/s/files/1/0593/5346/4982/files/ram-cart.webp?v=1652386602" alt="cart icon" />
+        <span class="hidden lg:block">CART</span>
+        {% if cart.item_count > 0 %}
+            <span data-items-count class=" absolute flex items-center justify-center rounded-full bg-cartBubble text-headerBg w-6 h-6 shadow top-0 right-0 transform translate-x-1/2 -translate-y-1/4 text-xs">{{ cart.item_count }}</span>
+        {% endif %}
+    </a> -->
+
+
+{% else %}
+<a href="{{ routes.cart_url }}" style="min-width:40px;"  class="lg:ml-4 relative   duration-500 transition-short text-sm flex bg-grayBtn border-[#3e3e3e] border-2 hover:border-red text-white p-[6px] md:py-2 md:px-3 rounded hover:bg-grayBtn">
+    <img class="w-5 mr-2" src="https://cdn.shopify.com/s/files/1/0593/5346/4982/files/ram-cart.webp?v=1652386602" alt="cart icon" />
+    <span class="hidden lg:block">CART</span>
+    {% if cart.item_count > 0 %}
+        <span data-items-count class=" absolute flex items-center justify-center rounded-full bg-cartBubble text-headerBg w-6 h-6 shadow top-0 right-0 transform translate-x-1/2 -translate-y-1/4 text-xs">{{ cart.item_count }}</span>
+    {% endif %}
+</a>
+{% endif %}

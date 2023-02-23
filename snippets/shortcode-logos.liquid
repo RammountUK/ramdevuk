@@ -1,0 +1,19 @@
+{% capture item %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% case item %}
+  {% when 'start' %}
+    <div class="logos-grid w-full grid grid-cols-4 mt-8 md:mt-12">
+  {% when 'new' %}
+
+  {% when 'end' %}
+    </div>
+  {% else %}
+
+{% endcase %}
+<style>
+  .logos-grid img{
+    max-height:72px;
+    margin-bottom:50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

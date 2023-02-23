@@ -1,0 +1,65 @@
+<script>
+  function showImportFeeNote(event) {
+    var dropdownValue = document.querySelector('#checkout_shipping_address_country').value
+    var radioValue = document.querySelector('.input-radio:checked').value
+
+    if (dropdownValue != 'United States' && radioValue == 'delivery-shipping') {
+      document.getElementById('import-fee-note').classList.remove("hidden");
+    } else {
+      document.getElementById('import-fee-note').classList.add("hidden");
+    }
+  };
+
+  function showLocalNote(event) {
+    var radioValue = document.querySelector('.input-radio:checked').value;
+
+    if (radioValue == 'delivery-pickup') {
+      document.getElementById('local-pickup-note').classList.remove("hidden");
+    } else {
+      document.getElementById('local-pickup-note').classList.add("hidden");
+    }
+  };
+
+  (function($) {
+    $(document).on("page:load page:change", function() {
+      if (Shopify.Checkout.step === "contact_information") {
+        $('.main__content .step .edit_checkout .step__sections').after("<p class='checkout-additional'>For help setting up a Tax exempt account please reach out to our Customer service team at <a href='https://www.rammount.com/support'>www.rammount.com/support</a>.</p>");
+        
+      }
+    });
+  })(Checkout.$);
+
+  (function($) {
+    $(document).on("page:load", function() {
+      if (Shopify.Checkout.step === "contact_information") {
+        $('.main__content .step .edit_checkout .step__sections .section--shipping-address .section__content .content-box').after("<p class='hidden checkout-additional local-note' id='local-pickup-note'>*Local pickup is available exclusively in Seattle, WA. Our address is provided below. Please remember to bring the order ID that was sent to you via email when you come to pick up your order.</p>");
+        $('.main__content .step .edit_checkout .step__sections').after("<p class='hidden checkout-additional local-note' id='import-fee-note'>*Orders that are shipped to countries outside of the U.S. may be subject to import taxes, customs duties and brokerage fees levied by the destination country (\"Import Fees\") which are the responsibility of the purchaser.</p>");
+
+        showImportFeeNote()
+        showLocalNote();
+      
+        var radioButtons = document.getElementsByClassName('input-radio');
+        var dropdownCountry = document.querySelector('#checkout_shipping_address_country')
+        dropdownCountry.addEventListener('change', showImportFeeNote)
+
+        for (var i = 0; i < radioButtons.length; i++) {
+          radioButtons[i].addEventListener('change', () => { showImportFeeNote(); showLocalNote(); });
+        }
+      }
+    });
+  })(Checkout.$);
+</script>
+
+
+<style>
+
+  .local-note{
+    color: #cd1e27;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .checkout-additional{
+    padding-top:20px;
+  }
+</style>

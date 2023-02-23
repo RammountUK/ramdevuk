@@ -1,0 +1,51 @@
+
+{% assign position = 'position_' | append: id %}
+
+  <div class=" w-[250px] navmenu-meganav-standard_side-container
+      navmenu-meganav-standard__side-{{ position }}
+      border-gray border-solid
+      {% if position == 'position_1'%}
+      mr-4
+      pr-4
+      border-r
+      {% else %}
+      ml-4
+      pl-4
+      border-l
+      {% endif %}"
+    >
+    {% if checkout %}
+      {% assign menu = linklists[settings.side_menu].links %}
+    {% else %}
+      {% assign menu = settings.side_menu.links %}
+    {% endif %}
+    {% for menu_item in menu %}
+      {%- capture navmenu_item_classes -%}
+        navmenu-item
+        navmenu-item-parent
+        navmenu-id-{{ menu_item.title | handle }}
+        navmenu-meganav-standard__item
+      {%- endcapture -%}
+
+      <li
+        class="">
+        <a href="{{ menu_item.url }}" class="navmenu-item-text navmenu-link-parent text-lg font-medium ">
+          {% if menu_item.title == "ISO 9001:2015 Certification" %}
+            <img src="https://cdn.shopify.com/s/files/1/0593/5346/4982/files/iso-logo.jpg?v=1665441497">
+          {% else %}
+            {{ menu_item.title }}
+          {% endif %}
+        </a>
+        {%
+          render 'navlist',
+          menu_list: linklists[menu_item.handle].links,
+          depth: 3,
+          max_depth: 3,
+          aria_expanded: true,
+          is_mobile: false,
+          is_depth: false,
+          is_mega:true
+        %}
+      </li>
+    {% endfor %}
+</div>

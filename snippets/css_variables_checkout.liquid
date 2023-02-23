@@ -1,0 +1,29 @@
+{% style %}
+:root {
+  --color-announcement-background: {{ settings.announcement_bar_bg_color }};
+  --color-announcement-text: {{ settings.announcement_bar_text_color }};
+  --color-header-background: {{ settings.header_bg_color }};
+  --color-header-text: {{ settings.header_text_color }};
+  --color-cart-bubble: {{ settings.header_cart_icon }};
+  --color-header-mega-background: {{ settings.header_bg_megamenu_color }};
+  --color-header-mega-text: {{ settings.header_megamenu_text_color }};
+
+
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+body {
+  font-size: 16px;
+}
+
+{% endstyle %}

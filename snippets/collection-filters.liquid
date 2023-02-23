@@ -1,0 +1,69 @@
+{%- for filter in collection.filters -%}
+    {%- unless filter.type == 'price_range' -%}
+        {%- assign name = filter.label | downcase -%}
+        <div class="flex flex-col pt-2">
+            <strong class="font-bold py-2 capitalize">
+                {{ filter.label }}
+            </strong>
+            <hr class="block border-current w-52" />
+            {% if name == 'color' %}
+                <ul class="grid grid-cols-6 gap-1 font-body py-4 text-sm w-52 overflow-visible">
+                    {%- for filter_value in filter.values -%}
+                        <li class="flex items-center">
+                            <div class="h-8 relative rounded w-8">
+                                <input
+                                    data-new-url="{% if filter_value.active %}{{ filter_value.url_to_remove }}{% else %}{{ filter_value.url_to_add }}{% endif %}"
+                                    type="checkbox"
+                                    class="absolute cursor-pointer h-full left-0 opacity-0 peer top-0 w-full z-10"
+                                    name="{{ filter_value.param_name }}"
+                                    value="{{ filter_value.value }}"
+                                    id="Filter-{{ filter.label }}-{{ forloop.index }}"
+                                    {% if filter_value.active -%}checked{%- endif %}
+                                />
+                                <div aria-hidden="true" class="border border-2 border-white h-full left-0 peer-focus:outline-yellow peer-checked:border-black relative rounded top-0 transition-short w-full">
+                                    {% assign bg = filter_value.value | downcase | handleize | append: '.png' %}
+                                    <div
+                                        style="background-image: url('{{ bg | asset_url }}'); background-color: {{ filter_value.value }};"
+                                        class="absolute bg-center bg-cover border inset-px rounded"
+                                    ></div>
+                                </div>
+                            </div>
+                            <label class="sr-only" for="black">Black</label>
+                        </li>
+                    {%- endfor -%}
+                </ul>
+            {% else %}
+                <ul class="grid grid-col-1 gap-4 mt-2 py-2 text-sm">
+                    {%- for filter_value in filter.values -%}
+                        <li class="flex flex-col justify-center w-full">
+                            <div class="flex items-center">
+                                <div class="border border-current h-4 mr-2 relative rounded w-4">
+                                    <input
+                                        data-new-url="{% if filter_value.active %}{{ filter_value.url_to_remove }}{% else %}{{ filter_value.url_to_add }}{% endif %}"
+                                        type="checkbox"
+                                        class="absolute cursor-pointer h-full left-0 opacity-0 peer top-0 w-full z-10"
+                                        name="{{ filter_value.param_name }}"
+                                        value="{{ filter_value.value }}"
+                                        id="Filter-{{ filter.label }}-{{ forloop.index }}"
+                                        {% if filter_value.active -%}checked{%- endif %}
+                                    >
+                                    <div aria-hidden="true" class="border border-2 border-white h-full left-0 peer-focus:outline-yellow peer-checked:bg-black rounded text-white top-0 transition-short w-full"><span style="display: block;" data-checkmark>{% render 'icons' icon: 'checkmark' %}</span><span style="display: none;" data-dash>{% render 'icons' icon: 'minus' %}</span></div>
+                                </div>
+                                <label class="w-4/5 {% if filter_value.active -%}font-bold{%- endif %}" for="Filter-{{ filter.label }}-{{ forloop.index }}">
+                                    {% liquid
+                                        if filter_value.label contains '>'
+                                            echo filter_value.label | split: '>' | last
+                                        else
+                                            echo filter_value.label
+                                        endif
+                                    %} 
+                                    ({{ filter_value.count }})
+                                </label>
+                            </div>
+                        </li>
+                    {%- endfor -%}
+                </ul>
+            {% endif %}
+        </div>
+    {%- endunless -%}
+{%- endfor -%}

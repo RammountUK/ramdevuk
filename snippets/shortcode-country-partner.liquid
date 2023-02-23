@@ -1,0 +1,12 @@
+{% capture column %}{% include 'shortcode-render' render:'action' %}{% endcapture %}
+{% case column %}
+    {% when 'start' %}
+      <div class="w-full flex flex-wrap  mt-8 md:mt-12">
+    {% when 'item start' %}
+      <div class="country-item w-full md:w-1/4">
+    {% when 'item end' %}
+      </div>
+    {% when 'end' %}
+      </div>
+    {% else %}
+  {% endcase %}

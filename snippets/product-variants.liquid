@@ -1,0 +1,69 @@
+{% liquid
+    assign variant_styles = 'px-4 md:px-8'
+    if compact
+        assign variant_styles = 'px-2 text-xs'
+    endif
+%}
+
+{% liquid
+    assign url = request.path
+    assign url =  url | replace: product.url , "" | replace: "/" , ""
+    assign url = url| plus: 0
+    if url
+      for variant in product.variants
+        if variant.id == url
+          assign has_variant = variant
+        endif
+      endfor
+    endif
+%}
+{% if has_variant %}
+  {%- assign current_variant = has_variant -%}
+{% else %}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+{% endif %}
+
+
+{% unless product.has_only_default_variant %}
+    <!-- PDP's Variant Custom Select Drop Down -- Populated By Variant -- -->
+        <div class="{% unless compact %}flex flex-col w-full h-1/6{% endunless %}">
+            {% for product_option in product.options_with_values %}
+                {% assign position = "option" | append: product_option["position"] %}
+                <!-- Hidden Select Communicates User Choices -->
+                <product-variants class="flex flex-col {% unless compact %}mr-5{% else %}mr-2{% endunless %}">
+                    {% if compact %}<div class="flex flex-col md:flex-row pb-2 items-start md:items-center">{% endif %}
+                        <label class="font-bold w-3/4 md:w-1/4"> {{ product_option.name }}:</label>
+                        <select name="{{ product_option.name }}-hiddenSelect" {% unless compact %}style="visibility: hidden; overflow:hidden; height: 0px"{% else %} class="font-heading h-full px-2 text-sm  bg-transparent border border-solid border-[#ccc] px-3 py-1.5 w-3/4 md:w-1/2" {% endunless %} aria-hidden="false" data-real-select>
+                            {% for value in product_option.values %}
+                                <option {% if current_variant[position] == value %}selected{% endif %} value="{{ value | escape }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    {% if compact %}</div>{% endif %}
+                    {% unless compact %}
+                        <!-- Choice Span -->
+                        <span value="{{ product_option.name }}" class="text-sm font-bold {% if compact %}py-1.5{% else %}py-4{% endif %}">Select {{ product_option.name }}</span>
+                        <div class="flex h-full w-full {% unless compact %}pb-4{% endunless %}">
+                            <ul aria-hidden="true" class="flex flex-wrap w-full" >
+                                <!-- Create List Item for Each Option Value [XS, S, M, LG, XL, XXL] -->
+                                {% for value in product_option.values %}
+                                    <li class="flex items-center justify-center my-1 {% unless forloop.last %}mr-2{% endunless %} relative">
+                                        <input {% if forloop.first %}checked{% endif %} data-option id="option-{{ value }}-{{ forloop.index }}" class="peer block opacity-0 absolute top-0 left-0 bottom-0 right-0 w-full h-full cursor-pointer" type="radio" value="{{ value }}" name="{{ product_option.name }}">
+                                        <label for="option-{{ value }}-{{ forloop.index }}" class="{{ variant_styles }} py-2.5 border font-bold font-heading rounded duration-200 transition bg-lightGray peer-checked:bg-gray peer-checked:bg-opacity-40 w-full">{{ value }}</label>
+                                    </li>
+                                {% endfor %}
+                                {% assign option_name = product_option.name | downcase %}
+                                {% if option_name == 'size' and sizechart != blank %}
+                                    <li>
+                                        <button data-modal-open class="flex flex-col justify-center h-full px-4">
+                                            <span class="block w-10 -ml-2">{% render 'icons' icon: 'sizechart' %}</span>
+                                            <span class="text-sm font-bold leading-tight">Size & Fit</span>
+                                        </button>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endunless %}
+                </product-variants>
+            {% endfor %}
+          </div>
+        {% endunless %}

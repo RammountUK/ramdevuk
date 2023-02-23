@@ -1,0 +1,45 @@
+
+<div class="solutions">
+  {% if product_variant %}
+    {% assign current_variant = product_variant %}
+   {% else %}
+     {%- assign current_variant = product.selected_or_first_available_variant -%}
+  {% endif %}
+  {% if current_variant.metafields.variant_attrs.complete_solution.value %}
+  <div class="mt-2">
+    {% for key in current_variant.metafields.variant_attrs.complete_solution.value %}
+        {% if collections[key].id != blank %}
+        <div class="single-solution">
+            <div class=" auto-rows-min md:col-span-4 grid  md:gap-7 gap-4 gap-y-4 grid-cols-2 lg:grid-cols-4 gap-4 text-center mb-4">
+                <div class="flex relative flex-col">
+                    <div class="font-heading text-lg font-medium text-left mb-4">
+                        {{collections[key].title}}
+
+                    </div>
+
+                    {% if collections[key].all_products_count > 3 %}
+                        <a href="{{collections[key].url}}" class="btn-sm btn-ram">
+                            See All
+
+                        </a>
+                    {% endif %}
+
+
+                </div>
+                {% liquid
+
+                    for product in collections[key].products limit:3
+
+                        render 'product_tile_3' with product as product
+
+                    endfor
+                 %}
+            </div>
+        </div>
+        {% endif %}
+
+    {% endfor %}
+
+  </div>
+  {% endif %}
+</div>

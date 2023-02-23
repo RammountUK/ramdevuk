@@ -1,0 +1,28 @@
+{% if product_variant %}
+  {% assign current_variant = product_variant %}
+{% else %}
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+{% endif %}
+
+<div class="notify-container py-4   {% unless current_variant.metafields.variant_attrs.notify.value.NOTIFY_ME == "true" %}hidden  {% endunless %}">
+  <a href="#" class="BIS_trigger font-body bg-[#343a40] text-white tracking-wide w-[250px] h-full text-center  px-4 py-3 flex items-center justify-center hover:bg-white  transition-all duration-300 ease-in hover:text-[#343a40] border border-2 border-[#343a40]" data-product-data="{{ product | json | escape }}">
+    Coming Soon
+  </a>
+</div>
+
+{% unless current_variant.metafields.variant_attrs.notify.value.NOTIFY_ME == "true" %}
+  <div class="add-to-cart-container flex flex-row items-stretch pb-4 ">
+      <div class="w-1/3 flex flex-row">
+          {% render 'product-qty-selector' %}
+      </div>
+      <div class="w-2/3 h-full px-5">
+          <button
+              data-variants='{{ current_variant.id }}'
+              data-add-to-cart
+              class="py-2.5  btn-full px-8 max-w-[250px] bg-red text-white border-red solid border-2 hover:bg-white hover:text-red transition-all duration-300 ease-in "
+          >
+              Add to cart
+          </button>
+      </div>
+  </div>
+  {% endunless %}

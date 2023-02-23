@@ -1,0 +1,377 @@
+{%  liquid
+  assign heading_tag = section.settings.heading_tag
+  assign heading = section.settings.heading
+%}
+
+{% if section.settings.red_line %}
+	<div class="w-40 mx-auto h-2 border-red border-b-2 mb-3"></div>
+{% endif %}
+{% if section.settings.heading != blank %}
+    <div style="padding-bottom: {{ section.settings.heading_bottom_spacing }}px; color: {{ section.settings.heading_color }};" class="w-full {{ section.settings.text_alignment }} {{ section.settings.mobile_heading_font_size }} {{ section.settings.desktop_heading_font_size }} {{ section.settings.heading_font_family }} font-bold">
+    <{{ heading_tag | default: 'h2' }}>
+        {{ heading  | remove: '<p>'  | remove: '</p>'  }}
+    </{{ heading_tag }}>
+    </div>
+{% endif %}
+{% if section.settings.copy != blank %}
+    <div style="padding-bottom: {{ section.settings.copy_bottom_spacing }}px;" class="w-full {{ section.settings.text_alignment }} {{ section.settings.mobile_copy_font_size }} {{ section.settings.desktop_copy_font_size }} {{ section.settings.copy_font_family }}">{{ section.settings.copy }}</div>
+{% endif %}
+
+{% comment %}
+
+STANDARDIZED SCHEMA FOR ALL SECTIONS CONTAINING THIS SNIPPET
+
+{
+	"type": "header",
+	"content": "Section Content"
+}, {
+	"type": "richtext",
+	"id": "heading",
+	"label": "Heading"
+},
+{
+  "type": "select",
+  "id": "heading_tag",
+  "label": "Heading Tag",
+  "default": "h2",
+  "info": "This tag is used for SEO purposes only, it will not affect visual display. [Learn more](https://www.searchenginejournal.com/heading-tags-for-seo/341817)",
+  "options": [
+    {
+      "label": "h1",
+      "value": "h1"
+    },
+    {
+      "label": "h2",
+      "value": "h2"
+    },
+    {
+      "label": "h3",
+      "value": "h3"
+    },
+    {
+      "label": "h4",
+      "value": "h4"
+    },
+    {
+      "label": "h5",
+      "value": "h5"
+    },
+    {
+      "label": "h6",
+      "value": "h6"
+    }
+  ]
+},{
+	"type": "richtext",
+	"id": "copy",
+	"label": "Copy"
+}, {
+	"type": "header",
+	"content": "Section Content Fonts"
+}, {
+	"type": "select",
+	"id": "heading_font_family",
+	"label": "Section Heading Font Family",
+	"default": "font-heading",
+	"options": [{
+			"value": "font-heading",
+			"label": "Montserrat"
+		},
+		{
+			"value": "font-body",
+			"label": "Roboto"
+		}
+	]
+}, {
+	"type": "select",
+	"id": "copy_font_family",
+	"label": "Section Copy Font Family",
+	"default": "font-body",
+	"options": [{
+			"value": "font-heading",
+			"label": "Montserrat"
+		},
+		{
+			"value": "font-body",
+			"label": "Roboto"
+		}
+	]
+}, {
+	"type": "header",
+	"content": "Section Content Spacing"
+}, {
+	"type": "range",
+	"id": "heading_bottom_spacing",
+	"label": "Heading - Bottom Spacing",
+	"min": 0,
+	"max": 128,
+	"step": 4,
+	"default": 16,
+	"unit": "px"
+}, {
+	"type": "range",
+	"id": "copy_bottom_spacing",
+	"label": "Copy - Bottom Spacing",
+	"min": 0,
+	"max": 128,
+	"step": 4,
+	"default": 16,
+	"unit": "px"
+}, {
+	"type": "header",
+	"content": "Section Content Alignment"
+}, {
+	"type": "select",
+	"id": "text_alignment",
+	"label": "Text Alignment",
+	"default": "text-center",
+	"options": [{
+			"label": "Left",
+			"value": "text-left"
+		},
+		{
+			"label": "Center",
+			"value": "text-center"
+		},
+		{
+			"label": "Right",
+			"value": "text-right"
+		}
+	]
+}, {
+	"type": "header",
+	"content": "Section Content Sizes"
+}, {
+	"type": "select",
+	"id": "desktop_heading_font_size",
+	"label": "Desktop - Section Heading Font Size",
+	"default": "md:text-xl",
+	"options": [{
+			"value": "md:text-xs",
+			"label": "X Small"
+		},
+		{
+			"value": "md:text-sm",
+			"label": "Small"
+		},
+		{
+			"value": "md:text-base",
+			"label": "Medium"
+		},
+		{
+			"value": "md:text-lg",
+			"label": "Large"
+		},
+		{
+			"value": "md:text-xl",
+			"label": "X Large"
+		},
+		{
+			"value": "md:text-2xl",
+			"label": "2X Large"
+		},
+		{
+			"value": "md:text-3xl",
+			"label": "3X Large"
+		},
+		{
+			"value": "md:text-4xl",
+			"label": "4X Large"
+		},
+		{
+			"value": "md:text-5xl",
+			"label": "5X Large"
+		},
+		{
+			"value": "md:text-6xl",
+			"label": "6X Large"
+		},
+		{
+			"value": "md:text-7xl",
+			"label": "7X Large"
+		},
+		{
+			"value": "md:text-8xl",
+			"label": "8X Large"
+		},
+		{
+			"value": "md:text-9xl",
+			"label": "9X Large"
+		}
+	]
+}, {
+	"type": "select",
+	"id": "desktop_copy_font_size",
+	"label": "Desktop - Section Copy Font Size",
+	"default": "md:text-base",
+	"options": [{
+			"value": "md:text-xs",
+			"label": "X Small"
+		},
+		{
+			"value": "md:text-sm",
+			"label": "Small"
+		},
+		{
+			"value": "md:text-base",
+			"label": "Medium"
+		},
+		{
+			"value": "md:text-lg",
+			"label": "Large"
+		},
+		{
+			"value": "md:text-xl",
+			"label": "X Large"
+		},
+		{
+			"value": "md:text-2xl",
+			"label": "2X Large"
+		},
+		{
+			"value": "md:text-3xl",
+			"label": "3X Large"
+		},
+		{
+			"value": "md:text-4xl",
+			"label": "4X Large"
+		},
+		{
+			"value": "md:text-5xl",
+			"label": "5X Large"
+		},
+		{
+			"value": "md:text-6xl",
+			"label": "6X Large"
+		},
+		{
+			"value": "md:text-7xl",
+			"label": "7X Large"
+		},
+		{
+			"value": "md:text-8xl",
+			"label": "8X Large"
+		},
+		{
+			"value": "md:text-9xl",
+			"label": "9X Large"
+		}
+	]
+}, {
+	"type": "select",
+	"id": "mobile_heading_font_size",
+	"label": "Mobile - Section Heading Font Size",
+	"default": "text-xl",
+	"options": [{
+			"value": "text-xs",
+			"label": "X Small"
+		},
+		{
+			"value": "text-sm",
+			"label": "Small"
+		},
+		{
+			"value": "text-base",
+			"label": "Medium"
+		},
+		{
+			"value": "text-lg",
+			"label": "Large"
+		},
+		{
+			"value": "text-xl",
+			"label": "X Large"
+		},
+		{
+			"value": "text-2xl",
+			"label": "2X Large"
+		},
+		{
+			"value": "text-3xl",
+			"label": "3X Large"
+		},
+		{
+			"value": "text-4xl",
+			"label": "4X Large"
+		},
+		{
+			"value": "text-5xl",
+			"label": "5X Large"
+		},
+		{
+			"value": "text-6xl",
+			"label": "6X Large"
+		},
+		{
+			"value": "text-7xl",
+			"label": "7X Large"
+		},
+		{
+			"value": "text-8xl",
+			"label": "8X Large"
+		},
+		{
+			"value": "text-9xl",
+			"label": "9X Large"
+		}
+	]
+}, {
+	"type": "select",
+	"id": "mobile_copy_font_size",
+	"label": "Mobile - Section Copy Font Size",
+	"default": "text-base",
+	"options": [{
+			"value": "text-xs",
+			"label": "X Small"
+		},
+		{
+			"value": "text-sm",
+			"label": "Small"
+		},
+		{
+			"value": "text-base",
+			"label": "Medium"
+		},
+		{
+			"value": "text-lg",
+			"label": "Large"
+		},
+		{
+			"value": "text-xl",
+			"label": "X Large"
+		},
+		{
+			"value": "text-2xl",
+			"label": "2X Large"
+		},
+		{
+			"value": "text-3xl",
+			"label": "3X Large"
+		},
+		{
+			"value": "text-4xl",
+			"label": "4X Large"
+		},
+		{
+			"value": "text-5xl",
+			"label": "5X Large"
+		},
+		{
+			"value": "text-6xl",
+			"label": "6X Large"
+		},
+		{
+			"value": "text-7xl",
+			"label": "7X Large"
+		},
+		{
+			"value": "text-8xl",
+			"label": "8X Large"
+		},
+		{
+			"value": "text-9xl",
+			"label": "9X Large"
+		}
+	]
+}
+{% endcomment %}

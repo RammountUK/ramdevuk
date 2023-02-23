@@ -1,0 +1,79 @@
+<hr class="push-down-30">
+<div class="flex my-2 mb-6">
+  <div class="w-1/2 px-4">
+    {% if section.settings.logo != blank %}
+      {{ section.settings.logo | image_url: width: 250 | image_tag: width: 250, loading: 'lazy', class: 'object-contain w-[125px]' }}
+    {% endif %}
+  </div>
+  <div class="w-1/2 px-4 text-right text-base">
+    {{ section.settings.print_message}}
+  </div>
+</div>
+<div class="flex">
+    <div class="w-1/2 px-4">
+            <div class="w-full flex-col my-4">
+                <div class="block product-title text-xl font-medium font-heading leading-tight">{{ product.title }}</div>
+                <div class="block sku-barcode py-3 text-base">
+                  {%- assign current_variant = product.selected_or_first_available_variant -%}
+                  <span class="font-medium">Part#:</span><span class="ml-1 mr-2 font-light" itemprop="sku">{{ current_variant.sku }}</span>
+                  <span class="font-medium">UPC:</span><span class="ml-1 font-light" itemprop="sku mr-2">{{ current_variant.barcode }}</span>
+                  {% if product.metafields.rammount.patent %}<span class="ml-2 font-medium">Patented</span>{% endif %}
+                </div>
+                <div class="py-1 text-base mb-3">  {% unless product.tags contains 'Coming Soon' %} {{ product.price | money }} {% else %}Price Coming Soon {% endunless %}</div>
+
+                <div class="w-full text-left">
+                    {% if product.metafields.rammount.features %}
+                      <div class="features">
+                        <h4 class="text-left uppercase pb-4 text-sm">Features</h4>
+                        <ul class="list-disc pl-4 text-base">
+                        {% assign features = product.metafields.rammount.features | split: ";" %}
+                        {% for feature in features %}
+                          <li class="mb-2 text-[#333]">{{ feature }}</li>
+                        {% endfor %}
+                        </ul>
+                      </div>
+                    {% endif %}
+                </div>
+
+            </div>
+    </div>
+    <div class="w-1/2 ">
+      <div class="h-0 pt-[50%] relative w-full mt-8">
+        <div
+          class="absolute h-full max-h-[400px] px-4 left-0 top-0 w-full overflow-hidden"
+        >
+          {% render 'optimized-image', imageObject: product.featured_media, square: true %}
+        </div>
+      </div>
+    </div>
+
+</div>
+<div class="product-info mt-4 px-4 print">
+  <hr>
+  <h2 class="text-xl font-normal mt-4 mb-4 ">PRODUCT INFORMATION</h2>
+  <div class="overview">
+  {% if product.description != blank %}
+    <div class="product-info-wrapper flex flex-row items-top py-4">
+      <h4 class="text-sm mb-2 md:mb-0 w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">Overview</h4>
+      <div class="w-4/5 text-base">
+        {{product.description}}
+      </div>
+    </div>
+  {% endif %}
+  {% for field in product.metafields.overview %}
+    {% if field != blank %}
+      <div class="product-info-wrapper flex flex-row items-top py-4">
+        {% assign label =  field | first %}
+        {% if label == 'ball_socket_size'%}
+          {% assign label = "ball/socket_size"%}
+        {% endif %}
+        <h4 class="font-medium mb-2 w-1/5 uppercase {{section.settings.desktop_heading_font_size}} {{section.settings.mobile_heading_font_size}}">{{ label |  replace: "_" , " " }}</h4>
+        <div class="w-5/5">
+          <p>{{ field | last | newline_to_br}}</p>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+</div>
