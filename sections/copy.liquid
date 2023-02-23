@@ -1,0 +1,314 @@
+
+
+{{ 'rte.css' | asset_url | stylesheet_tag: 'all', preload: 'true' }}
+
+<div id="section-{{ section.id }}" class="section-copy {% unless section.settings.full_width %}container text-dark {% endunless %} {{ section.settings.text_alignment }} flex flex-col py-4 md:py-12 px-6 md:px-0 ">
+    {%- if section.settings.heading != blank or section.settings.main -%}
+        <div class="pb-2.5">
+          	{% unless section.settings.hide_title %}
+            <span class="font-heading font-medium {{ section.settings.heading_font_size }} {{ section.settings.desktop_heading_font_size}}">
+                {%  liquid
+                    if template.name contains 'article'
+                        echo article.title
+                    elsif section.settings.main
+                        echo page.title
+                    else
+                        echo section.settings.heading
+                    endif
+                %}
+            </span>
+          	{% endunless %}
+            {% if template.name contains 'article' %}
+                <small class="flex items-center py-4 rte">
+                    <a href="{{ blog.url }}">Blog: {{ blog.title | strip_html }}</a>
+                </small>
+            {% endif %}
+        </div>
+    {%- endif -%}
+
+
+    <div class="pb-2.5 md:pb-10">
+        <span class="content rte font-sans font-light {{ section.settings.copy_font_size }}">
+            {%  liquid
+
+                if template.name contains 'article'
+                    echo article.content
+                elsif template.name contains 'collection'
+                    echo collection.description
+                elsif template.name contains 'hide'
+                    echo page.content
+                elsif section.settings.main
+                    echo page.content
+                else
+                    echo section.settings.copy
+                endif
+            %}
+        </span>
+    </div>
+
+
+    {% if template.name contains 'article' %}
+        <div class="flex items-center justify-between py-4">
+            <span>
+                {% if blog.previous_article %}
+                    <a href="{{ blog.previous_article }}"><< Previous Article</a>
+                {% endif %}
+            </span>
+            </span>
+                {% if blog.next_article %}
+                    <a href="{{ blog.next_article }}">Next Article >></a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+</div>
+<style>
+  .section-copy .content a{
+    color:#cd1e27;
+    text-decoration:none;
+    font-weight:500;
+  }
+
+</style>
+{% schema %}
+{
+    "name": "Copy",
+    "tag": "section",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "main",
+            "label": "Are you using this section to display page content?",
+            "default": false
+        },
+		{
+            "type": "checkbox",
+            "id": "hide_title",
+            "label": "Hide Page Title?",
+            "default": false
+        },
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "default": "text-left",
+            "options": [
+                {
+                    "value": "text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "text-right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "select",
+            "id": "desktop_heading_font_size",
+            "label": "Desktop Heading Size",
+            "default": "md:text-base",
+            "options": [
+                {
+                    "value": "md:text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "md:text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "md:text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "md:text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "md:text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "md:text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "md:text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "md:text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "md:text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "md:text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "md:text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "md:text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "md:text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_font_size",
+            "label": "Mobile Heading Font Size",
+            "default": "text-xl",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "copy",
+            "label": "Copy"
+        },
+
+        {
+            "type": "select",
+            "id": "copy_font_size",
+            "label": "Copy Size",
+            "default": "text-base",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "label": "Full Width ?",
+            "id": "full_width",
+            "default": false
+        }
+    ],
+    "presets": [
+        {
+            "name": "Page - Copy"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,59 @@
+<div data-api-content>
+
+  <div class="font-heading font-medium text-lg md:text-xl mb-10 pt-4 md:pt-0">
+        <h2 data-heading ></h2>
+  </div>
+  <div id="result-list" class="flex justify-center flex-wrap">
+    <tab-content class="w-full">
+        <div class="mobile-toggle border-2 border-black solid md:border-0">
+            <div class="flex items-center md:hidden cursor-pointer p-4" data-tab-selector={{section.id}}>
+                <span data-title-option class="title-option font-medium uppercase  mr-auto">Please Select</span>
+                <span class="w-5 md:w-8 md:mr-4">{% render 'icons', icon: 'down' %}</span>
+            </div>
+            <ul class="h-0 md:!h-auto overflow-hidden md:opacity-100 flex tab-heading w-full flex-col md:flex-row border border-0 md:border-b-2 solid border-red" data-tab-menu={{section.id}}>
+                <li class="nav-item flex-1 cursor-pointer" role="presentation">
+                    <a data-toggle="option-1" class="flex items-center justify-center h-full px-2 py-2 md:py-2 block w-full text-center md:rounded-t-2xl text-base md:text-base text-red hover:bg-red hover:text-white transition-all duration-200  active " role="tab"
+                      aria-selected="true">  Option 1 - Top Recommended
+                    </a>
+                  </li>
+                  <li class="nav-item flex-1 cursor-pointer" role="presentation">
+                      <a data-toggle="option-2" class="flex items-center justify-center h-full px-2 py-2 md:py-2 block w-full text-center md:rounded-t-2xl text-base md:text-base text-red hover:bg-red hover:text-white transition-all duration-200 " role="tab"
+                      aria-selected="true">  Option 2
+                      </a>
+                  </li>
+                  <li class="nav-item flex-1 cursor-pointer" role="presentation">
+                      <a data-toggle="option-3" class="flex items-center justify-center h-full px-2 py-2 md:py-2 block w-full text-center md:rounded-t-2xl text-base md:text-base text-red hover:bg-red hover:text-white transition-all duration-200 " role="tab"
+                      aria-selected="true">  Option 3
+                      </a>
+                  </li>
+           </ul>
+        </div>
+
+        <div class="tab-content mt-4 mb-4 px-0 md:px-6" >
+            <div class="transition-base tab-pane" data-content="option-1" id="tabs-option-1" role="tabpanel" aria-labelledby="tabs-option-1-tab">
+                <div data-inner-content class="grid search-result-ctm md:grid-cols-3 grid-cols-1 gap-8" ></div>
+                <div class="flex flex-wrap md:flex-row flex-col justify-center py-6">
+                  <button data-add-bundle class="btn-ram py-2 md:w-[200px] w-full md:mx-2">Add to Cart</button>
+                  <button data-add-accessory class="btn-ram py-2 md:w-[200px] w-full md:mx-2 mt-2 md:mt-0">Add Accessories</button>
+                </div>
+            </div>
+            <div class="transition-base tab-pane hidden" data-content="option-2" id="tabs-option-2" role="tabpanel" aria-labelledby="tabs-option-2-tab">
+                <div data-inner-content class="grid search-result-ctm md:grid-cols-3 grid-cols-1 gap-8" ></div>
+                <div class="flex justify-center py-6">
+                  <button data-add-bundle class="btn-ram py-2 md:w-[200px] w-full">Add to Cart</button>
+                </div>
+            </div>
+            <div class="transition-base tab-pane hidden" data-content="option-3" id="tabs-option-3" role="tabpanel" aria-labelledby="tabs-option-3-tab">
+                <div data-inner-content class="grid search-result-ctm md:grid-cols-3 grid-cols-1 gap-8" ></div>
+                <div class="flex justify-center py-6">
+                  <button data-add-bundle class="btn-ram py-2 md:w-[200px] w-full">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+
+    </tab-content>
+
+
+  </div>
+
+</div>

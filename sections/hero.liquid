@@ -1,0 +1,560 @@
+
+{%  liquid
+    if template.name contains 'article'
+        assign image_var =  article.image.src
+        assign mobile_var = article.image.src
+        assign buttonlink = "/blogs/articles"
+        assign button = "More Blogs"
+    elsif template.name contains 'collection'
+      assign image_var =  collection.image.src
+      assign mobile_var = collection.image.src
+      assign buttonlink = section.settings.desktop_button_link
+      assign buttonlink2 = section.settings.desktop_button_link2
+      assign heading = section.settings.desktop_heading
+      assign subheading = section.settings.desktop_subheading
+      assign button = section.settings.desktop_button_text
+      assign button2 = section.settings.desktop_button_text2
+      assign heading_tag = section.settings.heading_tag
+      assign description = section.settings.copy
+    else
+        assign image_var = section.settings.desktop_image
+        assign mobile_var = section.settings.mobile_image
+        assign buttonlink = section.settings.desktop_button_link
+        assign buttonlink2 = section.settings.desktop_button_link2
+        assign heading = section.settings.desktop_heading
+        assign subheading = section.settings.desktop_subheading
+        assign button = section.settings.desktop_button_text
+        assign button2 = section.settings.desktop_button_text2
+        assign heading_tag = section.settings.heading_tag
+        assign description = section.settings.copy
+    endif
+%}
+{% liquid
+  if section.settings.desktop_image
+    assign image_var = section.settings.desktop_image
+  endif
+%}
+{% liquid
+  if section.settings.mobile_var
+    assign mobile_var = section.settings.mobile_image
+  endif
+%}
+{% if image_var != blank %}
+<div {% if section.settings.section_id != blank %} id="{{section.settings.section_id}}" {% endif %}  class="bg-center relative bg-cover bg-no-repeat flex hero items-center hero-{{template.name}} border-b-0 ">
+    {% if section.settings.responsive_image %}
+      <div class="h-full w-full">
+        {{ image_var | image_url: width:2000 | image_tag : width: 2000, class: 'hidden md:block object-cover w-full'}}
+      </div>
+    {% endif %}
+    <div
+        class="{% if section.settings.responsive_image %}absolute left-0 w-full h-full{% endif %}container lg m-auto flex flex-col md:flex-row md:items-center h-full {{ section.settings.text_mobile_alignment }} {{ section.settings.text_mobile_vertical_alignment }} {{ section.settings.content_desktop_alignment }} {{ section.settings.text_desktop_alignment }}">
+            <div class="{{ section.settings.text-color }} md:w-3/5 xl:w-3/5 px-4 md:px-0">
+
+                {% if heading != blank %}
+                    <{{ heading_tag }} class="font-heading font-semibold my-8 w-full {{ section.settings.heading_font_size_mobile }} {{ section.settings.heading_font_size_desktop }}">
+                        {{ heading  | remove: '<p>'  | remove: '</p>'  }} {% if subheading  != blank %}<span class="hero-subheading" style="color:{{section.settings.desktop_subheading_color}};" > {{ subheading }} </span> {% endif %}
+                    </{{ heading_tag }}>
+                {% endif %}
+                {% if description != blank %}
+                    <div class="font-heading font-semibold {% unless template.name contains 'collection' %} text-lg {% else %}{{ section.settings.heading_font_size_mobile }} {{ section.settings.heading_font_size_desktop }}{% endunless %}">{{ description }}</div>
+                {% endif %}
+                {% if section.settings.desktop_button_text != blank and section.settings.desktop_button_link != blank %}
+                <div class=" {{ section.settings.content_desktop_alignment }} flex">
+                  <a href="{{ buttonlink }}" class="button-{{ section.id }} block font-bold px-5 lg:px-12 py-5 rounded text-center uppercase w-max transition-short ">
+                      {{ button }}
+                  </a>
+                  {% if section.settings.desktop_button_text2 != blank and section.settings.desktop_button_link2 != blank %}
+                  <a href="{{ buttonlink2 }}" class="ml-4 button2-{{ section.id }} block font-bold px-5 lg:px-12 py-5 rounded text-center uppercase w-max transition-short ">
+                    {{ button2 }}
+                </a>
+                  {% endif %}
+                </div>
+                {% endif %}
+            </div>
+    </div>
+    <div style="background-color:{{section.settings.line_color}};" class="absolute bottom-0 left-0 w-full h-1">
+
+    </div>
+</div>
+{% endif %}
+{% style %}
+    @media(max-width: 768px) {
+      #shopify-section-{{ section.id }} .hero-subheading{
+        color: {{ section.settings.mobile_text_color }}!important;
+      }
+      {% if mobile_var != blank %}
+        #shopify-section-{{ section.id }} .hero {
+          background-image: url("{{ mobile_var | image_url }}");
+          color: {{ section.settings.mobile_text_color }};
+          height: {{ section.settings.mobile_image_height }}px;
+        }
+
+      {% else %}
+        #shopify-section-{{ section.id }} .hero {
+          display:none;
+          
+        }
+
+      {% endif %}
+      {% if template.name contains 'collection' %}
+        #shopify-section-{{ section.id }} .hero {
+        
+          display:none;
+        }
+      {% endif %}
+
+    }
+   
+    {% unless section.settings.responsive_image %}
+
+      @media(min-width: 768px) {
+        {% if image_var != blank %}
+          #shopify-section-{{ section.id }} .hero {
+              background-image: url("{{ image_var | image_url }}");
+              color: {{ section.settings.desktop_text_color }};
+              height: {{ section.settings.desktop_image_height }}px;
+          }
+        {% else %}
+          #shopify-section-{{ section.id }} .hero {
+            display:none;
+          }
+        {% endif %}
+      }
+
+    {% endunless %}
+
+    .button-{{ section.id }} {
+      background: {{ section.settings.button_bg }};
+      color: {{ section.settings.button_text }};
+      border: 2px solid {{ section.settings.button_bg }};
+    }
+
+    .button-{{ section.id }}:hover {
+      background: {{ section.settings.button_hover_bg }};
+      color: {{ section.settings.button_hover_text }};
+    }
+
+    .button2-{{ section.id }} {
+      background: {{ section.settings.button2_bg }};
+      color: {{ section.settings.button2_text }};
+      border: 2px solid;
+      border-color: {{ section.settings.button2_border_bg }};
+    }
+
+    .button2-{{ section.id }}:hover {
+      background: {{ section.settings.button2_hover_bg }};
+      color: {{ section.settings.button2_hover_text }};
+    }
+
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Desktop"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Background - Desktop Image"
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Border Color",
+      "default": "#cd1e27"
+    },
+    {
+      "type": "number",
+      "id": "desktop_image_height",
+      "label": "Image Height Pixels - Desktop",
+      "default": 300
+    },
+    {
+      "type": "select",
+      "id": "content_desktop_alignment",
+      "label": "Content Alignment",
+      "default": "md:justify-start",
+      "options": [
+        {
+          "label": "Left",
+          "value": "md:justify-start"
+        },
+        {
+          "label": "Center",
+          "value": "md:justify-center"
+        },
+        {
+          "label": "Right",
+          "value": "md:justify-end"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_desktop_alignment",
+      "label": "Text Alignment",
+      "default": "md:text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "md:text-left"
+        },
+        {
+          "label": "Center",
+          "value": "md:text-center"
+        },
+        {
+          "label": "Right",
+          "value": "md:text-right"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "desktop_heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "desktop_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Copy"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "default": "h1",
+      "info": "This tag is used for SEO purposes only, it will not affect visual display. [Learn more](https://www.searchenginejournal.com/heading-tags-for-seo/341817)",
+      "options": [
+        {
+          "label": "h1",
+          "value": "h1"
+        },
+        {
+          "label": "h2",
+          "value": "h2"
+        },
+        {
+          "label": "h3",
+          "value": "h3"
+        },
+        {
+          "label": "h4",
+          "value": "h4"
+        },
+        {
+          "label": "h5",
+          "value": "h5"
+        },
+        {
+          "label": "h6",
+          "value": "h6"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size_desktop",
+      "label": "Heading Font Size Desktop",
+      "default": "sm:text-5xl",
+      "options": [
+        {
+          "value": "sm:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "sm:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "sm:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "sm:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "sm:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "sm:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "sm:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "sm:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "sm:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "sm:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "sm:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "sm:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "sm:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size_mobile",
+      "label": "Heading Font Size Mobile",
+      "default": "text-3xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "desktop_button_text",
+      "label": "Button Label",
+      "default": "Click Here"
+    },
+    {
+      "type": "url",
+      "id": "desktop_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "desktop_button_text2",
+      "label": "Secondary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "desktop_button_link2",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "color",
+      "id": "desktop_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "desktop_subheading_color",
+      "label": "Subheading Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button Background Color - Hover",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Button Background Color - Hover",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button2_bg",
+      "label": "Secondary Button Background Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button2_border_bg",
+      "label": "Secondary Button Border Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button2_hover_bg",
+      "label": "Secondary Button Background Color - Hover",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button2_text",
+      "label": "Secondary Button Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button2_hover_text",
+      "label": "Secondary Button Background Color - Hover",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Background - Mobile Image"
+    },
+    {
+      "type": "number",
+      "id": "mobile_image_height",
+      "label": "Image Height Pixels - Mobile",
+      "default": 375
+    },
+    {
+      "type": "select",
+      "id": "text_mobile_alignment",
+      "label": "Text Alignment",
+      "default": "text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-left"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_mobile_vertical_alignment",
+      "label": "Content Vertical Alignment",
+      "default": "justify-center",
+      "options": [
+        {
+          "label": "Top",
+          "value": "justify-start"
+        },
+        {
+          "label": "Center",
+          "value": "justify-center"
+        },
+        {
+          "label": "Bottom",
+          "value": "justify-end"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "mobile_text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "id": "mobile_button_color",
+      "label": "Button Color",
+      "type": "select",
+      "options": [
+        {
+          "label": "Light",
+          "value": "btn"
+        },
+        {
+          "label": "Dark",
+          "value": "btn btn-dark"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

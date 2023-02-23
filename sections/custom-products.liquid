@@ -1,0 +1,58 @@
+
+<div id="section-{{ section.id }}" class="{% unless section.settings.full_width %}container {% endunless %}  px-4 md:px-0">
+  
+  {% if section.blocks.size > 0 %}
+  <div class="auto-rows-min md:col-span-4 grid md:gap-7 gap-4 gap-y-4 grid-cols-2 lg:grid-cols-4 gap-4 text-center mb-10">
+      {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.single_product] %}
+        {% liquid
+            
+            render 'product_tile' with product as product, brand: true
+            
+            
+        %}
+      
+
+      {% endfor %}
+
+    </div>
+    
+  {% endif %}
+</div>
+
+
+{% schema %}
+{
+    "name": "Custom Products",
+    "tag": "section",
+    "settings": [
+       
+        {
+         "type": "checkbox",
+        "label": "Full Width ?",
+        "id": "full_width",
+        "default": false
+        }
+
+    ],
+    "blocks": [
+      {
+        "type": "products",
+        "name": "Products",
+        "limit" : 4,
+        "settings": [
+          {
+            "type": "product",
+            "label": "Product",
+            "id": "single_product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+        {
+            "name": "Custom Products"
+        }
+    ]
+}
+{% endschema %}

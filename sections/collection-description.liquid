@@ -1,0 +1,122 @@
+
+{% if collection.description != blank %}
+{{ 'rte.css' | asset_url | stylesheet_tag: 'all', preload: 'true' }}
+<div id="section-{{ section.id }}" class="section-copy {% unless section.settings.full_width %}container text-dark {% endunless %} {{ section.settings.text_alignment }} flex flex-col py-4 md:py-6 px-6 md:px-0 ">
+    <div>
+        <span class="content rte font-sans font-light {{ section.settings.copy_font_size }}">
+            {%  liquid
+              echo collection.description
+            %}
+        </span>
+    </div>
+</div>
+<style>
+  .section-copy .content a{
+    color:#cd1e27;
+    text-decoration:none;
+    font-weight:500;
+  }
+
+</style>
+{% endif %}
+{% schema %}
+{
+    "name": "Collection Description",
+    "tag": "section",
+    "settings": [
+
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "default": "text-left",
+            "options": [
+                {
+                    "value": "text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "text-right",
+                    "label": "Right"
+                }
+            ]
+        },
+
+        {
+            "type": "select",
+            "id": "copy_font_size",
+            "label": "Copy Size",
+            "default": "text-base",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "label": "Full Width ?",
+            "id": "full_width",
+            "default": false
+        }
+    ],
+    "presets": [
+        {
+            "name": "Collection - Copy"
+        }
+    ]
+}
+{% endschema %}

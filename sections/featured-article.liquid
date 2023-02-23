@@ -1,0 +1,704 @@
+<div class="main-blog container section-{{ section.id }}-padding {{ section.settings.mobile_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.desktop_horizontal_padding }}">
+    {% if section.settings.heading != blank %}
+      <div class="text-underline border-b-2 border-red border-solid w-[15%] m-auto"></div>
+      <h2 class="title--primary mt-5 mb-10 {{ section.settings.heading_font_size_mobile }} {{ section.settings.heading_font_size_desktop }} {{ section.settings.text_desktop_alignment }} text-center font-bold">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="blog-articles grid grid-cols-1 ">
+    <div class="blog-articles__article article shadow-xl lg:shadow-none mb-8  lg:mb-0">
+      {% if section.settings.article %}
+        {% assign article = section.settings.article %}
+        {%- render 'article-card',
+          article: article,
+          media_height: large,
+          media_aspect_ratio: article.image.aspect_ratio,
+          show_image: section.settings.show_image,
+          show_date: section.settings.show_date,
+          show_author: section.settings.show_author,
+          show_excerpt: true,
+          show_cat: false,
+          blog : blog,
+          font_mobile : section.settings.heading_font_size_mobile_post,
+          font_desktop : section.settings.heading_font_size_desktop_post,
+          font_align : section.settings.text_desktop_alignment_post
+          content_padding : "md:px-0",
+          content_padding_mobile : "px-8"
+        -%}
+      {% endif %}
+    </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_desktop_alignment",
+      "label": "Text Alignment",
+      "default": "md:text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "md:text-left"
+        },
+        {
+          "label": "Center",
+          "value": "md:text-center"
+        },
+        {
+          "label": "Right",
+          "value": "md:text-right"
+        }
+      ]
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font_size_desktop",
+      "label": "Title Font Size Desktop",
+      "default": "sm:text-5xl",
+      "options": [
+        {
+          "value": "sm:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "sm:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "sm:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "sm:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "sm:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "sm:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "sm:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "sm:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "sm:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "sm:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "sm:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "sm:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "sm:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size_mobile",
+      "label": "Title Font Size Mobile",
+      "default": "text-3xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile - Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile - Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_padding",
+      "label": "Desktop - Vertical Padding",
+      "default": "md:py-12",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding",
+      "label": "Desktop - Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Post Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size_desktop_post",
+      "label": "Post Title Font Size Desktop",
+      "default": "sm:text-lg",
+      "options": [
+        {
+          "value": "sm:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "sm:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "sm:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "sm:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "sm:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "sm:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "sm:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "sm:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "sm:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "sm:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "sm:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "sm:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "sm:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "id": "article",
+      "type": "article",
+      "label": "Article"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "Show Image"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium",
+      "label": "Image Height"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show Date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Show Author"
+    },{
+      "type": "header",
+      "content": "Post Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_desktop_alignment_post",
+      "label": "Text Alignment",
+      "default": "md:text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "md:text-left"
+        },
+        {
+          "label": "Center",
+          "value": "md:text-center"
+        },
+        {
+          "label": "Right",
+          "value": "md:text-right"
+        }
+      ]
+    }
+
+      ],
+      "presets": [
+          {
+              "name": "Featured Article"
+          }
+      ]
+  }
+
+{% endschema %}

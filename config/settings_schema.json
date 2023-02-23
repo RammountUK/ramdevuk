@@ -1,0 +1,777 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Ram Mount - Shopify Theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Ambaum Labs",
+    "theme_documentation_url": "https:\/\/shopify.dev\/themes\/tools\/dawn",
+    "theme_support_url": "https:\/\/support.shopify.com\/"
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Theme Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Announcement Bar"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bar_bg_color",
+        "label": "Background Color",
+        "default": "#131313"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bar_text_color",
+        "label": "Text Color",
+        "default": "#bcbcbc"
+      },
+      {
+        "type": "header",
+        "content": "Header & Navigation"
+      },
+      {
+        "type": "color",
+        "id": "header_bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "header_text_color",
+        "label": "Text Color",
+        "default": "#131313"
+      },
+      {
+        "type": "color",
+        "id": "header_bg_megamenu_color",
+        "label": "Mega Menu Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "header_megamenu_text_color",
+        "label": "Mega Menu Text Color",
+        "default": "#000"
+      },
+      {
+        "type": "color",
+        "id": "header_cart_icon",
+        "label": "Cart Icon Count",
+        "default": "#131313"
+      }
+    ]
+  },
+  {
+    "name": "minicart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Minicart"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_minicart",
+        "label": "Enable Minicart",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Ram Features",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Ram Mount Builder"
+      },
+      {
+        "type": "url",
+        "id": "ram_mount_url",
+        "label": "Ram Mount Builder URL"
+      },
+      {
+        "type": "richtext",
+        "id": "ram_mount_help_text",
+        "label": "Ram Mount Builder Help Text"
+      }
+    ]
+  },
+  {
+    "name": "Product Tiles",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_product_swatches",
+        "label": "Show product swatches?",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "back_order_notify",
+        "label": "Enable Back Order Notification?",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Theme Fonts",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "font_picker",
+        "id": "announcement_bar_font",
+        "label": "Announcement Bar - Font Family",
+        "default": "mono"
+      },
+      {
+        "type": "text",
+        "id": "custom_announcement_bar_font",
+        "label": "Custom Announcement Bar - Font Family"
+      },
+      {
+        "type": "select",
+        "id": "announcement_bar_font_weight",
+        "label": "Announcement Bar- Font Weight",
+        "default": "font-normal",
+        "options": [
+          {
+            "value": "font-thin",
+            "label": "Thin"
+          },
+          {
+            "value": "font-extralight",
+            "label": "Extra-light"
+          },
+          {
+            "value": "font-light",
+            "label": "Light"
+          },
+          {
+            "value": "font-normal",
+            "label": "Normal"
+          },
+          {
+            "value": "font-medium",
+            "label": "Medium"
+          },
+          {
+            "value": "font-semibold",
+            "label": "Semibold"
+          },
+          {
+            "value": "font-bold",
+            "label": "Bold"
+          },
+          {
+            "value": "font-extrabold",
+            "label": "Extra-bold"
+          },
+          {
+            "value": "font-black",
+            "label": "Black"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "announcement_font_size_dt",
+        "label": "Announcement Bar - Desktop Font Size",
+        "default": "md:text-sm",
+        "options": [
+          {
+            "value": "md:text-xs",
+            "label": "Extra small"
+          },
+          {
+            "value": "md:text-sm",
+            "label": "Small"
+          },
+          {
+            "value": "md:text-base",
+            "label": "Medium"
+          },
+          {
+            "value": "md:text-lg",
+            "label": "Large"
+          },
+          {
+            "value": "md:text-xl",
+            "label": "Extra large"
+          },
+          {
+            "value": "md:text-2xl",
+            "label": "2X Large"
+          },
+          {
+            "value": "md:text-3xl",
+            "label": "3X Large"
+          },
+          {
+            "value": "md:text-4xl",
+            "label": "4X Large"
+          },
+          {
+            "value": "md:text-5xl",
+            "label": "5X Large"
+          },
+          {
+            "value": "md:text-6xl",
+            "label": "6X Large"
+          },
+          {
+            "value": "md:text-7xl",
+            "label": "7X Large"
+          },
+          {
+            "value": "md:text-8xl",
+            "label": "8X Large"
+          },
+          {
+            "value": "md:text-9xl",
+            "label": "9X Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "announcement_font_size_mb",
+        "label": "Announcement Bar - Mobile Font Size",
+        "default": "text-sm",
+        "options": [
+          {
+            "value": "text-xs",
+            "label": "Extra small"
+          },
+          {
+            "value": "text-sm",
+            "label": "Small"
+          },
+          {
+            "value": "text-base",
+            "label": "Medium"
+          },
+          {
+            "value": "text-lg",
+            "label": "Large"
+          },
+          {
+            "value": "text-xl",
+            "label": "Extra large"
+          },
+          {
+            "value": "text-2xl",
+            "label": "2X Large"
+          },
+          {
+            "value": "text-3xl",
+            "label": "3X Large"
+          },
+          {
+            "value": "text-4xl",
+            "label": "4X Large"
+          },
+          {
+            "value": "text-5xl",
+            "label": "5X Large"
+          },
+          {
+            "value": "text-6xl",
+            "label": "6X Large"
+          },
+          {
+            "value": "text-7xl",
+            "label": "7X Large"
+          },
+          {
+            "value": "text-8xl",
+            "label": "8X Large"
+          },
+          {
+            "value": "text-9xl",
+            "label": "9X Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "navigation_font",
+        "label": "Navigation - Font Family",
+        "default": "font-body",
+        "options": [
+          {
+            "value": "font-heading",
+            "label": "Montserrat"
+          },
+          {
+            "value": "font-body",
+            "label": "Roboto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "navigation_font_weight",
+        "label": "Navigation - Font Weight",
+        "default": "font-normal",
+        "options": [
+          {
+            "value": "font-thin",
+            "label": "Thin"
+          },
+          {
+            "value": "font-extralight",
+            "label": "Extra-light"
+          },
+          {
+            "value": "font-light",
+            "label": "Light"
+          },
+          {
+            "value": "font-normal",
+            "label": "Normal"
+          },
+          {
+            "value": "font-medium",
+            "label": "Medium"
+          },
+          {
+            "value": "font-semibold",
+            "label": "Semibold"
+          },
+          {
+            "value": "font-bold",
+            "label": "Bold"
+          },
+          {
+            "value": "font-extrabold",
+            "label": "Extra-bold"
+          },
+          {
+            "value": "font-black",
+            "label": "Black"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "navigation_font_size_dt",
+        "label": "Navigation - Desktop Font Size",
+        "default": "md:text-base",
+        "options": [
+          {
+            "value": "md:text-xs",
+            "label": "Extra small"
+          },
+          {
+            "value": "md:text-sm",
+            "label": "Small"
+          },
+          {
+            "value": "md:text-base",
+            "label": "Medium"
+          },
+          {
+            "value": "md:text-lg",
+            "label": "Large"
+          },
+          {
+            "value": "md:text-xl",
+            "label": "Extra large"
+          },
+          {
+            "value": "md:text-2xl",
+            "label": "2X Large"
+          },
+          {
+            "value": "md:text-3xl",
+            "label": "3X Large"
+          },
+          {
+            "value": "md:text-4xl",
+            "label": "4X Large"
+          },
+          {
+            "value": "md:text-5xl",
+            "label": "5X Large"
+          },
+          {
+            "value": "md:text-6xl",
+            "label": "6X Large"
+          },
+          {
+            "value": "md:text-7xl",
+            "label": "7X Large"
+          },
+          {
+            "value": "md:text-8xl",
+            "label": "8X Large"
+          },
+          {
+            "value": "md:text-9xl",
+            "label": "9X Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "navigation_font_size_mb",
+        "label": "Navigation - Mobile Font Size",
+        "default": "text-sm",
+        "options": [
+          {
+            "value": "text-xs",
+            "label": "Extra small"
+          },
+          {
+            "value": "text-sm",
+            "label": "Small"
+          },
+          {
+            "value": "text-base",
+            "label": "Medium"
+          },
+          {
+            "value": "text-lg",
+            "label": "Large"
+          },
+          {
+            "value": "text-xl",
+            "label": "Extra large"
+          },
+          {
+            "value": "text-2xl",
+            "label": "2X Large"
+          },
+          {
+            "value": "text-3xl",
+            "label": "3X Large"
+          },
+          {
+            "value": "text-4xl",
+            "label": "4X Large"
+          },
+          {
+            "value": "text-5xl",
+            "label": "5X Large"
+          },
+          {
+            "value": "text-6xl",
+            "label": "6X Large"
+          },
+          {
+            "value": "text-7xl",
+            "label": "7X Large"
+          },
+          {
+            "value": "text-8xl",
+            "label": "8X Large"
+          },
+          {
+            "value": "text-9xl",
+            "label": "9X Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "drawer_font",
+        "label": "Drawer - Font Family",
+        "default": "font-body",
+        "options": [
+          {
+            "value": "font-heading",
+            "label": "Montserrat"
+          },
+          {
+            "value": "font-body",
+            "label": "Roboto"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "drawer_font_weight",
+        "label": "Drawer - Font Weight",
+        "default": "font-normal",
+        "options": [
+          {
+            "value": "font-thin",
+            "label": "Thin"
+          },
+          {
+            "value": "font-extralight",
+            "label": "Extra-light"
+          },
+          {
+            "value": "font-light",
+            "label": "Light"
+          },
+          {
+            "value": "font-normal",
+            "label": "Normal"
+          },
+          {
+            "value": "font-medium",
+            "label": "Medium"
+          },
+          {
+            "value": "font-semibold",
+            "label": "Semibold"
+          },
+          {
+            "value": "font-bold",
+            "label": "Bold"
+          },
+          {
+            "value": "font-extrabold",
+            "label": "Extra-bold"
+          },
+          {
+            "value": "font-black",
+            "label": "Black"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "drawer_font_size_dt",
+        "label": "Drawer - Desktop Font Size",
+        "default": "md:text-base",
+        "options": [
+          {
+            "value": "md:text-xs",
+            "label": "Extra small"
+          },
+          {
+            "value": "md:text-sm",
+            "label": "Small"
+          },
+          {
+            "value": "md:text-base",
+            "label": "Medium"
+          },
+          {
+            "value": "md:text-lg",
+            "label": "Large"
+          },
+          {
+            "value": "md:text-xl",
+            "label": "Extra large"
+          },
+          {
+            "value": "md:text-2xl",
+            "label": "2X Large"
+          },
+          {
+            "value": "md:text-3xl",
+            "label": "3X Large"
+          },
+          {
+            "value": "md:text-4xl",
+            "label": "4X Large"
+          },
+          {
+            "value": "md:text-5xl",
+            "label": "5X Large"
+          },
+          {
+            "value": "md:text-6xl",
+            "label": "6X Large"
+          },
+          {
+            "value": "md:text-7xl",
+            "label": "7X Large"
+          },
+          {
+            "value": "md:text-8xl",
+            "label": "8X Large"
+          },
+          {
+            "value": "md:text-9xl",
+            "label": "9X Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "drawer_font_size_mb",
+        "label": "Drawer - Mobile Font Size",
+        "default": "text-sm",
+        "options": [
+          {
+            "value": "text-xs",
+            "label": "Extra small"
+          },
+          {
+            "value": "text-sm",
+            "label": "Small"
+          },
+          {
+            "value": "text-base",
+            "label": "Medium"
+          },
+          {
+            "value": "text-lg",
+            "label": "Large"
+          },
+          {
+            "value": "text-xl",
+            "label": "Extra large"
+          },
+          {
+            "value": "text-2xl",
+            "label": "2X Large"
+          },
+          {
+            "value": "text-3xl",
+            "label": "3X Large"
+          },
+          {
+            "value": "text-4xl",
+            "label": "4X Large"
+          },
+          {
+            "value": "text-5xl",
+            "label": "5X Large"
+          },
+          {
+            "value": "text-6xl",
+            "label": "6X Large"
+          },
+          {
+            "value": "text-7xl",
+            "label": "7X Large"
+          },
+          {
+            "value": "text-8xl",
+            "label": "8X Large"
+          },
+          {
+            "value": "text-9xl",
+            "label": "9X Large"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show-cart-upsells",
+        "label": "Show Cart Upsells?",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.social-media.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:settings_schema.social-media.settings.header__1.content"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "default": true,
+        "label": "t:settings_schema.social-media.settings.share_facebook.label"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "default": true,
+        "label": "t:settings_schema.social-media.settings.share_twitter.label"
+      },
+      {
+        "type": "checkbox",
+        "id": "share_pinterest",
+        "default": true,
+        "label": "t:settings_schema.social-media.settings.share_pinterest.label"
+      },
+      {
+        "type": "header",
+        "content": "t:settings_schema.social-media.settings.header__2.content"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "t:settings_schema.social-media.settings.social_twitter_link.label",
+        "info": "t:settings_schema.social-media.settings.social_twitter_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "t:settings_schema.social-media.settings.social_facebook_link.label",
+        "info": "t:settings_schema.social-media.settings.social_facebook_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_link",
+        "label": "t:settings_schema.social-media.settings.social_pinterest_link.label",
+        "info": "t:settings_schema.social-media.settings.social_pinterest_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "t:settings_schema.social-media.settings.social_instagram_link.label",
+        "info": "t:settings_schema.social-media.settings.social_instagram_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok_link",
+        "label": "t:settings_schema.social-media.settings.social_tiktok_link.label",
+        "info": "t:settings_schema.social-media.settings.social_tiktok_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_link",
+        "label": "t:settings_schema.social-media.settings.social_tumblr_link.label",
+        "info": "t:settings_schema.social-media.settings.social_tumblr_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_snapchat_link",
+        "label": "t:settings_schema.social-media.settings.social_snapchat_link.label",
+        "info": "t:settings_schema.social-media.settings.social_snapchat_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_link",
+        "label": "t:settings_schema.social-media.settings.social_youtube_link.label",
+        "info": "t:settings_schema.social-media.settings.social_youtube_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_link",
+        "label": "t:settings_schema.social-media.settings.social_vimeo_link.label",
+        "info": "t:settings_schema.social-media.settings.social_vimeo_link.info"
+      }
+    ]
+  },
+  {
+    "name": "Custom Checkout",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "checkout_customization",
+        "label": "Enables a checkout customization",
+        "default": true
+      }
+    ]
+  }
+]

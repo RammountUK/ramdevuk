@@ -1,0 +1,32 @@
+<div data-api-content>
+{%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'.myshopify.com' | last |
+ replace:'\/','/' |
+ replace:'%20',' ' |
+ replace:'\u0026','&'
+-%}
+{% assign debug = false %}
+{%- assign product_handle = null -%}
+{%- for i in (1..1) -%}
+  {%- unless pageUrl contains "?" -%}{% break %}{%- endunless -%}
+  {%- unless pageUrl contains "cache=false" -%}{% break %}{%- endunless -%}
+  {%- assign pageQuerystring = pageUrl | split:'?' | last -%}
+  {%- assign parts = pageQuerystring | split:'&' -%}
+
+  {%- for part in parts -%}
+    {%- assign keyAndValue = part | split:'=' -%}
+      {% if keyAndValue[0] == "product_handle" %}
+        {% assign product_handle = keyAndValue[1]%}
+      {% endif %}
+
+      {%- if debug -%}
+        key: {{ keyAndValue[0] }}<br>
+        value: {{ keyAndValue[1] }}
+      {% endif %}
+  {%- endfor -%}
+{%- endfor -%}
+  {% if product_handle %}
+    {%- assign product = all_products[product_handle] -%}
+  {% endif %}
+  {% render 'product-gallery' product: product %}
+</div>

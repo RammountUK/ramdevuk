@@ -1,0 +1,596 @@
+{% if section.settings.enable_annoucement %}
+<div
+  style="padding-top: {{ section.settings.announcement_y_padding }}px; padding-bottom: {{ section.settings.announcement_y_padding }}px;"
+  data-announcement-bar
+  class="
+    no-print
+    container
+    bg-announcementBg
+    flex
+    md:py-4
+    md:px-0
+    text-announcementText
+    {{ settings.announcement_bar_font }}
+    {{ settings.announcement_bar_font_weight }}
+    {{ settings.announcement_font_size_mb }}
+    {{ settings.announcement_font_size_dt }}
+  "
+>
+  {% capture discount_button %}<button data-copy="{{ section.settings.discount }}" class="border border-current px-2 py-1 mx-2 inline-flex items-center">{{ section.settings.discount }}<span data-checkmark class="hidden w-3 h-3 ml-2">{% render 'icons' icon: 'checkmark' %}</span></button>{% endcapture %}
+  <div class="text-center md:hidden">{{ section.settings.mobile_message | replace: '_DISCOUNT_', discount_button }}</div>
+  <div class="col-span-3 hidden md:block ">{{ section.settings.left_message | replace: '_DISCOUNT_', discount_button }}</div>
+  <div class="col-span-6 flex-grow text-center hidden md:block">{{ section.settings.center_message | replace: '_DISCOUNT_', discount_button }}</div>
+  <div class="col-span-3 text-right hidden md:block"></div>
+</div>
+{% endif %}
+<header data-header class="items-center lg:items-start  no-print header flex relative shadow pt-2 pb-2 md:pb-0 md:pt-0  lg:pt-3.5 ">
+  <div data-search-form class="absolute invisible z-20  w-[95%] ">
+    <div class="flex  justify-center items-center bg-headerBg pt-0 md:py-5">
+      <form
+        action="/search"
+        method="get"
+        role="search"
+        class="flex input input-small w-5/6 px-2 bg-[#3e3e3e] outline-none border-none"
+        >
+        <button aria-label="submit search" type="submit" class="w-5 h-5 mr-2">
+          {% render 'icons' icon: 'search' %}
+        </button>
+        <input
+          class="bg-transparent outline-none w-full"
+          type="search"
+          name="q"
+          value="{% if search.terms != blank%}{{search.terms}}{% endif %}"
+          placeholder="Search"
+          id="search"
+        >
+      <label class="sr-only" for="search">Search</label>
+
+      </form>
+      <button data-search-close class=" w-6 ml-4 text-red">
+
+        {% render 'icons' icon: 'close' %}
+      </button>
+    </div>
+
+
+  </div>
+  {% if section.settings.flag != blank %}
+    <div class=" mobile-flag z-10 w-36 md:w-40 h-10 px-2 absolute inset-2/4 lg:hidden" style="transform: translate(-50%, -50%);">
+      <img src="{{ section.settings.flag | image_url: height: 200 | image_tag: height: 200, loading: 'lazy', class: 'object-contain h-full' }}">
+    </div>
+  {% endif %}
+  <!-- mobile drawer toggle -->
+  <button data-drawer-toggle class=" h-full lg:hidden ml-4 w-auto order-3 lg:order-1">
+      <div class="flex items-center">
+          <span class="w-5 md:w-8 md:mr-4">{% render 'icons', icon: 'burger' %}</span>
+          <span class="font-bold uppercase hidden md:block">explore</span>
+      </div>
+      <div class="flex hidden items-center">
+          <span class="w-5 md:w-8 md:mr-4">{% render 'icons', icon: 'close' %}</span>
+          <span class="font-bold uppercase hidden md:block">close</span>
+      </div>
+  </button>
+    <!--LOGO -->
+
+    <div class="flex w-3/6 lg:w-1/6 order-1 lg:order-2">
+        <div style="padding: {{ section.settings.logo_y_padding }}px 0;" class="flex w-full m-auto justify-center mobile-pd-0">
+            <a aria-label="Site Home" class="flex h-full logo-wrapper" style="height: {{ section.settings.logo_height }}px; width: {{ section.settings.logo_width }}px;" href="/">
+                {% if section.settings.logo != blank %}
+                  <img src="{{ section.settings.logo | image_url: width: 1200 }}" class="object-contain w-32 lg:h-full lg:w-full"/>
+                  {% else %}
+                    <div class="uppercase font-bold text-2xl">
+                        {{ shop.name }}
+                    </div>
+                {% endif %}
+            </a>
+        </div>
+    </div>
+    <!-- Right Column -->
+    <div class="flex w-[95%] md:w-2/6 lg:w-5/6 flex-col px-0 md:px-2 lg:px-8 lg:pb-2 order-2 lg:order-3">
+        <!-- top section -->
+        <div class="top-section w-full flex-row hidden lg:flex items-center py-2 ">
+
+        <!-- form -->
+        {% if section.settings.search_style == 'form'%}
+            <form
+                action="/search"
+                method="get"
+                role="search"
+                class="hidden md:flex input input-small w-1/2 px-2 bg-[#3e3e3e] outline-none border-none"
+            >
+                <button aria-label="submit search" type="submit" class="w-5 h-5 mr-2">
+                    {% render 'icons' icon: 'search' %}
+                </button>
+                <input
+                    class="bg-transparent outline-none w-full"
+                    type="search"
+                    name="q"
+                    value="{% if search.terms != blank%}{{search.terms}}{% endif %}"
+                    placeholder="Search"
+                    id="search"
+                >
+                <label class="sr-only" for="search">Search</label>
+
+            </form>
+            {% else %}
+            <details-modal class="header__search bg-headerBg">
+               <details>
+                 <summary class="header__icon header__icon--search header__icon--summary link focus-inset list-none" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                   <div>
+                      <div class="w-7 h-7 relative">
+                      {% render 'icons' icon: 'search' %}
+                      </div>
+
+                   </div>
+                 </summary>
+                 <div class="search-modal modal__content opacity-0 h-full absolute flex inset-0 justify-center items-center " role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+                   <div class="modal-overlay"></div>
+                   <div class="search-modal__content pl-4 pr-16 h-full w-full flex justify-center items-center z-10 bg-headerBg" tabindex="-1">
+
+                       <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form w-full max-w-lg">
+                         <div class="field relative bg-headerBg">
+                           <input class="search__input field__input input-small w-full bg-transparent focus:outline-none"
+                             id="Search-In-Modal-1"
+                             type="search"
+                             name="q"
+                             value="{% if search.terms != blank%}{{search.terms}}{% endif %}"
+                             placeholder="{{ 'general.search.search' | t }}"
+                           >
+
+                           <button class="absolute right-2.5 top-50 w-7 h-7 search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+                               {% render 'icons' icon: 'search' %}
+                           </button>
+                         </div>
+                       </form>
+                         <button type="button" class="modal__close-button right-3 absolute w-7 h-7 link flex justify-center items-center p-0 link--text focus-inset md:relative md:right-0 md:ml-4" aria-label="{{ 'accessibility.close' | t }}">
+                           <svg class="icon icon-close" aria-hidden="true" focusable="false" role="presentation">
+                               {% render 'icons' icon: 'close' %}
+                           </svg>
+                         </button>
+
+                   </div>
+                 </div>
+               </details>
+             </details-modal>
+          {% endif %}
+          <!-- end form -->
+          <!-- Image Container -->
+          {% if section.settings.flag != blank %}
+            <div class="w-1/4 px-2">
+              <img src="{{ section.settings.flag | image_url: height: 32    }}" class='object-contain h-full'/>
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- end top section -->
+        <!-- Botttom section -->
+        <div class="bottom-section w-full flex-row flex items-center justify-end">
+
+            <div class="pr-4 lg:w-[55%]">
+              <header-drawer class="inline-header-menu">
+                <nav class="hidden lg:flex"
+                  aria-label="{{ 'general.accessibility.nav_main' | t }}">
+                  {%
+                    render 'navmenu',
+                    menu: section.settings.nav_menu,
+                    blocks: section.blocks,
+                  %}
+                </nav>
+              </header-drawer>
+            </div>
+
+            <div class="flex justify-right align-center lg:ml-auto">
+              {% comment %}
+              {%- if shop.customer_accounts_enabled -%}
+                 <div class=" ml-2 md:ml-6 w-7 h-7 relative">
+                   <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="header__icon header__icon--account link focus-inset{% if section.settings.menu != blank %} small-hide{% endif %}">
+                      {% render 'icons' icon: 'account' %}
+                       <span class="sr-only">
+                         {%- liquid
+                           if customer
+                             echo 'customer.account_fallback' | t
+                           else
+                             echo 'customer.log_in' | t
+                           endif
+                         -%}
+                       </span>
+                   </a>
+                 </div>
+              {%- endif -%}
+              {% endcomment %}
+              {% if section.settings.link_mount != blank %}
+                <div class="built-mount-btn hidden lg:block">
+                  <a href="/pages/mount-builder" class=" duration-500 transition-short text-sm flex bg-red border-2 border-red text-white py-2 px-3 rounded hover:bg-grayBtn "><img style="filter: invert(1);" alt="built a mount icon" class="w-4 mr-2 " src="https://cdn.shopify.com/s/files/1/0593/5346/4982/files/wrench-solid.svg?v=1652373455" />BUILD A MOUNT</a>
+                </div>
+              {%- endif -%}
+              <div data-cart-icon-wrapper class="flex">
+                {% render 'cart-toggle-with-item-count' %}
+              </div>
+              <div class="border-2 border-red align-center justify-center w-10 ml-4 rounded hidden lg:flex">
+                <a href="/account"><img src="https://cdn.shopify.com/s/files/1/0593/5346/4982/files/login-icon.png?v=1660251149" class="w-8 h-full object-contain"></a>
+              </div>
+              <menu-drawer class="bg-headerBg bottom-0 fixed left-0 max-w-screen w-96 lg:hidden transform transition-long -translate-x-full overflow-y-scroll">
+                {% render 'drawer_menu' %}
+              </menu-drawer>
+              <div class="flex align-center items-center">
+
+
+                <button data-search-toggle class="lg:hidden w-8 ml-3 md:ml-6">
+
+                  {% render 'icons' icon: 'search' %}
+                </button>
+
+
+
+              </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Right Column -->
+
+    {% if settings.enable_minicart %}
+      <div class="minicart-backdop hidden" ></div>
+      <mini-cart class="bg-white z-20 text-[#131313] fixed hidden max-w-screen opacity-0 right-0 transition-base w-96 shadow  overflow-y-scroll scrollbar-hide h-screen">
+            {% render 'minicart-items' %}
+      </mini-cart>
+    {% endif %}
+</header>
+
+<desktop-menu-drawer class="hidden md:block">
+  <div data-backdrop class="bg-headerBg fixed w-[66.66666vw] left-0 bottom-0 transform -translate-x-full transition-long">
+    <button class="w-8 h-8 p-2 absolute top-0 right-0" data-close aria-label="Close nav">{% render 'icons' icon: 'close' %}</button>
+  </div>
+  {% render 'desktop_drawer_menu' menu: section.settings.nav_menu %}
+</desktop-menu-drawer>
+
+<style>#satcb_sticky_cart, .satcb_quick_buy_tb { display: none !important; }
+
+    .search__button:focus-visible {
+      z-index: 2;
+    }
+    .search__button:not(:focus-visible):not(.focused){
+      box-shadow: inherit;
+      background-color: inherit;
+    }
+    input::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+
+    details[open] .modal-overlay {
+      display: block;
+    }
+
+    details[open] .modal-overlay::after {
+      position: absolute;
+      content: '';
+      background-color: rgba(255,255,255, 0.5);
+      top: 100%;
+      left: 0;
+      right: 0;
+      height: 100vh;
+    }
+
+    .no-js details[open] > .header__icon--search {
+      top: 1rem;
+      right: 0.5rem;
+    }
+    .navmenu-submenu:not(.navmenu-meganav) .navmenu-depth-3[data-animation-state=closed] {
+      display:none;
+    }
+
+    .inline-header-menu details[open]>.header__submenu:not(.is_mobile), .navmenu-depth-3:not(.is_mobile)[data-animation-state=open] {
+        opacity: 1;
+        transform: translateY(0);
+        z-index: 2;
+    }
+    .inline-header-menu details[open] svg{
+      transform: rotate(180deg);
+    }
+
+    .navmenu-submenu.navmenu-meganav[data-animation-state=open]{
+        animation: animateMenuOpen .5s ease;
+    }
+    @media(max-width: 1190px) {
+
+      {% assign items = section.settings.hide_menu | split: ", " %}
+      {% for item in items %}
+        .navmenu-id-{{item | handleize}} {
+          display:none;
+        }
+      {% endfor %}
+
+    }
+    @media(max-width: 768px) {
+      .logo-wrapper{
+          max-height:50px;
+      }
+      .mobile-pd-0{
+        padding:0!important;
+      }
+
+   }
+
+   @media(max-width: 1024px){
+
+    .bottom-section .navmenu-id-giving-back {
+    display: none;
+    }
+    .bottom-section > div{
+      width: 50%;
+    }
+
+
+
+   }
+
+   @media(max-width: 1024px){
+    .bottom-section > div{
+      width: 100%;
+    }
+
+   }
+
+   @media(max-width: 1100px){
+
+    .bottom-section .navmenu-id-new-products {
+      display: none;
+    }
+
+  }
+
+  @media(max-width: 433px){
+
+  .mobile-flag {
+    display: none;
+  }
+
+  }
+   .mobile-menu .navmenu.header__submenu {
+    background: rgba(255,255,255,.08);
+    margin: 0 0 0 20px;
+    padding:0;
+   }
+   .mobile-menu .menu-drawer__menu-item{
+    font-size:16px;
+   }
+  .mobile-menu .navmenu.header__submenu  li a{
+    border-bottom: 1px solid rgba(255,255,255,.15);
+    padding-top:15px;
+    padding-bottom:15px;
+    font-weight: 400;
+    font-size:16px;
+  }
+  .navmenu-meganav{
+    max-width: 1000px;
+    transform: translateX(-50%)!important;
+  }
+  .navmenu-meganav .navmenu-depth-3 li a:hover {
+    transform: scale(1.1) translateX(6px);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+</style>
+
+<script src="{{ 'menu-drawer.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'nav-menu.js' | asset_url }}" async defer="defer"></script>
+<script src="{{ 'desktop-menu-drawer.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'minicart.js' | asset_url }}" defer="defer"></script>
+
+{% javascript %}
+  (() => {
+    window.addEventListener('load', () => {
+      const copyButtons = [...document.querySelectorAll('[data-copy]')];
+      copyButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          navigator.clipboard.writeText(button.textContent)
+            .then(() => {
+              button.textContent = 'Copied!';
+              setTimeout(() => {
+                button.textContent = button.dataset.copy;
+              }, 1000);
+            })
+        })
+      });
+    })
+  }) ();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "bg-headerBg text-headerText top-0 sticky z-40",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Announcement Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_annoucement",
+      "label": "Enable Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "label": "Mobile Message",
+      "id": "mobile_message",
+      "default": "<p>Free Shipping on Orders over $129</p>",
+      "info": "To add the copy-able discount code, include discount code below, and mark where you would like it to appear in the message with the placeholder '_DISCOUNT_'"
+    },
+    {
+      "type": "richtext",
+      "label": "Left Message",
+      "id": "left_message",
+      "default": "<p>Free Shipping on Orders over $129</p>",
+      "info": "To add the copy-able discount code, include discount code below, and mark where you would like it to appear in the message with the placeholder '_DISCOUNT_'"
+    },
+    {
+      "type": "richtext",
+      "label": "Center Message",
+      "id": "center_message",
+      "default": "<p>SUMMER SALE 3 FOR $45 | USE CODE _DISCOUNT_ IN CHECKOUT</p>",
+      "info": "To add the copy-able discount code, include discount code below, and mark where you would like it to appear in the message with the placeholder '_DISCOUNT_'"
+    },
+    {
+      "type": "text",
+      "label": "Discount Code",
+      "id": "discount",
+      "default": "SUN3"
+    },
+    {
+      "type": "range",
+      "label": "Announcement Bar Vertical Padding",
+      "id": "announcement_y_padding",
+      "default": 16,
+      "min": 0,
+      "max": 64,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "label": "Nav Menu",
+      "id": "nav_menu"
+    },
+    {
+      "type": "text",
+      "label": "Hide Menu Item on Smaller Screen ",
+      "id": "hide_menu",
+      "info": "Comma Separate Items"
+    },
+    {
+      "type": "link_list",
+      "label": "Mobile Menu",
+      "id": "mobile_menu"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "label": "Logo",
+      "id": "logo"
+    },
+    {
+      "type": "range",
+      "label": "Logo Width",
+      "id": "logo_width",
+      "default": 360,
+      "min": 8,
+      "max": 576,
+      "step": 8,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Logo Height",
+      "id": "logo_height",
+      "default": 64,
+      "min": 8,
+      "max": 576,
+      "step": 8,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "label": "Logo Vertical Padding",
+      "id": "logo_y_padding",
+      "default": 16,
+      "min": 0,
+      "max": 64,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show Social Icons?"
+    },
+    {
+      "type": "header",
+      "content": "Search"
+    },
+    {
+      "type": "select",
+      "id": "search_style",
+      "label": "Search Style",
+      "default": "form",
+      "options": [
+        {
+          "value": "form",
+          "label": "Form"
+        },
+        {
+          "value": "icon",
+          "label": "Icon"
+        }
+        ]
+      },
+      {
+        "type": "image_picker",
+        "label": "Flag Image",
+        "id": "flag"
+      },
+      {
+        "type": "url",
+        "id": "link_mount",
+        "label": "Build Mount URL"
+      }
+
+  ],
+  "blocks": [
+    {
+      "type": "meganav_images",
+      "name": "Mega menu",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "meganav_trigger",
+          "label": "Mega navigation trigger",
+          "info": "Add the menu item that you want to turn into a mega-nav."
+        },
+        {
+          "type": "header",
+          "content": "Side Menu Options"
+        },
+        {
+          "type": "select",
+          "id": "position_1",
+          "label": "Position",
+          "options": [
+            {
+              "value": "first",
+              "label": "First column"
+            },
+            {
+              "value": "last",
+              "label": "Last column"
+            }
+          ],
+          "default": "first"
+        },
+        {
+          "type": "link_list",
+          "id": "side_menu",
+          "label": "Menu"
+        }
+
+      ]
+    }
+
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

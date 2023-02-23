@@ -1,0 +1,19 @@
+<div data-api-content>
+  {% if product_variant.metafields.variant_attrs.features %}
+      <div class="features py-4">
+        <h4 class="text-left uppercase pb-4 text-lg">Features</h4>
+        <ul class="list-disc pl-4">
+        {% for field in product_variant.metafields.variant_attrs.features.value %}
+          {% if field != blank %}
+            {% assign label =  field | first %}
+
+            {% if label != 'part_id' %}
+                <li>{{ field | last | newline_to_br}}</li>
+            {% endif %}
+
+          {% endif %}
+        {% endfor %}
+        </ul>
+      </div>
+ {% endif %}
+</div>

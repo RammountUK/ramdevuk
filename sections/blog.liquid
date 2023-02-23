@@ -1,0 +1,1121 @@
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+
+{%- paginate blog.articles by 7 -%}
+  <div class="main-blog container section-{{ section.id }}-padding {{ section.settings.mobile_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.desktop_horizontal_padding }} lg:pb-20">
+    {% if blog.metafields.ram.excerpt %}
+    <div class="excerpt mb-8 text-[1.5rem]">
+      {{ blog.metafields.ram.excerpt }}
+    </div>
+    {% endif %}
+    <div class=" mb-8 ">
+    <h1 class="title--primary w-full text-xl md:text-xl font-heading mb-0 {{ section.settings.text_desktop_alignment }}">{{ blog.title | escape }}</h1>
+    <div class="mt-2 text-underline border-b-2 border-red border-solid w-[150px] "></div>
+    </div>
+    <div class="featured-articles grid grid-cols-1 gap-y-16 gap-x-12 ">
+      {%- for article in blog.articles limit:1 -%}
+        <div class="blog-articles__article article shadow-xl lg:shadow-none mb-16 lg:mb-0">
+          {%- render 'article-card',
+            article: article,
+            media_height: large,
+            media_aspect_ratio: article.image.aspect_ratio,
+            show_image: section.settings.show_image,
+            show_date: section.settings.show_date,
+            show_author: section.settings.show_author,
+            show_excerpt: true,
+            show_cat: false,
+            blog : blog,
+            font_mobile : section.settings.heading_font_size_mobile_post,
+            font_desktop : section.settings.heading_font_size_desktop_post,
+            font_align : section.settings.text_desktop_alignment_post
+            content_padding : "md:px-0",
+            content_padding_mobile : section.settings.mobile_horizontal_padding_post
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="grid {% if section.settings.show_sidebar %}grid-cols-1 md:grid-cols-4 md:gap-x-8{% endif %}">
+        <div data-articles class="blog-articles grid {% if section.settings.layout == 'grid' %}grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12{% else %} grid-cols-1 gap-y-16 gap-x-6{% endif %} {% if section.settings.show_sidebar %} col-span-3{% endif %}">
+          {%- for article in blog.articles offset:1 -%}
+            <div class="blog-articles__article article shadow-xl"  >
+              {%- render 'article-card',
+                article: article,
+                media_height: section.settings.image_height,
+                media_aspect_ratio: article.image.aspect_ratio,
+                show_image: section.settings.show_image,
+                show_date: section.settings.show_date,
+                show_cat: false,
+                show_author: section.settings.show_author,
+                show_excerpt: true,
+                blog : blog,
+                font_mobile : section.settings.heading_font_size_mobile_post,
+                font_desktop : section.settings.heading_font_size_desktop_post,
+                font_align : section.settings.text_desktop_alignment_post
+                content_padding : section.settings.desktop_horizontal_padding_post,
+                content_padding_mobile : section.settings.mobile_horizontal_padding_post
+              -%}
+            </div>
+          {%- endfor -%}
+        </div>
+        <div data-results class="hidden blog-articles grid {% if section.settings.layout == 'grid' %}grid-cols-1 md:grid-cols-2 gap-y-16 gap-x-12{% else %} grid-cols-1 gap-y-16 gap-x-6{% endif %} {% if section.settings.show_sidebar %} col-span-3{% endif %}">
+        </div>
+        {% if section.settings.show_sidebar %}
+        <div class="sidebar col-span-1 mt-16 lg:mt-0">
+            <div class="lg:mb-16 mb-8">
+                <search-blogs>
+                <div class="flex input input-small w-full px-2 bg-[#eee] outline-none border-solid border-grey"
+                  >
+                    <button aria-label="submit search" type="submit" class="w-5 h-5 mr-2">
+                      {% render 'icons' icon: 'search' %}
+                    </button>
+                    <input
+                      class="bg-transparent outline-none w-full"
+                      type="text"
+                      name="blog_search"
+                      value=""
+                      placeholder="Search"
+                      id="blog-search"
+                    >
+                  <label class="sr-only" for="search">Search</label>
+
+                </div>
+                </search-blogs>
+            </div>
+            <div class="blog-cat">
+              <h3 class="uppercase mb-3">Blogs By Categories</h3>
+                  <ul class="flex flex-col menu ">
+                      {% for link in section.settings.sidebar_menu.links %}
+                        <li class="block pb-1.5  ">
+                          <a class="transition-short text-blue-500 font-base border-b border-transparent hover:border-current"
+                              href="{{ link.url }}">{{ link.title }}</a>
+                        </li>
+                      {% endfor %}
+                  </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination-blog', paginate: paginate -%}
+    {%- endif -%}
+  </div>
+{%- endpaginate -%}
+<style>
+.card img{
+  transition: transform .5s ease;
+}
+.card:hover img{
+    transform: scale(1.03);
+}
+.card .circle-divider:after {
+    content: "\2022";
+    margin: 0 1rem 0 1rem;
+}
+.card__heading a:after {
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+}
+.article-card__image--small img {
+  height: 8rem;
+}
+.article-card__image--medium img {
+  height: 18rem;
+}
+
+.article-card__image--large img{
+  height: 26rem;
+}
+@media screen and (min-width: 750px) {
+  .article-card__image--small img{
+    height: 9rem;
+  }
+
+  .article-card__image--medium img{
+    height: 16.9rem;
+  }
+
+  .article-card__image--large img {
+    height: 27.5rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .article-card__image--small img {
+    height: 12rem;
+  }
+  .article-card__image--medium img {
+    height: 20rem;
+  }
+
+  .article-card__image--large img {
+    height: 35rem;
+  }
+
+}
+
+</style>
+{% javascript %}
+    class SearchBlogs extends HTMLElement {
+        constructor() {
+            super();
+            this.input = this.querySelector("#blog-search");
+            this.results = [];
+            this.articlesContainter = document.querySelector("[data-articles]");
+            this.resultsContainter = document.querySelector("[data-results]");
+
+        }
+				connectedCallback() {
+            this.input.addEventListener('input', this.debounce((event) => {
+              this.onChange(event);
+            }, 500).bind(this));
+				}
+        onChange() {
+            const searchTerm = this.input.value.trim();
+            if (searchTerm.length) {
+            fetch(`/search?q=${encodeURIComponent(searchTerm)}&view=blogs&type=article`, {
+                method: 'GET',
+                })
+                .then((response) => response.json())
+                .then((parsedState) => {
+                    this.results = parsedState.results
+                    this.setResults();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            }else{
+              this.articlesContainter.classList.remove("hidden");
+              this.resultsContainter.classList.add("hidden");
+            }
+
+        }
+        setResults(){
+          if(this.results.length > 0){
+            let html = "";
+            for (let i = 0; i < this.results.length; i++) {
+               const item = this.results[i];
+               html += ` <div class="blog-articles__article article shadow-xl"  ><div class="card-wrapper underline-links-hover">
+                  <div class="card article-card relative card-- article-card__image--medium card--media"
+                    style="--ratio-percent: 66.650390625%;">
+                    <div class="card__inner flex relative items-stretch grid grid-rows-1 {% if settings.card_style == 'standard' %} color-{{ settings.card_color_scheme }}{% endif %}{% if article.image and show_image or settings.card_style == 'standard' %} ratio{% endif %}" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+                        <div class="article-card__image-wrapper card__media w-full relative mb-4">
+                          <div class="article-card__image overflow-hidden media media--hover-effect" {% if section.settings.media_height == 'adapt' %} style="padding-bottom: {{ 1 | divided_by: article.image.aspect_ratio | times: 100 }}%;"{% endif %}>
+                            <img
+                              src="${item.thumbnail}"
+                              class="motion-reduce relative h-full w-full object-cover"
+                            >
+                          </div>
+                        </div>
+                    </div>
+                    <div class="card__content md:px-8 px-8 py-4 pb-16  ">
+                      <div class="card__information md:text-left">
+                        <h3 class="card__heading mb-6  sm:text-lg ">
+                          <a href="${item.url}" class="full-unstyled-link">
+                            ${item.title}
+                          </a>
+                        </h3>
+                        <div class="article-card__info caption-with-letter-spacing h5 flex flex-wrap">
+                          <span class=" text-grayBtn caption-with-letter-spacing text-base font-heading">${item.date}</span>
+                        </div>
+                        <p class="article-card__excerpt rte-width mt-4">
+                          ${item.text_content}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div></div>`;
+            }
+
+            this.resultsContainter.innerHTML =  html;
+          }
+          this.articlesContainter.classList.add("hidden");
+          this.resultsContainter.classList.remove("hidden");
+        }
+        debounce(fn, wait) {
+            let t;
+            return (...args) => {
+                clearTimeout(t);
+                t = setTimeout(() => fn.apply(this, args), wait);
+            };
+        }
+    }
+    customElements.define('search-blogs', SearchBlogs);
+{% endjavascript %}
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Blog Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sidebar",
+      "default": true,
+      "label": "Show Sidebar"
+    },
+    {
+      "type": "link_list",
+      "id": "sidebar_menu",
+      "label": "Sidebar Menu"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "collage",
+          "label": "Collage"
+        }
+      ],
+      "default": "collage",
+      "label": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "Show Image"
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium",
+      "label": "Image Height"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show Date"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Show Author"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_desktop_alignment",
+      "label": "Text Alignment",
+      "default": "md:text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "md:text-left"
+        },
+        {
+          "label": "Center",
+          "value": "md:text-center"
+        },
+        {
+          "label": "Right",
+          "value": "md:text-right"
+        }
+      ]
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font_size_desktop",
+      "label": "Title Font Size Desktop",
+      "default": "sm:text-5xl",
+      "options": [
+        {
+          "value": "sm:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "sm:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "sm:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "sm:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "sm:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "sm:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "sm:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "sm:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "sm:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "sm:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "sm:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "sm:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "sm:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_font_size_mobile",
+      "label": "Title Font Size Mobile",
+      "default": "text-3xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile - Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile - Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_padding",
+      "label": "Desktop - Vertical Padding",
+      "default": "md:py-12",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding",
+      "label": "Desktop - Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Post Heading"
+    },
+    {
+      "type": "select",
+      "id": "text_desktop_alignment_post",
+      "label": "Text Alignment",
+      "default": "md:text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "md:text-left"
+        },
+        {
+          "label": "Center",
+          "value": "md:text-center"
+        },
+        {
+          "label": "Right",
+          "value": "md:text-right"
+        }
+      ]
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font_size_desktop_post",
+      "label": "Post Title Font Size Desktop",
+      "default": "sm:text-lg",
+      "options": [
+        {
+          "value": "sm:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "sm:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "sm:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "sm:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "sm:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "sm:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "sm:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "sm:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "sm:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "sm:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "sm:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "sm:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "sm:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding_post",
+      "label": "Mobile - Horizontal Padding Post Content",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding_post",
+      "label": "Desktop - Horizontal Padding Post Content",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

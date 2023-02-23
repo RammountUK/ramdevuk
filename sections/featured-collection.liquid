@@ -1,0 +1,247 @@
+
+<div id="section-{{ section.id }}" class="featured-collection {% unless section.settings.full_width %}container {% endunless %} {{ section.settings.text_alignment }} px-4 md:px-0">
+  <div class="pb-2.5 flex pt-20 flex-col">
+    <span class="font-heading font-bold {{ section.settings.heading_font_size }} {{ section.settings.desktop_heading_font_size}}">
+        {%  liquid
+            echo section.settings.heading
+        %}
+    </span>
+    <div class="text-underline w-[150px] border-2 border-b border-[#cd1e27]"></div>
+  </div>
+  <div class="mt-10">
+    {% paginate section.settings.collection.products by 16 %}
+        <div class="auto-rows-min md:col-span-4 grid {% if section.settings.collection.products.size > 0 %} md:gap-7 gap-4 gap-y-4 grid-cols-2 lg:grid-cols-4{% endif %} gap-4 text-center mb-4">
+        {% liquid
+
+            for product in section.settings.collection.products
+                if section.settings.theme_style == 'theme_1'
+                  render 'product_tile' with product as product, brand: true
+                else
+                  render 'product_tile_2' with product as product, brand: true
+                endif
+            endfor
+         %}
+        </div>
+    {% endpaginate %}
+  </div>
+  {% if section.blocks.size > 0 %}
+    <div class="md:my-32 my-20 flex justify-center flex-col md:flex-row">
+      {% for block in section.blocks %}
+          <a class="text-white text-[15px] md:w-[250px] mx-[2.5%] my-4 md:my-0 p-2.5 inline-block text-center" href="{{block.settings.link_url}}" style="background:{{block.settings.link_color}};">{{block.settings.title}}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+
+{% schema %}
+{
+    "name": "Featured Collection",
+    "tag": "section",
+    "settings": [
+
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "default": "text-left",
+            "options": [
+                {
+                    "value": "text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "text-right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "select",
+            "id": "desktop_heading_font_size",
+            "label": "Desktop Heading Size",
+            "default": "md:text-base",
+            "options": [
+                {
+                    "value": "md:text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "md:text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "md:text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "md:text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "md:text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "md:text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "md:text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "md:text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "md:text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "md:text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "md:text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "md:text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "md:text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_font_size",
+            "label": "Mobile Heading Font Size",
+            "default": "text-xl",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+            "type": "select",
+            "id": "theme_style",
+            "label": "Product Grid Theme",
+            "default": "theme_style_1",
+            "options": [
+                {
+                    "value": "theme_style_1",
+                    "label": "Theme 1"
+                },
+                {
+                    "value": "theme_style_2",
+                    "label": "Theme 2"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "label": "Full Width ?",
+            "id": "full_width",
+            "default": false
+        }
+
+    ],
+    "blocks": [
+      {
+        "type": "btn",
+        "name": "CTA",
+        "settings": [
+
+          {
+            "type": "text",
+            "label": "Link Title ",
+            "id": "title"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link"
+          },
+          {
+            "type": "color",
+            "id": "link_color",
+            "label": "Link Color"
+          }
+        ]
+      }
+    ],
+    "presets": [
+        {
+            "name": "Featured Collection"
+        }
+    ]
+}
+{% endschema %}

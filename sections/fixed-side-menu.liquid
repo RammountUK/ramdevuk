@@ -1,0 +1,84 @@
+<div class="relative container">
+  <div id="fixed-side-menu" class="fixed-side-menu z-20">
+    <nav class="gds-nav top-12 z-10 absolute hidden lg:block" >
+
+        {% if section.settings.logo != blank %}
+          {{ section.settings.logo | image_url: width:35 | image_tag: width: 35, class: 'object-contain w-auto' }}
+        {%- endif -%}
+       <ul class="nav nav-stacked gds-section-1 mt-5 border-l-3 border-solid border-[#d3d3d3] relative">
+          <div class="progress-bar absolute bg-[#00b588] h-[20%] top-0 w-[3px] left-[-3px]"></div>
+          {% for block in section.blocks %}
+            <li class="p-2.5 text-black border-solid border-b-2 border-transparent hover:border-[#00b588] ml-1.5 "><button class="font-bold section {% if forloop.first %} grey {% endif %}" data-section="{{ forloop.index }}" data-id="#{{ block.settings.anchor }}">
+              {{ block.settings.heading }}
+            </button></li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+  </div>
+</div>
+
+<script src="{{ 'gds.js' | asset_url }}" defer="defer"></script>
+<style>
+#fixed-side-menu.fixed{
+  width: 100%;
+  top: 150px;
+}
+#fixed-side-menu.fixed .gds-nav .section{
+    
+    text-shadow: 2px 2px 10px #fff,-2px -2px 10px #fff,2px 2px 10px #fff,-2px -2px 10px #fff;
+  }
+#fixed-side-menu.fixed .gds-nav .section.grey{
+  color: #707070;
+  text-shadow: 2px 2px 10px #fff,-2px -2px 10px #fff,2px 2px 10px #fff,-2px -2px 10px #fff;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Fixed Menu List",
+  "tag": "section",
+  "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "color",
+        "id": "progress_color",
+        "label": "Background Color",
+        "default": "#00b588"
+      }
+
+  ],
+  "blocks": [
+    {
+      "name": "Menu List",
+      "type": "menu-list",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Menu Title"
+        },
+        {
+          "type": "text",
+          "id": "anchor",
+          "label": "Section Anchor"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fixed Menu List",
+      "blocks": [
+        {
+          "type": "menu-list"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
