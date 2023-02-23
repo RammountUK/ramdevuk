@@ -1,0 +1,41 @@
+{% layout none %}
+
+{% assign imgSrc = '""' %}
+{% assign price = '""' %}
+{% assign compare = '""' %}
+{% assign collections = '""' %}
+{% assign rawPrice = '""' %}
+{% assign rawCompare = '""' %}
+{% assign priceVaries = '""' %}
+{% assign priceMin = '""' %}
+{% assign textContent = '""' %}
+
+{% capture results %}
+  {% for item in search.results %}
+    {% if item.object_type == 'article' %}
+      {% if item.image.src != blank %}
+        {% assign imgSrc = item.image.src | img_url: '500x' | json %}
+      {% endif %}
+      {%- if item.excerpt.size > 0 -%}
+        {% assign textContent = item.excerpt | strip_html | truncatewords: 30 | json %}
+      {%- else -%}
+        {% assign textContent = item.content | strip_html | truncatewords: 30 | json %}
+      {%- endif -%}
+    {% endif %}
+
+      {
+        "object_type": {{ item.object_type | json }},
+        "title"    : {{ item.title | json }},
+        "url"      : {{ item.url | json }},
+        "thumbnail": {{ imgSrc }},
+        "text_content": {{ textContent }},
+        "date" : {{ item.published_at | date: "%B %d, %Y" | json }},
+        "handle" : {{ item.handle | json }}
+      }
+    {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+{% endcapture %}
+{
+  "results_count": {{ search.results_count }},
+  "results": [{{ results }}]
+}

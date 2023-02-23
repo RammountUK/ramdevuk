@@ -1,0 +1,290 @@
+<!-- Start YMM short code -->
+{%- capture the_snippet_content -%}
+	{% render 'ymm-searchbox' %}{%- endcapture -%}
+	{% unless the_snippet_content contains "Liquid error" %}
+		{%- assign ymm_searchbox_use = "yes" -%}
+		{%- assign searchbox_style = "horizontal" -%}<!-- eg. horizontal or vertical -->
+		{%- assign searchbox_title = "Search By Device, Make and Model" -%}
+		{% render 'ymm-searchbox', ymm_searchbox_use: ymm_searchbox_use, searchbox_style: searchbox_style, searchbox_title: searchbox_title %}
+{% endunless %}
+<!-- Ended YMM short code -->
+
+{{ 'ymm-custompage.css' | asset_url | stylesheet_tag }}
+
+{% comment %} Translation Error Handling {% endcomment %}
+{%- assign pg_title_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.product_pagetitle' -%}
+{%- assign no_results_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.no_results' -%}
+{%- assign products_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.products' -%}
+{%- assign product_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.product' -%}
+{%- assign sale_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.sale_lbl' -%}
+{%- assign soldout_err = 'translation missing:' | append:' ' | append: shop.locale | append: '.ymm_app.soldout_lbl' -%}
+
+{%- assign product_pagetitle = 'ymm_app.product_pagetitle' | t | replace: pg_title_err, 'Products' | replace: '&#39;', "'" -%}
+
+{%- assign is_sidebar = false -%}
+<div class="page-width container {% if is_sidebar == true %}ymm-result-page{% endif %}">
+{% if is_sidebar == true %}
+  <div class="sidebar">SIDE BAR FILE INCLUDE</div>
+{% endif %}
+<div class="ymm-grid">
+    <div class="page-ymm-custom">
+      <div class="section-header text-center">
+        <h1 id="title">{{product_pagetitle}}</h1>
+        <h4><span id="total_products"></span></h4>
+      </div>
+      <div class="ymm_content">
+        	{{ page.content }}
+
+        	{% comment %} DO NOT EDIT BELOW LINES [ PRODUCTS ARE WRITTEN IN THIS PART DYNAMICALLY ] {% endcomment %}
+        	<div id="product_container" class="clearfix">
+              <div class="ymm-prd-loader" style="display: none;"></div>
+              <div id="products" class="grid search-result-ctm grid-cols-3"></div>
+              <div class="clearfix paging-outr"><ul class="pagination" id="paginate"></ul></div>
+        	</div>
+        	{% comment %} ENDS HERE {% endcomment %}
+      </div>
+    </div>
+</div>
+</div>
+<!-- Check jQuery library is not included or if it's version is lower then only include it. -->
+<script type="text/javascript">
+var shop_domain = '{{ shop.permanent_domain }}';
+var front_domain = '{{ shop.domain }}';
+var ymm_loader = '{{ "loader.png" | asset_url }}';
+var data_url = 'https://www.ymmshopify.capacitywebservices.com/ajax/get_dropdowns_pro_plan.php';
+var no_results = "{{ 'ymm_app.no_results' | t | strip | replace: no_results_err, 'There are No Products found.' | replace: '&#39;', "'" }}";
+var ymm_products = "{{ 'ymm_app.products' | t | strip | replace: products_err, 'Products' | replace: '&#39;', "'" }}";
+var ymm_product = "{{ 'ymm_app.product' | t | strip | replace: product_err, 'Product' | replace: '&#39;', "'" }}";
+var sale_lbl = "{{ 'ymm_app.sale_lbl' | t | strip | replace: sale_err, 'Sale' | replace: '&#39;', "'" }}";
+var soldout_lbl = "{{ 'ymm_app.soldout_lbl' | t | strip | replace: soldout_err, 'Soldout' | replace: '&#39;', "'" }}";
+var shop_currency = "{{ shop.currency }}";
+var theme_id = "{{ theme.id }}";
+var ymm_searchbox_use = "{{ ymm_searchbox_use }}";
+var ymm_paging_js = "{{ 'ymm-custompage.js' | asset_url }}";
+var ymm_money_format = "{{ shop.money_format | strip_html }}";
+window.shopify_ajaxapi = "{{ 'api.jquery.js' | shopify_asset_url }}";
+
+/***
+This function ensures that ymm JS of script ID: "ymm_script" will be loaded once.
+Whenever there will be ymmbox and compatible list present on the same page and on the ymm result page if ymm searchbox included then also this will ensure that it will be called one time only.
+***/
+if(typeof removeYMMJS === 'undefined') {
+window.removeYMMJS = function(filename){
+    var allsuspects = document.getElementsByTagName("script");
+
+    for (var i=allsuspects.length; i>=0; i--)
+    {
+   	 	if(allsuspects[i] && allsuspects[i].getAttribute("src")!=null && allsuspects[i].getAttribute("src").indexOf(filename)!=-1 && allsuspects[i].getAttribute("id") == "ymm_script") {
+      		allsuspects[i].parentNode.removeChild(allsuspects[i]);
+    	}
+    }
+};
+}
+
+//Define Load Javascript Function If Not Exists
+if(typeof ymmLoadScript === 'undefined') {
+window.ymmLoadScript = function(url, id,callback){
+  	var script = document.createElement("script")
+  	script.type = "text/javascript";
+
+  	if (script.readyState) { //IE
+   		 	script.onreadystatechange = function () {
+      		if (script.readyState == "loaded" || script.readyState == "complete" || script.readyState == "loading" || dom.readyState == "uninitialized") {
+        		script.onreadystatechange = null;
+        		callback();
+     	 	}
+    		};
+  	} else { //Others
+    		script.onload = function () {
+      			callback();
+    		};
+  	}
+
+  	script.type = 'text/javascript';
+  	script.defer = true;
+  	script.src = url;
+
+  	if(id != "") {
+  	script.id = id;
+  	}
+
+  	var head = document.getElementsByTagName('head')[0];
+  	head.appendChild(script);
+};
+}
+
+if(typeof getYMMParameter === 'undefined') {
+window.getYMMParameter = function(name,url) {
+   if (!url) url = window.location.href;
+     name = name.replace(/[\[\]]/g, "\\$&");
+     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+         results = regex.exec(url);
+     if (!results) return null;
+     if (!results[2]) return '';
+     return decodeURIComponent(results[2].replace(/\+/g, " "));
+};
+}
+
+function ymmRequireJSInclude()
+{
+  //Check if shopify AJAX API lib. is not included then only include it.[It's require to add below line after jQuery has been loaded.]
+  var check_api_exist = jQuery('script[src*="api.jquery"]').length;
+  if(check_api_exist == 0) {
+  	window.ymmLoadScript(window.shopify_ajaxapi,"", function () {
+  	});
+  }
+
+  jQuery.getScript(ymm_paging_js).done(function( script, textStatus ) {
+  		ymmProductsInit("onload");
+  }).fail(function( jqxhr, settings, exception ) {
+        console.log("ymm pagination JS not called...");//786/ASK
+  });
+}
+
+//YMM Products Init Function
+function ymmProductsInit(action)
+{
+(function($){
+	var tags = window.getYMMParameter('rq'); //786
+
+  	if(tags != null) {
+    	tags = tags.toString().split("~");
+ 	} else {
+    	tags = "";
+ 	}
+
+	if(tags != "") {
+
+	jQuery('#paginate').pagination({
+    	current: 1,
+    	size: 2,
+    	length: 20,
+   		prev: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-left" viewBox="0 0 20 8"><path d="M4.814 7.555C3.95 6.61 3.2 5.893 2.568 5.4 1.937 4.91 1.341 4.544.781 4.303v-.44a9.933 9.933 0 0 0 1.875-1.196c.606-.485 1.328-1.196 2.168-2.134h.752c-.612 1.309-1.253 2.315-1.924 3.018H19.23v.986H3.652c.495.632.84 1.1 1.036 1.406.195.306.485.843.869 1.612h-.743z" fill="#000" fill-rule="evenodd"></path></svg>',
+    	next: '<svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-arrow-right" viewBox="0 0 20 8"><path d="M15.186.445c.865.944 1.614 1.662 2.246 2.154.631.491 1.227.857 1.787 1.098v.44a9.933 9.933 0 0 0-1.875 1.196c-.606.485-1.328 1.196-2.168 2.134h-.752c.612-1.309 1.253-2.315 1.924-3.018H.77v-.986h15.577c-.495-.632-.84-1.1-1.035-1.406-.196-.306-.486-.843-.87-1.612h.743z" fill="#000" fill-rule="evenodd"></path></svg>',
+    	ajax: function(options,refresh,$target){
+    	jQuery.ajax({
+    	  url: data_url,
+          type: "GET",
+          data: "domain="+shop_domain+"&action=get_products&tags="+encodeURIComponent(tags)+"&current="+options.current+"&limit="+options.length+"&currency="+shop_currency+"&theme_id="+theme_id+"&front_domain="+front_domain+"&sale_lbl="+sale_lbl+"&soldout_lbl="+soldout_lbl+"&ver_no=2&fetch_no_img=no",
+          dataType: 'jsonp',
+          beforeSend: function() {
+			jQuery('.ymm-prd-loader').html('<img src="'+ymm_loader+'">').show();
+		  }
+    	}).done(function(res){
+
+          jQuery('.ymm-prd-loader').html("").hide();
+
+          if(typeof res.prd_res != "undefined") {
+
+			if(jQuery(".spr-badge").length > 0) {
+              jQuery('link[rel=stylesheet][href*="spr"]').remove(); //this line is added to fix big review star problem in IE11.-786/ASK
+              jQuery.getScript("//productreviews.shopifycdn.com/assets/v4/spr.js");
+            }
+
+            if(action == "loaded") {
+            jQuery('html, body').animate({ scrollTop: eval(jQuery('#title').offset().top-120)}, 270);
+            }
+
+            jQuery("#product_container #products").html();
+						const productsContainer = document.querySelector('#products');
+
+						const products = new DOMParser().parseFromString(res.prd_res, 'text/html').querySelectorAll('.list-group-item');
+					  console.log(products);
+						[...products].forEach((item) => {
+
+								fetch(`${window.routes.root_url}variants/${item.dataset.firstVarId}/?section_id=api-product-tile`)
+									.then((response) => response.text())
+									.then((text) => {
+										const productHTML = new DOMParser().parseFromString(text, 'text/html').querySelector('[data-api-content]').innerHTML;
+										jQuery("#product_container #products").append(productHTML);
+                                        jQuery("#product_container #products product-tile").each(function(){
+                                            jQuery(this).find('.quickview-btn').remove();
+                                        });
+									})
+									.catch((e) => {
+										console.error(e);
+									});
+						})
+
+            //Set YMM prices in store currency format - 786/ASK.
+            jQuery("div[class*='ymm_price_box_']").each(function() {
+                var ymm_prd_id_str = jQuery(this).attr("class").split(' ');
+                var ymm_prd_id_val = ymm_prd_id_str[1].replace("ymm_price_box_", "");
+
+                //Price - Sale price-786/ASK.
+                var ymm_comp_price = jQuery(".ymm_price_box_"+ymm_prd_id_val).find("span.comp_price").attr("data-ymm-compare-price");
+
+                if (typeof ymm_comp_price !== "undefined") {
+					ymm_comp_price = Shopify.formatMoney(ymm_comp_price,ymm_money_format);
+                    var ymm_prd_price = jQuery(".ymm_price_box_"+ymm_prd_id_val).find("span.ymm-product-price").attr("data-ymm-price");
+                    ymm_prd_price = Shopify.formatMoney(ymm_prd_price,ymm_money_format);
+
+              		jQuery(".ymm_price_box_"+ymm_prd_id_val).find("span.ymm-product-price").html(ymm_prd_price);
+                	jQuery(".ymm_price_box_"+ymm_prd_id_val).find("span[data-ymm-compare-price]").html(ymm_comp_price);
+
+                } else {
+                  	var ymm_prd_price = jQuery(".ymm_price_box_"+ymm_prd_id_val).find("span.ymm-product-price").attr("data-ymm-price");
+                  	ymm_prd_price = Shopify.formatMoney(ymm_prd_price,ymm_money_format);
+
+              		jQuery(".ymm_price_box_"+ymm_prd_id_val).find("span.ymm-product-price").html(ymm_prd_price);
+                }
+			});
+
+            action = "loaded";
+
+          	if(res.total > 1) {
+              jQuery("#total_products").html(res.total+" "+ymm_products);
+            } else {
+              jQuery("#total_products").html(res.total+" "+ymm_product);
+            }
+
+        	if(res.prd_res != null && res.total >= res.length) {
+    			refresh({
+    				total: res.total,
+    				length: res.length
+    			});
+            }
+
+           if(res.total == 0){
+           jQuery("#total_products").html(no_results);
+           }
+          }
+
+    	}).fail(function(error){ });
+    }
+	});
+} else {
+	jQuery("#total_products").html(no_results);
+}
+})(jQuery);
+}
+
+//Check jquery lib. is already included or not and if version is less than defined then call jquery lib through our App.
+if(ymm_searchbox_use == "") {
+
+if ((typeof jQuery === "undefined") || (jQuery.fn.jquery.replace(/\.(\d)/g,".0$1").replace(/\.0(\d{2})/g,".$1") < "1.08.01")) {
+  window.ymmLoadScript("https://code.jquery.com/jquery-1.12.4.min.js","ymm_script", function () {
+      jQuery.noConflict();
+      ymmRequireJSInclude();
+  });
+
+} else {
+   	ymmRequireJSInclude();
+}
+
+} else {
+
+  if(typeof jQuery === "undefined"){
+
+    removeYMMJS("https://code.jquery.com/jquery-1.12.4.min.js"); //!IMPORTANT
+
+    window.ymmLoadScript("https://code.jquery.com/jquery-1.12.4.min.js","ymm_script", function () {
+     	jQuery.noConflict();
+        ymmRequireJSInclude();
+    });
+
+  } else {
+    ymmRequireJSInclude();
+  }
+}
+</script>
