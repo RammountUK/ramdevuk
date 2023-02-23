@@ -1,0 +1,81 @@
+/*======================================================================================
+Copyright 2017-2022 Shopify App. All rights reserved. | Capacity Web Solutions Pvt. Ltd.
+========================================================================================*/
+
+.ymm-mobile-loader { position:relative; margin:20px auto; text-align:center; }
+.ymm-mobile-loader img { max-width:100%; border:none; outline:none; display:inline; margin:0 auto; width:28px; height:28px; text-align:center; vertical-align:middle; z-index:9999; animation: spin 1s infinite steps(12); }
+
+@keyframes spin {
+  100% { -webkit-transform: rotateZ(360deg); transform: rotateZ(360deg); }
+}
+@-webkit-keyframes spin {
+  100% { -webkit-transform: rotateZ(360deg); transform: rotateZ(360deg); }	
+}
+
+.ymm_comptbl_list { margin-top: 30px; margin-bottom: 30px; }
+.ymm_comptbl_list h3 { text-align: center; font-size: 20px; font-weight: 700; text-transform: uppercase; margin: 0 0 15px; line-height: 1.3; color: #000; }
+.ymm-table-data { background-color: #ffffff; position: relative; max-height:400px; overflow:auto; white-space: normal; word-wrap: anywhere; }
+.ymm_comptbl_list table { border: none; border-collapse: collapse; table-layout: fixed; margin: 0; padding: 0; width: 100%; }
+.ymm_comptbl_list table th,
+.ymm_comptbl_list table td { color: #000000; padding: 8px; text-align: center; border: 1px solid #ddd; font-size: 15px; font-weight: 400; }
+.ymm_comptbl_list thead th,
+.ymm_comptbl_list tfoot th { background-color: #f0f0f0; font-weight: bold; }
+.ymm_comptbl_list thead { position: -webkit-sticky; position: sticky; top: 0; }
+
+/* Pagination CSS */
+.paging-outr { margin:20px 0 0; }
+.paging-outr ul.pagination { font-size:14px; line-height: 36px; display: table; margin: 0 auto; padding: 0; list-style: none; -webkit-user-select: none; -moz-user-select: none; user-select: none; color: #000; }
+.paging-outr ul.pagination:before { display: table; content: ' '; }
+.paging-outr ul.pagination:after { display: table; clear: both; content: ' '; }
+.paging-outr ul.pagination > li { float: left; margin: 0 2px; padding: 0; }
+.paging-outr ul.pagination > li > a { display:block; margin:0; padding:0 14px; line-height:36px; cursor:pointer; text-align:center; text-decoration:none; color:#000000; border:1px solid #dddddd; background-color:#fff; }
+.paging-outr ul.pagination > li > a:hover { border-color: #737373; }
+.paging-outr ul.pagination > li > span { display: inline; padding: 7px 10px; cursor: default; text-align: center; color: #000; }
+.paging-outr ul.pagination > li.active > a,
+.paging-outr ul.pagination > li.active > a:hover,
+.paging-outr ul.pagination > li.active > a:focus { cursor: default; color: #ffffff; border-color: #000000; outline: none; background-color: #000000; }
+.paging-outr ul.pagination > li.disabled > a,
+.paging-outr ul.pagination > li.disabled > a:hover,
+.paging-outr ul.pagination > li.disabled > a:focus { cursor: not-allowed; color: #000000; border-color: #dddddd; outline: none; background-color: #ffffff; }
+.paging-outr .pagination .icon { display:block; width:20px; height:20px; vertical-align:middle; }
+.paging-outr .pagination .icon { height:36px; }
+
+#ymm_data_mobile .ymm_nested_header { background-color: #f0f0f0; color: #000000; border: 1px solid #e6e6e6; font-size: 14px; padding: 8px 15px; font-weight: bold; display: flex; justify-content: center; flex-direction: row-reverse; align-items: center; }
+#ymm_data_mobile ul { padding: 0; margin: -1px 0 0; list-style: none; background-color: #ffffff; border: 1px solid #e6e6e6; }
+#ymm_data_mobile li { position: relative; color: #000000; padding: 8px 10px 8px 15px; display: flex;align-items: center;justify-content: space-between; -webkit-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out; }
+#ymm_data_mobile li:hover {  background-color: #ffffff; color: #000000; box-shadow: 0 0 8px #d7d7d7; }
+#ymm_data_mobile li.get_next_ymm { cursor: pointer; }
+#ymm_data_mobile li:not(:last-child) { border-bottom: 1px solid #e6e6e6; }
+#ymm_data_mobile .next_ymm { width: 18px; height: 18px; border-radius: 50%; font-size: 0; background: #ddd; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+#ymm_data_mobile .next_ymm:after { content: ''; -webkit-transform: rotate(-45deg); transform: rotate(-45deg); border: solid #000; border-width: 0 2px 2px 0; display: inline-block; padding: 2px; margin: 0 0 0 -2px; }
+#ymm_data_mobile .next_ymm:hover { background-color: #cecece; }
+
+#ymm_data_mobile .prev_ymm { text-decoration: none; display: inline-flex; align-items: center; background-color: #4f4f4f; color: #ffffff; border: none; color: #ffffff; padding: 6px 12px; font-size: 13px; font-weight: 600; line-height: normal; }
+#ymm_data_mobile .prev_ymm:hover { background-color: #242424; color: #ffffff; }
+
+#ymm_data_mobile.active { position: fixed; z-index: 999; background: #fdfdfd; width: 100%; height: 100%; top: 0; left: 0; overflow: auto; }
+#ymm_data_mobile.active .ymm_nested_header { background-color: #e9e9e9; }
+
+#ymm_data_mobile .ymm_nested_title { margin-right: auto; }
+#ymm_data_mobile .ymm_go_back { margin-right: auto; }
+
+
+/*
+#ymm_data_mobile.active .ymm_data {
+    display: block !important; padding-bottom: 12px; text-align: center; font-weight: 600;
+}
+*/
+
+/*------------ Media Querys ------------*/
+@media only screen and (max-width:767px){
+ 	.product-section .ymm_comptbl_list { margin-top: 1rem; margin-bottom: 5rem; }
+  	.ymm_comptbl_list table td, .ymm_comptbl_list table th { font-size: 14px; }
+  
+}
+
+@media only screen and (max-width:480px) {
+  	.paging-outr ul.pagination { line-height:30px; }
+  	.paging-outr ul.pagination > li > a { padding:0 10px; line-height:30px; }
+  	.paging-outr .pagination .icon { height:30px; }
+  
+}

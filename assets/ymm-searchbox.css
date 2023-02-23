@@ -1,0 +1,116 @@
+/*======================================================================================
+Copyright 2017-2022 Shopify App. All rights reserved. | Capacity Web Solutions Pvt. Ltd.
+========================================================================================*/
+
+/* Container Size */
+.page-width { width: 100%; max-width:1200px; margin:0 auto; }
+.page-width:after { content: ""; display: block; clear: both; }
+
+/* Searchbox */
+#ymm_searchbox { background-color:#ffffff; margin:20px auto; }
+#ymm_searchbox h2 { color:#000000; font-size:24px; font-weight:600; line-height:normal; text-transform:titlecase; padding:10px; margin:0 0 15px; text-align:center;}
+#ymm_searchbox ul { list-style:none; margin:0; padding:0; }
+
+/* Searchbox Form */
+#ymm_searchbox form { display:block; margin:0; padding:0; width:100%; }
+#ymm_searchbox label { display:block; color:#000000; font-size:14px; line-height:normal; margin:0 0 5px;; font-weight:600; text-transform:uppercase; }
+#ymm_searchbox .field { position:relative; margin-bottom:15px; }
+#ymm_searchbox select { color:#000000; background-color:#ffffff; border:1px solid #e8e9eb; border-radius:2px; font-size:15px; font-weight:500; padding:10px 25px 10px 10px; min-height:42px; min-width:100px; line-height: normal; margin:0; width:100%; height: auto; cursor:pointer; box-shadow:none; outline:none; }
+#ymm_searchbox select[disabled] { color:#666666; background-color:#f4f4f4; border:1px solid #dddddd; cursor: not-allowed; opacity:0.5; }
+
+#ymm_actions .btn[disabled] { color:#ffffff; background-color:#CE1E28; border:1px solid #cccccc; cursor: not-allowed; opacity:0.5; }
+#ymm_actions .btn { font-size:15px; font-weight:600; padding:10px 25px; letter-spacing:0; height:auto; width:auto; min-height: 42px; line-height: normal; margin-right:10px; color:#ffffff; border:solid 1px #CE1E28; border-radius:2px; cursor: pointer; }
+#ymm_actions .ymm_search { background-color: #CE1E28; color: #ffffff; border-color: #CE1E28; }
+#ymm_actions .ymm_search:hover { opacity:0.85; }
+#ymm_actions #ymm_reset { background-color:#CE1E28; color:#3d4246; border-color:#CE1E28; margin-right:0; }
+#ymm_actions #ymm_reset:hover { opacity:0.85; }
+
+/* Searchbox Horizontal */
+#ymm_searchbox.horizontal { max-width:100%; width:100%; padding: 20px 20px; }
+#ymm_searchbox.horizontal .formFields ul { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:center; margin:-15px -5px 0; }
+#ymm_searchbox.horizontal .formFields li { list-style:none; padding:15px 5px 0; display:inline-block; text-align:left; font-size:16px; -webkit-flex:1 0 0%; flex:1 0 0%; }
+#ymm_searchbox.horizontal .formFields li.ymm_bttns { -webkit-flex:none; flex:none; } 
+
+#ymm_searchbox ul.dropdowns li:not(.ymm_bttns) {  }
+#ymm_searchbox ul.dropdowns li:nth-child(n+5) + li.ymm_bttns { clear:both; text-align: center; width:100%; -webkit-flex: 0 0 100%; flex: 0 0 100%; }
+
+/* Searchbox Loading */
+#ymm_searchbox .ymm_loading { position:relative; width:28px; height:28px; min-height: 42px; margin:0 auto; text-align:center; }
+
+/* Fitment Loading */
+.ymm-fitment-loading { position:absolute; left: 0; right: 0; margin:20px auto; text-align:center; }
+#ymm_searchbox .ymm_loading img, .ymm-fitment-loading img { max-width:100%; border:none; outline:none; display:inline; margin:0 auto; width:28px; height:28px; text-align:center; vertical-align:middle; z-index:9999; animation: spin 1s infinite steps(12); }
+@keyframes spin { 100% { transform: rotateZ(360deg); } }
+
+/* Searchbox Vertical */
+#ymm_searchbox.vertical { padding:20px; max-width: 100%; width: 100%; }
+#ymm_searchbox.vertical ul.dropdowns li { width:100%; }
+#ymm_searchbox.vertical ul.dropdowns li:not(.ymm_bttns) { padding: 0 0 15px; }
+
+/* Fitment block */
+.ymm_fitment_block { background-color: #fff; color: #000000; border: 1px solid #eaeaea; padding: 15px 15px; margin: 15px auto; line-height: 1.5; }
+.ymm_fitment_block .ymm_fitment_inner { width: 100%; }
+.ymm_fitment_block .item_fits_cont { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.ymm_fitment_block .item_fits_cont .fit_title p { color: #000000; padding:0; margin: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+.ymm_fitment_block .item_fits_cont .ymm_text { font-size: 15px; font-weight: 700; margin: 0 0 0 10px; }
+.ymm_fitment_block .fit_desc { font-size: 15px; font-weight: 400; margin: 0 0 0 15px; }
+.ymm_fitment_block .reset_fitment_data { margin-left: auto; }
+#reset_ymm_fitment { display: inline-flex; background-color: #4f4f4f; color: #ffffff; border: none; outline: 0; text-transform: titlecase; padding: 8px 12px; font-size: 12px; font-weight: 700; align-items: center; letter-spacing: 0.5px; font-family: inherit; cursor:pointer; }
+#reset_ymm_fitment:hover { background-color: #242424; color: #ffffff; }
+
+/* Unfits block */
+.ymm_fitment_block .item_unfits_cont { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.ymm_fitment_block .item_unfits_cont .unfit_desc { display: flex; align-items: center; }
+.ymm_fitment_block .item_unfits_cont .ymm_text { font-size: 15px; font-weight: 400; margin: 0 0 0 15px; }
+.ymm_fitment_block .item_unfits_cont .unfit-icon { display: flex; align-items: center; white-space: nowrap; }
+.ymm_fitment_block .item_unfits_cont .unfit_title { font-size: 14px; font-weight: 700; margin: 0 0 0 10px; }
+#view_fitments { display: inline-flex; background-color: #000000; color: #ffffff; border: none; outline: 0; text-transform: lowercase; padding: 7px 12px; margin-right:10px; font-size: 12px; font-weight: 700; align-items: center; letter-spacing: 0.5px; font-family: inherit; cursor:pointer; }
+#view_fitments:hover { background-color: #444444; color: #ffffff; }
+
+/* Product info wrapper */
+.product__info-wrapper .ymm_fitment_block .item_fits_cont { flex-direction: column; justify-content: flex-start; align-items: self-start; text-align: left; margin: 0; width: 100%; }
+.product__info-wrapper .ymm_fitment_block .fit_desc { margin: 10px 0; }
+.product__info-wrapper .ymm_fitment_block .reset_fitment_data { margin-left: 0; }
+
+.product__info-wrapper .ymm_fitment_block .item_unfits_cont .unfit_desc { flex-direction: column; justify-content: flex-start; align-items: self-start; text-align: left; margin: 0; width: 100%; }
+.product__info-wrapper .ymm_fitment_block .item_unfits_cont .ymm_text { margin: 10px 0; }
+.product__info-wrapper .ymm_fitment_block .item_unfits_cont { justify-content: flex-start; align-items: flex-start; }
+
+.product--no-media .product__info-wrapper .ymm_fitment_block .fit_desc { margin: 0 0 0 15px; }
+
+.product__info-wrapper #ymm_searchbox.horizontal .formFields li:nth-child(n+3) + li.ymm_bttns { clear:both; text-align: center; width:100%; -webkit-flex: 0 0 100%; flex: 0 0 100%; }
+
+
+/*------------ Media Querys ------------*/
+@media only screen and (max-width:1199px){
+
+}
+
+@media only screen and (max-width:999px){
+    .ymm_fitment_block .item_unfits_cont { justify-content: center; flex-direction: column; }
+    .ymm_fitment_block .item_unfits_cont .unfit_desc { width: 100%; margin: 0 0 10px; }
+
+}
+
+@media only screen and (max-width:767px){
+    #ymm_searchbox h2 { font-size:20px; padding:0 0 15px 0; }
+    #ymm_searchbox .field { position:relative; margin-bottom:10px; } 
+    #ymm_searchbox.horizontal .formFields li,
+    #ymm_searchbox.horizontal ul.dropdowns li:not(.ymm_bttns) { width:100%; -webkit-flex:none; flex:none; } 
+
+    .ymm_fitment_block .reset_fitment_data { clear: both; width: 100%; text-align: center; margin: 10px auto 0; }
+
+}
+
+@media only screen and (max-width:480px){
+    .ymm_fitment_block .item_fits_cont { justify-content: center; flex-direction: column; }
+    .ymm_fitment_block .fit_desc { font-size: 14px; margin: 5px auto 0; }
+
+    .ymm_fitment_block .item_unfits_cont .unfit_desc { justify-content: center; flex-direction: column; text-align: center; }
+    .ymm_fitment_block .item_unfits_cont .ymm_text { margin: 5px 0 0; }
+    .ymm_fitment_block .item_unfits_cont .fitment_buttons { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    #view_fitments { margin: 0 0 5px; }
+    .product--no-media .product__info-wrapper .ymm_fitment_block .fit_desc { margin: 10px auto 0; }
+  
+}
+
