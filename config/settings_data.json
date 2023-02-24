@@ -1,1 +1,140 @@
-{"current":{"favicon":"shopify:\/\/shop_images\/rammounts-favicon_5219e79a-ae8d-43c0-a901-bf25c4d15d12.png","announcement_bar_text_color":"#ffffff","header_bg_color":"#000","header_text_color":"#ffffff","header_cart_icon":"#ffffff","ram_mount_url":"\/mount-builder","ram_mount_help_text":"<p>Need help deciding? <\/p><p>Try the RAM® Mount Builder<br\/>      <\/p>","back_order_notify":true,"navigation_font_weight":"font-semibold","navigation_font_size_dt":"md:text-base","drawer_font_weight":"font-normal","social_twitter_link":"https:\/\/twitter.com\/rammounts","social_facebook_link":"https:\/\/www.facebook.com\/RAMMount\/","social_pinterest_link":"https:\/\/www.pinterest.com\/rammounts\/","social_instagram_link":"https:\/\/www.instagram.com\/rammounts\/","social_tiktok_link":"","social_youtube_link":"https:\/\/www.youtube.com\/channel\/UCN7EpVA0JC557g8l6djtr4A","checkout_logo_image":"shopify:\/\/shop_images\/ram_logo.png","sections":{"header":{"type":"header","blocks":{"5cb8a0f2-af73-4f7b-86b9-57bda1a290f2":{"type":"meganav_images","settings":{"meganav_trigger":"consumer","position_1":"first","side_menu":"consumer-sidemenu"}},"0d58fc98-c505-4f86-8f18-cf3330615f76":{"type":"meganav_images","settings":{"meganav_trigger":"business","position_1":"first","side_menu":"business-sidemenu"}}},"block_order":["5cb8a0f2-af73-4f7b-86b9-57bda1a290f2","0d58fc98-c505-4f86-8f18-cf3330615f76"],"settings":{"enable_annoucement":false,"mobile_message":"<p>Free Shipping on Orders over $129<\/p>","left_message":"<p>Free Shipping on Orders over $129<\/p>","center_message":"<p>_DISCOUNT_<\/p>","discount":"SUN3","announcement_y_padding":16,"nav_menu":"main-menu-1","hide_menu":"Giving Back","mobile_menu":"mobile-menu","logo":"shopify:\/\/shop_images\/ram-logo.png","logo_width":360,"logo_height":88,"logo_y_padding":0,"show_social":true,"search_style":"form","flag":"shopify:\/\/shop_images\/assembled-in-america.png","link_mount":"#"}},"footer":{"type":"footer","blocks":{"b66bdc2b-24ae-4c21-8e27-101475efb678":{"type":"column_block","settings":{"column_menu":"about","text":"<p>About<\/p>"}},"0ba88ac4-c691-41d3-afa9-12222771bf04":{"type":"column_block","settings":{"column_menu":"product-info","text":"<p>Product Info<\/p>"}},"1000b5c0-812a-43ab-a020-6785ec5dc1a0":{"type":"column_block","settings":{"column_menu":"more-ram-mounts","text":"<p>More RAM® Mounts<\/p>"}},"897aaaaa-bcd6-4671-9a5c-89b45d2ee37c":{"type":"column_block","settings":{"column_menu":"support","text":"<p>Support<\/p>"}},"2ebf60bc-ca06-4fd1-a70b-5c6d59ccf019":{"type":"column_block","settings":{"column_menu":"partners","text":"<p>Partners<\/p>"}}},"block_order":["b66bdc2b-24ae-4c21-8e27-101475efb678","0ba88ac4-c691-41d3-afa9-12222771bf04","1000b5c0-812a-43ab-a020-6785ec5dc1a0","897aaaaa-bcd6-4671-9a5c-89b45d2ee37c","2ebf60bc-ca06-4fd1-a70b-5c6d59ccf019"],"settings":{"enable_newsletter":true,"newsletter_heading":"","newsletter_copy":"<p><strong>Subscribe to our mailing list<\/strong><\/p>","column_text":"<p><strong>Need help? Chat with a live agent!<\/strong><br\/>M-F 9:00am to 12:00pm, 1:00pm to 4:00pm PST<\/p><p><\/p><p>Or email us at<br\/><a href=\"mailto:support@gunnars.com\">support@gunnars.com<\/a><\/p>","copyright_text":"<p>Copyright © 2022 National Products Inc. Seattle, Washington. All rights reserved.<br\/><\/p>","footer_logo":"shopify:\/\/shop_images\/ram-logo.png","show_payment_options":false,"show_social_icons":true,"footer_menu":""}},"footer-for-links":{"type":"footer-for-links","settings":{"enable_newsletter":true,"newsletter_heading":"","newsletter_copy":"<p><strong>Subscribe to our mailing list<\/strong><\/p>","column_text":"","copyright_text":"<p>Copyright © 2022 National Products Inc. Seattle, Washington. All rights reserved.<\/p>","footer_logo":"shopify:\/\/shop_images\/ram-logo-white.png","show_payment_options":false,"show_social_icons":true,"footer_menu":""}}},"content_for_index":[],"blocks":{"319724205969189013":{"type":"shopify:\/\/apps\/form-builder-with-file-upload\/blocks\/app-embed\/b6b8dd14-356b-4725-a4ed-77232212b3c3","disabled":false,"settings":{}},"13925620588085469650":{"type":"shopify:\/\/apps\/year-make-model-advance-search\/blocks\/app-embed-ymm-pro-script\/ce35ea35-ef50-4f43-8cb6-7c34cae4c285","disabled":false,"settings":{"search_button":"Search","reset_button":"Reset","select_label":"Select","none_txt":"None","ymm_searchbox_use":true,"products_limit":"20","img_dimension":"240x240","show_sku":false,"show_vendor":false,"product_pagetitle":"Products Result","products":"Products","product":"Product","no_results":"There are No Products found.","sale_lbl":"Sale","soldout_lbl":"Soldout","ymm_custom_css":""}},"1892562240530925112":{"type":"shopify:\/\/apps\/gdpr-ccpa-compliance-manager\/blocks\/app-embed\/e2ac5ac3-1765-477b-ac58-d792f9a65f3a","disabled":false,"settings":{}},"12561304603952093179":{"type":"shopify:\/\/apps\/bevy-share-cart-social-link\/blocks\/app-embed.js\/6f179945-6ca4-4ba4-919e-6daa3f1c383b","disabled":false,"settings":{}},"2153490007123654574":{"type":"shopify:\/\/apps\/gdpr-ccpa-cookie-management\/blocks\/gdpr_cookie_consent\/4fbe573f-a377-4fea-9801-3ee0858cae41","disabled":false,"settings":{}}}}}
+{
+  "current": {
+    "favicon": "shopify:\/\/shop_images\/rammounts-favicon_5219e79a-ae8d-43c0-a901-bf25c4d15d12.png",
+    "announcement_bar_text_color": "#ffffff",
+    "header_bg_color": "#000",
+    "header_text_color": "#ffffff",
+    "header_cart_icon": "#ffffff",
+    "ram_mount_url": "\/mount-builder",
+    "ram_mount_help_text": "<p>Need help deciding? <\/p><p>Try the RAM® Mount Builder<br\/>      <\/p>",
+    "back_order_notify": true,
+    "navigation_font_weight": "font-semibold",
+    "navigation_font_size_dt": "md:text-base",
+    "drawer_font_weight": "font-normal",
+    "social_twitter_link": "https:\/\/twitter.com\/rammounts",
+    "social_facebook_link": "https:\/\/www.facebook.com\/RAMMount\/",
+    "social_pinterest_link": "https:\/\/www.pinterest.com\/rammounts\/",
+    "social_instagram_link": "https:\/\/www.instagram.com\/rammounts\/",
+    "social_tiktok_link": "",
+    "social_youtube_link": "https:\/\/www.youtube.com\/channel\/UCN7EpVA0JC557g8l6djtr4A",
+    "checkout_logo_image": "shopify:\/\/shop_images\/ram_logo.png",
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "5cb8a0f2-af73-4f7b-86b9-57bda1a290f2": {
+            "type": "meganav_images",
+            "settings": {
+              "meganav_trigger": "consumer",
+              "position_1": "first",
+              "side_menu": ""
+            }
+          },
+          "0d58fc98-c505-4f86-8f18-cf3330615f76": {
+            "type": "meganav_images",
+            "settings": {
+              "meganav_trigger": "business",
+              "position_1": "first",
+              "side_menu": ""
+            }
+          }
+        },
+        "block_order": [
+          "5cb8a0f2-af73-4f7b-86b9-57bda1a290f2",
+          "0d58fc98-c505-4f86-8f18-cf3330615f76"
+        ],
+        "settings": {
+          "enable_annoucement": false,
+          "mobile_message": "<p>Free Shipping on Orders over $129<\/p>",
+          "left_message": "<p>Free Shipping on Orders over $129<\/p>",
+          "center_message": "<p>_DISCOUNT_<\/p>",
+          "discount": "SUN3",
+          "announcement_y_padding": 16,
+          "nav_menu": "main-menu",
+          "hide_menu": "Giving Back",
+          "mobile_menu": "",
+          "logo_width": 360,
+          "logo_height": 88,
+          "logo_y_padding": 0,
+          "show_social": true,
+          "search_style": "form",
+          "link_mount": "#"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "b66bdc2b-24ae-4c21-8e27-101475efb678": {
+            "type": "column_block",
+            "settings": {
+              "column_menu": "",
+              "text": "<p>About<\/p>"
+            }
+          },
+          "0ba88ac4-c691-41d3-afa9-12222771bf04": {
+            "type": "column_block",
+            "settings": {
+              "column_menu": "",
+              "text": "<p>Product Info<\/p>"
+            }
+          },
+          "1000b5c0-812a-43ab-a020-6785ec5dc1a0": {
+            "type": "column_block",
+            "settings": {
+              "column_menu": "",
+              "text": "<p>More RAM® Mounts<\/p>"
+            }
+          },
+          "897aaaaa-bcd6-4671-9a5c-89b45d2ee37c": {
+            "type": "column_block",
+            "settings": {
+              "column_menu": "",
+              "text": "<p>Support<\/p>"
+            }
+          },
+          "2ebf60bc-ca06-4fd1-a70b-5c6d59ccf019": {
+            "type": "column_block",
+            "settings": {
+              "column_menu": "",
+              "text": "<p>Partners<\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "b66bdc2b-24ae-4c21-8e27-101475efb678",
+          "0ba88ac4-c691-41d3-afa9-12222771bf04",
+          "1000b5c0-812a-43ab-a020-6785ec5dc1a0",
+          "897aaaaa-bcd6-4671-9a5c-89b45d2ee37c",
+          "2ebf60bc-ca06-4fd1-a70b-5c6d59ccf019"
+        ],
+        "settings": {
+          "enable_newsletter": true,
+          "newsletter_heading": "",
+          "newsletter_copy": "<p><strong>Subscribe to our mailing list<\/strong><\/p>",
+          "column_text": "<p><strong>Need help? Chat with a live agent!<\/strong><br\/>M-F 9:00am to 12:00pm, 1:00pm to 4:00pm PST<\/p><p><\/p><p>Or email us at<br\/><a href=\"mailto:support@gunnars.com\">support@gunnars.com<\/a><\/p>",
+          "copyright_text": "<p>Copyright © 2022 National Products Inc. Seattle, Washington. All rights reserved.<br\/><\/p>",
+          "show_payment_options": false,
+          "show_social_icons": true,
+          "footer_menu": ""
+        }
+      },
+      "footer-for-links": {
+        "type": "footer-for-links",
+        "settings": {
+          "enable_newsletter": true,
+          "newsletter_heading": "",
+          "newsletter_copy": "<p><strong>Subscribe to our mailing list<\/strong><\/p>",
+          "column_text": "",
+          "copyright_text": "<p>Copyright © 2022 National Products Inc. Seattle, Washington. All rights reserved.<\/p>",
+          "footer_logo": "shopify:\/\/shop_images\/ram-logo-white.png",
+          "show_payment_options": false,
+          "show_social_icons": true,
+          "footer_menu": ""
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  }
+}
