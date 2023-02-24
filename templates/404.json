@@ -1,5 +1,124 @@
 {
   "sections": {
+    "d597da3a-0471-4249-898c-2e6a0fe83f2c": {
+      "type": "featured-carousel",
+      "blocks": {
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-0": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/tab-active4-pro-banner_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-1": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/iphone14_banner_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-2": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/sonim-xp5plus-banner_75f39880-7f37-42a0-a5ed-5cfba75928b3_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-3": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/zebra-et40-et45-tablet-banner_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-4": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/samsung-xcover6pro-banner.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-5": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/zebra-et8x-main-banner_a9a905a5-2504-4dfe-8644-935674e81a87.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "3e165af6-e46b-48e0-bd7c-7ade8d7e7b6e": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/panasonic-fza3-banner_864717d4-386e-43a9-a91d-46aa6bdf3a5e_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "75a2ebd5-c07d-4e09-bc7c-ae802ae2964b": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2023-vb_banner_16ce31aa-9e4a-406b-964f-ed71ced0c734_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "220ff8c6-1800-4760-af5e-de3bf14d3f54": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/vanlife-banner_ce37aa2f-6302-454d-83b5-1d1670c7128e_1.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        },
+        "6fa5f0d4-bb8a-4528-a896-f2a30d882093": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/zebra-TC73-TC78-main-banner.webp",
+            "heading": "<p>Heading<\/p>",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-0",
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-1",
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-2",
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-3",
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-4",
+        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-5",
+        "3e165af6-e46b-48e0-bd7c-7ade8d7e7b6e",
+        "75a2ebd5-c07d-4e09-bc7c-ae802ae2964b",
+        "220ff8c6-1800-4760-af5e-de3bf14d3f54",
+        "6fa5f0d4-bb8a-4528-a896-f2a30d882093"
+      ],
+      "settings": {
+        "section_class": "",
+        "full_width": false,
+        "mobile_vertical_padding": "py-8",
+        "mobile_horizontal_padding": "px-8",
+        "desktop_vertical_padding": "md:py-12",
+        "desktop_horizontal_padding": "md:px-8",
+        "tile_font_family": "font-heading",
+        "tile_font_size": "text-xl",
+        "heading_tag": "h2",
+        "heading": "",
+        "copy": "",
+        "heading_font_family": "font-heading",
+        "copy_font_family": "font-body",
+        "heading_bottom_spacing": 16,
+        "copy_bottom_spacing": 16,
+        "text_alignment": "text-center",
+        "desktop_heading_font_size": "md:text-xl",
+        "desktop_copy_font_size": "md:text-base",
+        "mobile_heading_font_size": "text-xl",
+        "mobile_copy_font_size": "text-base"
+      }
+    },
     "main": {
       "type": "404",
       "blocks": {
@@ -55,6 +174,7 @@
     }
   },
   "order": [
+    "d597da3a-0471-4249-898c-2e6a0fe83f2c",
     "main"
   ]
 }
