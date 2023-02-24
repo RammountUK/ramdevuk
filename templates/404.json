@@ -1,7 +1,86 @@
 {
   "sections": {
+    "a61bec0c-db04-4127-b095-1e35c98e658d": {
+      "type": "hero-carousel",
+      "blocks": {
+        "06008440-e018-4634-a677-7b0899138d66": {
+          "type": "slide",
+          "settings": {
+            "page_url": "",
+            "desktop_image": "shopify:\/\/shop_images\/zebra-TC73-TC78-main-banner.webp",
+            "video_url": "",
+            "mobile_video_url": "",
+            "slide_btn_color": "#000"
+          }
+        },
+        "7be3454c-8e37-4206-8745-325e3303f709": {
+          "type": "slide",
+          "settings": {
+            "page_url": "",
+            "desktop_image": "shopify:\/\/shop_images\/vanlife-banner_ce37aa2f-6302-454d-83b5-1d1670c7128e_1.webp",
+            "video_url": "",
+            "mobile_video_url": "",
+            "slide_btn_color": "#000"
+          }
+        },
+        "5e0cfdfe-acd2-4e92-b8ab-7ce6877c4b95": {
+          "type": "slide",
+          "settings": {
+            "page_url": "",
+            "desktop_image": "shopify:\/\/shop_images\/2023-vb_banner_16ce31aa-9e4a-406b-964f-ed71ced0c734_1.webp",
+            "video_url": "",
+            "mobile_video_url": "",
+            "slide_btn_color": "#000"
+          }
+        },
+        "358a62f8-60ec-4cb0-b60e-91f7328ef8ab": {
+          "type": "slide",
+          "settings": {
+            "page_url": "",
+            "desktop_image": "shopify:\/\/shop_images\/panasonic-fza3-banner_864717d4-386e-43a9-a91d-46aa6bdf3a5e_1.webp",
+            "video_url": "",
+            "mobile_video_url": "",
+            "slide_btn_color": "#000"
+          }
+        },
+        "6a43d906-4906-472e-99ba-f2c9b7d539c2": {
+          "type": "slide",
+          "settings": {
+            "page_url": "",
+            "desktop_image": "shopify:\/\/shop_images\/zebra-et8x-main-banner_a9a905a5-2504-4dfe-8644-935674e81a87.webp",
+            "video_url": "",
+            "mobile_video_url": "",
+            "slide_btn_color": "#000"
+          }
+        },
+        "f40e1d3e-a893-467e-8f59-d27f041a8925": {
+          "type": "slide",
+          "settings": {
+            "page_url": "",
+            "desktop_image": "shopify:\/\/shop_images\/zebra-et8x-main-banner_a9a905a5-2504-4dfe-8644-935674e81a87.webp",
+            "video_url": "",
+            "mobile_video_url": "",
+            "slide_btn_color": "#000"
+          }
+        }
+      },
+      "block_order": [
+        "06008440-e018-4634-a677-7b0899138d66",
+        "7be3454c-8e37-4206-8745-325e3303f709",
+        "5e0cfdfe-acd2-4e92-b8ab-7ce6877c4b95",
+        "358a62f8-60ec-4cb0-b60e-91f7328ef8ab",
+        "6a43d906-4906-472e-99ba-f2c9b7d539c2",
+        "f40e1d3e-a893-467e-8f59-d27f041a8925"
+      ],
+      "settings": {
+        "enable_arrow": false,
+        "enable_autoplay": false,
+        "slider_speed": 2
+      }
+    },
     "d597da3a-0471-4249-898c-2e6a0fe83f2c": {
       "type": "featured-carousel",
+      "disabled": true,
       "blocks": {
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-0": {
           "type": "feature",
@@ -174,6 +253,7 @@
     }
   },
   "order": [
+    "a61bec0c-db04-4127-b095-1e35c98e658d",
     "d597da3a-0471-4249-898c-2e6a0fe83f2c",
     "main"
   ]
