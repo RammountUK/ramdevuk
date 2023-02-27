@@ -10,7 +10,7 @@
             "desktop_image": "shopify:\/\/shop_images\/zebra-TC73-TC78-main-banner.webp",
             "video_url": "",
             "mobile_video_url": "",
-            "slide_btn_color": "#000"
+            "slide_btn_color": "#000000"
           }
         },
         "7be3454c-8e37-4206-8745-325e3303f709": {
@@ -20,7 +20,7 @@
             "desktop_image": "shopify:\/\/shop_images\/vanlife-banner_ce37aa2f-6302-454d-83b5-1d1670c7128e_1.webp",
             "video_url": "",
             "mobile_video_url": "",
-            "slide_btn_color": "#000"
+            "slide_btn_color": "#000000"
           }
         },
         "5e0cfdfe-acd2-4e92-b8ab-7ce6877c4b95": {
@@ -30,7 +30,7 @@
             "desktop_image": "shopify:\/\/shop_images\/2023-vb_banner_16ce31aa-9e4a-406b-964f-ed71ced0c734_1.webp",
             "video_url": "",
             "mobile_video_url": "",
-            "slide_btn_color": "#000"
+            "slide_btn_color": "#000000"
           }
         },
         "358a62f8-60ec-4cb0-b60e-91f7328ef8ab": {
@@ -40,7 +40,7 @@
             "desktop_image": "shopify:\/\/shop_images\/panasonic-fza3-banner_864717d4-386e-43a9-a91d-46aa6bdf3a5e_1.webp",
             "video_url": "",
             "mobile_video_url": "",
-            "slide_btn_color": "#000"
+            "slide_btn_color": "#000000"
           }
         },
         "6a43d906-4906-472e-99ba-f2c9b7d539c2": {
@@ -50,7 +50,7 @@
             "desktop_image": "shopify:\/\/shop_images\/zebra-et8x-main-banner_a9a905a5-2504-4dfe-8644-935674e81a87.webp",
             "video_url": "",
             "mobile_video_url": "",
-            "slide_btn_color": "#000"
+            "slide_btn_color": "#000000"
           }
         },
         "f40e1d3e-a893-467e-8f59-d27f041a8925": {
@@ -60,7 +60,7 @@
             "desktop_image": "shopify:\/\/shop_images\/zebra-et8x-main-banner_a9a905a5-2504-4dfe-8644-935674e81a87.webp",
             "video_url": "",
             "mobile_video_url": "",
-            "slide_btn_color": "#000"
+            "slide_btn_color": "#000000"
           }
         }
       },
@@ -80,12 +80,11 @@
     },
     "d597da3a-0471-4249-898c-2e6a0fe83f2c": {
       "type": "featured-carousel",
-      "disabled": true,
       "blocks": {
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-0": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/tab-active4-pro-banner_1.webp",
+            "image": "shopify:\/\/shop_images\/phone-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -93,7 +92,7 @@
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-1": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/iphone14_banner_1.webp",
+            "image": "shopify:\/\/shop_images\/tablet-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -101,7 +100,7 @@
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-2": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/sonim-xp5plus-banner_75f39880-7f37-42a0-a5ed-5cfba75928b3_1.webp",
+            "image": "shopify:\/\/shop_images\/components-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -109,7 +108,7 @@
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-3": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/zebra-et40-et45-tablet-banner_1.webp",
+            "image": "shopify:\/\/shop_images\/laptop-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -117,7 +116,7 @@
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-4": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/samsung-xcover6pro-banner.webp",
+            "image": "shopify:\/\/shop_images\/fishing-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -125,7 +124,7 @@
         "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-5": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/zebra-et8x-main-banner_a9a905a5-2504-4dfe-8644-935674e81a87.webp",
+            "image": "shopify:\/\/shop_images\/drink-holder-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -133,7 +132,7 @@
         "3e165af6-e46b-48e0-bd7c-7ade8d7e7b6e": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/panasonic-fza3-banner_864717d4-386e-43a9-a91d-46aa6bdf3a5e_1.webp",
+            "image": "shopify:\/\/shop_images\/xgrip-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -141,7 +140,7 @@
         "75a2ebd5-c07d-4e09-bc7c-ae802ae2964b": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/2023-vb_banner_16ce31aa-9e4a-406b-964f-ed71ced0c734_1.webp",
+            "image": "shopify:\/\/shop_images\/motorcycle-icon-rammounts.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -149,7 +148,6 @@
         "220ff8c6-1800-4760-af5e-de3bf14d3f54": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/vanlife-banner_ce37aa2f-6302-454d-83b5-1d1670c7128e_1.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -157,7 +155,6 @@
         "6fa5f0d4-bb8a-4528-a896-f2a30d882093": {
           "type": "feature",
           "settings": {
-            "image": "shopify:\/\/shop_images\/zebra-TC73-TC78-main-banner.webp",
             "heading": "<p>Heading<\/p>",
             "url": ""
           }
@@ -183,7 +180,7 @@
         "desktop_vertical_padding": "md:py-12",
         "desktop_horizontal_padding": "md:px-8",
         "tile_font_family": "font-heading",
-        "tile_font_size": "text-xl",
+        "tile_font_size": "text-base",
         "heading_tag": "h2",
         "heading": "",
         "copy": "",
@@ -192,7 +189,7 @@
         "heading_bottom_spacing": 16,
         "copy_bottom_spacing": 16,
         "text_alignment": "text-center",
-        "desktop_heading_font_size": "md:text-xl",
+        "desktop_heading_font_size": "md:text-sm",
         "desktop_copy_font_size": "md:text-base",
         "mobile_heading_font_size": "text-xl",
         "mobile_copy_font_size": "text-base"
@@ -200,6 +197,7 @@
     },
     "main": {
       "type": "404",
+      "disabled": true,
       "blocks": {
         "459270ad-b95c-4dc4-8036-ae4783a6db06": {
           "type": "link",
@@ -250,11 +248,140 @@
         "mobile_heading_font_size": "text-xl",
         "mobile_copy_font_size": "text-base"
       }
+    },
+    "edb62b7e-70d8-4693-8fdf-823c0788c0da": {
+      "type": "icon-row",
+      "blocks": {
+        "9b5346cf-0c60-433a-8cfc-f544b738c4f8": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/phone-icon-rammounts.webp",
+            "text": "<p>Phone Mounts<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "4377c84e-51fa-4904-b58d-66518f20f331": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/tablet-icon-rammounts.webp",
+            "text": "<p>Tablet Mounts<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "cde5eef1-58b5-4c88-afc6-52aed0210bb6": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/components-icon-rammounts.webp",
+            "text": "<p>Components<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "410c6392-20e3-41a6-9685-d6274c1c9567": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/laptop-icon-rammounts.webp",
+            "text": "<p>Laptop Mounts<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "f44de4fb-07e0-4795-b952-82d27d7503db": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/fishing-icon-rammounts.webp",
+            "text": "<p>Fishing Mounts<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "4af25e4f-ba96-4e23-8581-6fe1b089bb95": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/drink-holder-icon-rammounts.webp",
+            "text": "<p>Drink Holders<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "01eb558f-5cea-457a-8fda-65dab798c721": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/xgrip-icon-rammounts.webp",
+            "text": "<p>RAM®X-Grip®<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        },
+        "7e03ad70-9cf7-4b6a-be88-09a1ab109558": {
+          "type": "image_icon",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/motorcycle-icon-rammounts.webp",
+            "text": "<p>Motorcycle Mounts<\/p>",
+            "url": "",
+            "desktop_text_font_size": "md:text-lg",
+            "mobile_text_font_size": "text-lg"
+          }
+        }
+      },
+      "block_order": [
+        "9b5346cf-0c60-433a-8cfc-f544b738c4f8",
+        "4377c84e-51fa-4904-b58d-66518f20f331",
+        "cde5eef1-58b5-4c88-afc6-52aed0210bb6",
+        "410c6392-20e3-41a6-9685-d6274c1c9567",
+        "f44de4fb-07e0-4795-b952-82d27d7503db",
+        "4af25e4f-ba96-4e23-8581-6fe1b089bb95",
+        "01eb558f-5cea-457a-8fda-65dab798c721",
+        "7e03ad70-9cf7-4b6a-be88-09a1ab109558"
+      ],
+      "settings": {
+        "section_bg_color": "#fff",
+        "section_class": "",
+        "full_width": false,
+        "red_line": false,
+        "enable_slider": false,
+        "slider_speed": 2,
+        "slider_slides": 4,
+        "desktop_per_row": "w-1\/2",
+        "mobile_per_row": "w-1\/2",
+        "justify_items": "justify-center",
+        "icon_height": 100,
+        "icon_size": 100,
+        "icon_space": 32,
+        "icon_font_size": "text-xl",
+        "icon_font_family": "font-heading",
+        "icon_text_space": 32,
+        "mobile_vertical_padding": "py-8",
+        "mobile_horizontal_padding": "px-8",
+        "desktop_vertical_padding": "md:py-12",
+        "desktop_horizontal_padding": "md:px-8",
+        "heading": "",
+        "copy": "",
+        "heading_font_family": "font-heading",
+        "copy_font_family": "font-body",
+        "heading_bottom_spacing": 16,
+        "copy_bottom_spacing": 16,
+        "text_alignment": "text-center",
+        "desktop_heading_font_size": "md:text-xl",
+        "desktop_copy_font_size": "md:text-xl",
+        "mobile_heading_font_size": "text-xl",
+        "mobile_copy_font_size": "text-base"
+      }
     }
   },
   "order": [
     "a61bec0c-db04-4127-b095-1e35c98e658d",
     "d597da3a-0471-4249-898c-2e6a0fe83f2c",
-    "main"
+    "main",
+    "edb62b7e-70d8-4693-8fdf-823c0788c0da"
   ]
 }
