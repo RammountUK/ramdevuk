@@ -78,123 +78,6 @@
         "slider_speed": 2
       }
     },
-    "d597da3a-0471-4249-898c-2e6a0fe83f2c": {
-      "type": "featured-carousel",
-      "blocks": {
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-0": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/phone-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-1": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/tablet-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-2": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/components-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-3": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/laptop-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-4": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/fishing-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-5": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/drink-holder-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "3e165af6-e46b-48e0-bd7c-7ade8d7e7b6e": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/xgrip-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "75a2ebd5-c07d-4e09-bc7c-ae802ae2964b": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify:\/\/shop_images\/motorcycle-icon-rammounts.webp",
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "220ff8c6-1800-4760-af5e-de3bf14d3f54": {
-          "type": "feature",
-          "settings": {
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        },
-        "6fa5f0d4-bb8a-4528-a896-f2a30d882093": {
-          "type": "feature",
-          "settings": {
-            "heading": "<p>Heading<\/p>",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-0",
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-1",
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-2",
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-3",
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-4",
-        "template--18110490411328__d597da3a-0471-4249-898c-2e6a0fe83f2c-1677253759f4735031-5",
-        "3e165af6-e46b-48e0-bd7c-7ade8d7e7b6e",
-        "75a2ebd5-c07d-4e09-bc7c-ae802ae2964b",
-        "220ff8c6-1800-4760-af5e-de3bf14d3f54",
-        "6fa5f0d4-bb8a-4528-a896-f2a30d882093"
-      ],
-      "settings": {
-        "section_class": "",
-        "full_width": false,
-        "mobile_vertical_padding": "py-8",
-        "mobile_horizontal_padding": "px-8",
-        "desktop_vertical_padding": "md:py-12",
-        "desktop_horizontal_padding": "md:px-8",
-        "tile_font_family": "font-heading",
-        "tile_font_size": "text-base",
-        "heading_tag": "h2",
-        "heading": "",
-        "copy": "",
-        "heading_font_family": "font-heading",
-        "copy_font_family": "font-body",
-        "heading_bottom_spacing": 16,
-        "copy_bottom_spacing": 16,
-        "text_alignment": "text-center",
-        "desktop_heading_font_size": "md:text-sm",
-        "desktop_copy_font_size": "md:text-base",
-        "mobile_heading_font_size": "text-xl",
-        "mobile_copy_font_size": "text-base"
-      }
-    },
     "main": {
       "type": "404",
       "disabled": true,
@@ -344,7 +227,7 @@
         "7e03ad70-9cf7-4b6a-be88-09a1ab109558"
       ],
       "settings": {
-        "section_bg_color": "#fff",
+        "section_bg_color": "#ffffff",
         "section_class": "",
         "full_width": false,
         "red_line": false,
@@ -380,7 +263,6 @@
   },
   "order": [
     "a61bec0c-db04-4127-b095-1e35c98e658d",
-    "d597da3a-0471-4249-898c-2e6a0fe83f2c",
     "main",
     "edb62b7e-70d8-4693-8fdf-823c0788c0da"
   ]
