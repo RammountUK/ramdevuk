@@ -319,12 +319,131 @@
         "mobile_heading_font_size": "text-xl",
         "mobile_copy_font_size": "text-base"
       }
+    },
+    "324e96ca-67bd-4a7f-91fb-fa5f96d0f1e9": {
+      "type": "tabs-products",
+      "settings": {
+        "mobile_vertical_padding": "py-8",
+        "mobile_horizontal_padding": "px-8",
+        "desktop_vertical_padding": "md:py-12",
+        "desktop_horizontal_padding": "md:px-8",
+        "heading": "",
+        "copy": "",
+        "heading_font_family": "font-heading",
+        "copy_font_family": "font-body",
+        "heading_bottom_spacing": 16,
+        "copy_bottom_spacing": 16,
+        "text_alignment": "text-center",
+        "desktop_heading_font_size": "md:text-xl",
+        "desktop_copy_font_size": "md:text-base",
+        "mobile_heading_font_size": "text-xl",
+        "mobile_copy_font_size": "text-base"
+      }
+    },
+    "b65fa31e-1e45-4d28-b8f8-d728fdb421ed": {
+      "type": "ram-tabs-products",
+      "blocks": {
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-0": {
+          "type": "tab",
+          "settings": {
+            "title": "Wheelchair Mounts",
+            "content": "",
+            "btn_label": "SHOP ALL ACCESSIBILITY",
+            "btn_url": "#",
+            "btn_type": "btn-ram",
+            "btn_label_2": "RAM® MOUNT BUILDER",
+            "btn_url_2": "#",
+            "btn_type_2": "btn-dark",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          }
+        },
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-1": {
+          "type": "tab",
+          "settings": {
+            "title": "XBox Adaptive Controller",
+            "content": "",
+            "btn_label": "SHOP ALL ACCESSIBILITY",
+            "btn_url": "",
+            "btn_type": "btn-ram",
+            "btn_label_2": "RAM® MOUNT BUILDER",
+            "btn_url_2": "",
+            "btn_type_2": "btn-dark",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          }
+        },
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-2": {
+          "type": "tab",
+          "settings": {
+            "title": "Bedside Mounts",
+            "content": "",
+            "btn_label": "SHOP ALL ACCESSIBILITY",
+            "btn_url": "",
+            "btn_type": "btn-ram",
+            "btn_label_2": "RAM® MOUNT BUILDER",
+            "btn_url_2": "",
+            "btn_type_2": "btn-dark",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          }
+        },
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-3": {
+          "type": "tab",
+          "settings": {
+            "title": "Desk & Table Mounts",
+            "content": "",
+            "btn_label": "SHOP ALL ACCESSIBILITY",
+            "btn_url": "",
+            "btn_type": "btn-ram",
+            "btn_label_2": "RAM® MOUNT BUILDER",
+            "btn_url_2": "",
+            "btn_type_2": "btn-dark",
+            "product_1": "",
+            "product_2": "",
+            "product_3": "",
+            "product_4": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-0",
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-1",
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-2",
+        "template--18110490411328__b65fa31e-1e45-4d28-b8f8-d728fdb421ed-167872647641353c74-3"
+      ],
+      "settings": {
+        "mobile_vertical_padding": "py-8",
+        "mobile_horizontal_padding": "px-8",
+        "desktop_vertical_padding": "md:py-12",
+        "desktop_horizontal_padding": "md:px-8",
+        "heading": "",
+        "copy": "",
+        "content_vertical_padding": "md:mt-10",
+        "heading_font_family": "font-heading",
+        "copy_font_family": "font-body",
+        "heading_bottom_spacing": 16,
+        "copy_bottom_spacing": 16,
+        "text_alignment": "text-center",
+        "desktop_heading_font_size": "md:text-xl",
+        "desktop_copy_font_size": "md:text-base",
+        "mobile_heading_font_size": "text-xl",
+        "mobile_copy_font_size": "text-base"
+      }
     }
   },
   "order": [
     "a61bec0c-db04-4127-b095-1e35c98e658d",
     "main",
     "edb62b7e-70d8-4693-8fdf-823c0788c0da",
-    "7d22fc7b-c2db-44dd-a038-a1aaaa5f7831"
+    "7d22fc7b-c2db-44dd-a038-a1aaaa5f7831",
+    "324e96ca-67bd-4a7f-91fb-fa5f96d0f1e9",
+    "b65fa31e-1e45-4d28-b8f8-d728fdb421ed"
   ]
 }
