@@ -1,0 +1,55 @@
+<div aria-hidden="true" class="{{ section.settings.padding }}"></div>
+
+{% schema %}
+    {
+        "name": "Padding",
+        "tag": "section",
+        "settings": [
+            {
+                "label": "Spacing",
+                "id": "padding",
+                "type": "select",
+                "default": "pt-base",
+                "options": [
+                    {
+                        "label": "xs",
+                        "value": "pt-xs"
+                    },
+                    {
+                        "label": "sm",
+                        "value": "pt-sm"
+                    },
+                    {
+                        "label": "md",
+                        "value": "pt-md"
+                    },
+                    {
+                        "label": "base",
+                        "value": "pt-base"
+                    },
+                    {
+                        "label": "lg",
+                        "value": "pt-lg"
+                    },
+                    {
+                        "label": "xl",
+                        "value": "pt-xl"
+                    },
+                    {
+                        "label": "2xl",
+                        "value": "pt-2xl"
+                    },
+                    {
+                        "label": "3xl",
+                        "value": "pt-3xl"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Padding"
+            }
+        ]
+    }
+{% endschema %}

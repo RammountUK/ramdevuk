@@ -1,0 +1,325 @@
+<div id="section-{{ section.id }}" class="{{ section.settings.text_alignment }} " style="background-color:{{section.settings.section_bg_color}};">
+  <div class="container flex py-12 px-4 lg:px-0 items-center">
+    <div class="w-full md:px-4">
+        {%- if section.settings.heading != blank -%}
+            <div class="pb-2.5 flex items-center">
+                <h1 class="font-heading font-bold {{ section.settings.heading_font_size }} {{ section.settings.desktop_heading_font_size}} {{section.settings.text_alignment_mobile}} {{section.settings.text_alignment}} block">
+                    {{section.settings.heading}}
+                </h1>
+                {% if section.settings.btn_label != blank %}
+                    <a href="{{ section.settings.btn_url }}" class="ml-4 btn-xs btn-inline {{ section.settings.btn_type }} md:w-[180px]">
+
+                        {{ section.settings.btn_label }}
+                    </a>
+                {% endif %}
+            </div>
+        {%- endif -%}
+        <div>
+            <span class="content rte font-sans font-light {{ section.settings.copy_font_size }}">
+                {{ section.settings.copy}}
+            </span>
+        </div>
+      </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name": "RAM Title with Button ",
+    "tag": "section",
+    "settings": [
+
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "default": "md:text-left",
+            "options": [
+                {
+                    "value": "md:text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "md:text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "md:text-right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "text_alignment_mobile",
+            "label": "Heading Alignment Mobile",
+            "default": "text-left",
+            "options": [
+                {
+                    "value": "text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "text-right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "select",
+            "id": "desktop_heading_font_size",
+            "label": "Desktop Heading Size",
+            "default": "md:text-xl",
+            "options": [
+                {
+                    "value": "md:text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "md:text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "md:text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "md:text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "md:text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "md:text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "md:text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "md:text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "md:text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "md:text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "md:text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "md:text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "md:text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_font_size",
+            "label": "Mobile Heading Font Size",
+            "default": "text-xl",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "copy",
+            "label": "Copy"
+        },
+
+        {
+            "type": "select",
+            "id": "copy_font_size",
+            "label": "Copy Size",
+            "default": "text-base",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "btn_label",
+            "label": "Button Label"
+        },
+        {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button Link"
+        },
+        {
+            "type": "select",
+            "id": "btn_type",
+            "label": "Button Type",
+            "default": "btn-ram",
+            "options": [
+                {
+                    "value": "btn-ram",
+                    "label": "Red Button"
+                },
+                {
+                    "value": "btn-dark",
+                    "label": "Black Button"
+                },
+                {
+                    "value": "btn-grey",
+                    "label": "Grey Button"
+                },
+                {
+                    "value": "btn-green",
+                    "label": "Green Button"
+                }
+            ]
+        },
+        {
+          "type": "color",
+          "id": "section_bg_color",
+          "label": "Section Background Color",
+          "default": "#fff"
+        }
+        
+
+    ],
+    "presets": [
+        {
+            "name": "RAM Title with Button",
+            "settings": {
+                "text_alignment": "md:text-left",
+                "text_alignment_mobile": "text-left",
+                "heading": "AGRICULTURE",
+                "desktop_heading_font_size": "md:text-3xl",
+                "heading_font_size": "text-2xl",
+                "copy": "<p>Technological innovation within the agriculture industry has taken off at an unprecedented rate in recent years, and RAM®Mounts has worked closely alongside vehicle and display manufacturers to provide farmers with the best in-cab experience possible. Our trusted partnerships include companies like Agco, Precision Planting, Trimble, and many more. Depend on RAM®to provide a wide range of mounting solutions built specifically with agriculture in mind.<\/p>",
+                "copy_font_size": "text-base",
+                "btn_label": "View Catalog",
+                "btn_url": "#",
+                "btn_type": "btn-ram",
+                "section_bg_color": "#f4f4f6"
+              }
+             
+        }
+    ]
+}
+{% endschema %}

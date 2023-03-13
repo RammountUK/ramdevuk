@@ -1,0 +1,1229 @@
+<div class="relative {{ section.settings.mobile_vertical_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_horizontal_padding }}" style="background: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  <div class="container flex flex-col">
+    {% render 'section-copy' %}
+  </div>
+    <div class="flex items-center justify-center container {{ section.settings.slider_mobile_vertical_padding }} {{ section.settings.slider_desktop_vertical_padding }} {{ section.settings.slider_mobile_horizontal_padding }} {{ section.settings.slider_desktop_horizontal_padding }}">
+        <quotes-slider class="max-w-3xl overflow-hidden text-center" data-speed="{{ section.settings.slider_speed | times: 1000 }}">
+            <!-- Slider main container -->
+            <div class="relative h-full text-lg" data-swiper>
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    {% for block in section.blocks %}
+                        <div class="swiper-slide flex flex-col justify-center">
+                            <div style="padding-bottom: {{ section.settings.quote_bottom_spacing }}px;" class="{{ section.settings.quote_font_family }}" style="">
+                                "{{ block.settings.content }}"
+                            </div>
+                            <div class="{{ section.settings.attribution_font_family }}">
+                                — {{ block.settings.attribution }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </quotes-slider>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Quote Slider",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider Speed",
+      "default": 2,
+      "min": 1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "s"
+    },
+    {
+      "type": "select",
+      "id": "slider_mobile_vertical_padding",
+      "label": "Mobile - Slider Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "slider_mobile_horizontal_padding",
+      "label": "Mobile - Slider Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "slider_desktop_vertical_padding",
+      "label": "Desktop - Slider Vertical Padding",
+      "default": "md:py-12",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "slider_desktop_horizontal_padding",
+      "label": "Desktop - Slider Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Quote Styles"
+    },
+    {
+      "type": "range",
+      "id": "quote_bottom_spacing",
+      "label": "Quote Body - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "quote_font_family",
+      "label": "Quote Body Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "attribution_font_family",
+      "label": "Quote Attribution Font Family",
+      "default": "font-body",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile - Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile - Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_padding",
+      "label": "Desktop - Vertical Padding",
+      "default": "md:py-12",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding",
+      "label": "Desktop - Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Copy"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Section Heading Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "copy_font_family",
+      "label": "Section Copy Font Family",
+      "default": "font-body",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Spacing"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Heading - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_bottom_spacing",
+      "label": "Copy - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Alignment"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-left"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Sizes"
+    },
+    {
+      "type": "select",
+      "id": "desktop_heading_font_size",
+      "label": "Desktop - Section Heading Font Size",
+      "default": "md:text-xl",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_copy_font_size",
+      "label": "Desktop - Section Copy Font Size",
+      "default": "md:text-base",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_font_size",
+      "label": "Mobile - Section Heading Font Size",
+      "default": "text-xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_copy_font_size",
+      "label": "Mobile - Section Copy Font Size",
+      "default": "text-base",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "settings": [
+        {
+          "type": "textarea",
+          "label": "Quote Content",
+          "id": "content",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor aliquet risus non, pellentesque tempor, leo, sed sed adipiscing. Sapien elit, feugiat nulla tincidunt"
+        },
+        {
+          "type": "text",
+          "label": "Quote Attribution",
+          "id": "attribution",
+          "default": "Ima Person"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

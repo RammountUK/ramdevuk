@@ -1,0 +1,106 @@
+<mount-builder style="background-color:{{section.settings.section_bg_color}};"
+  class="flex flex-col text-center items-center {{ section.settings.mobile_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.desktop_horizontal_padding }} {{section.settings.section_class}}">
+  <div id="steps-banner" class="hidden md:flex bg-red w-full py-4">
+    <div class="container text-white text-lg font-light">
+      <h1><span class="mb-step"><span class="circle-number border-2 border-white rounded-full h-8 w-8 mr-2 inline-flex items-center justify-center">1</span><span class="step-copy mr-12">Select Device</span></span>
+      <span class="mb-step"><span class="circle-number border-2 border-white rounded-full h-8 w-8 mr-2 inline-flex items-center justify-center">2</span><span class="step-copy mr-12">Select Vehicle</span></span>
+      <span class="mb-step"><span class="circle-number border-2 border-white rounded-full h-8 w-8 mr-2 inline-flex items-center justify-center">3</span><span class="step-copy">View Solutions</span></span>
+      </h1>
+    </div>
+</div>
+  <div class="container pt-12 px-4 md:px-0 md:min-h-[600px]">
+      <div class="flex justify-center w-full">
+        <button id="back-btn" class="text-[20px] btn-ram py-2 mb-3 min-w-[200px] ">Go Back</button>
+      </div>
+      <div data-builder-content >
+
+      </div>
+  </div>
+  <div class="relative w-full">
+    <custom-equalizer>
+      <div class="flex flex-wrap justify-between gap-y-8 w-full px-2 mb-8">
+            <div class="flex flex-wrap h-full relative overflow-hidden  w-1/2 transition-all duration-300 ease-in  w-1/2-column">
+              <custom-modal>
+                <div class="flex flex-col md:flex-row md:items-center md:justify-center group cursor-pointer ">
+                    <div class=" w-14 relative" data-modal-open="">
+                      <img src="//cdn.shopify.com/s/files/1/0593/5346/4982/files/question-circle-regular.png" class=" object-contain w-full object-center">
+                    </div>
+                  <div class="hidden md:flex invisible md:ml-3 group-hover:visible transform transition-short font-heading text-base mt-2 md:mt-0 md:text-lg font-medium" style="padding-bottom: px;">
+                    <p>Can't find what you're looking for? Let us know.</p>
+                  </div>
+                </div>
+                <div data-modal-content="" class="hidden fixed bg-black/80 justify-center inset-x-1/2 top-0 -translate-x-1/2 z-40 w-full h-full opacity-0">
+                    <div data-inner-content="" class="w-full  overflow-scroll mt-14  w-[800px]  px-10 py-8 bg-white h-[700px] relative">
+                      <div data-modal-close="" class="absolute right-4 top-4 cursor-pointer bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-lg leading-none ">x</div>
+                      <div style="margin:0 auto;" class="pxFormGenerator" id="sI3x6EI1_FI74AfRP49ztw"></div>
+                    </div>
+                </div>
+              </custom-modal>
+            </div>
+              <div class="flex flex-wrap h-full relative overflow-hidden w-1/2 transition-all duration-300 ease-in  w-1/2-column">
+                <button data-start-over class="ml-auto py-2.5 bg-black text-white min-w-[150px] btn-dark "> Start Over </button>
+              </div>
+      </div>
+    </custom-equalizer>
+  </div>
+</mount-builder>
+{{ 'boost-pfs-otp.css' | asset_url | stylesheet_tag }}
+<style>
+  .tab-heading .nav-item a.active {
+    color: white;
+    background: #cd1e27;
+  }
+
+  .tab-content product-tile product-form{
+    display:none;
+  }
+  .tab-content product-tile .p-content{
+    padding-bottom:0;
+  }
+  .ts-control{
+    border:none;
+  }
+  .boost-pfs-quickview-slider .boost-pfs-quickview-slider-inner .boost-pfs-quickview-featured-image-wrapper .boost-pfs-quickview-featured-image.hidden{
+    display:none;
+  }
+  dd-selector[data-disabled] div[data-value]{
+    background: #eee;
+    opacity: .6;
+  }
+</style>
+
+
+
+
+{% schema %}
+{
+  "name": "Mount Builder",
+  "tag": "section",
+  "settings": [
+
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background Color",
+      "default": "#fff"
+    },
+		{
+      "type": "text",
+      "id": "section_class",
+      "label": "Section Class"
+    },
+		{
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Fullwidth",
+      "default": false
+    }
+
+  ],
+  "presets": [
+    {
+      "name": "Mount Builder"
+    }
+  ]
+}
+{% endschema %}

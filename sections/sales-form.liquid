@@ -1,0 +1,1298 @@
+<div id="{{section.settings.section_id}}" style="background-color: {{section.settings.back_color}};" class=" {{ section.settings.mobile_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.desktop_horizontal_padding }} {{section.settings.section_class}}">
+  <div class="{% unless section.settings.full_width %}container{% endunless %}">
+    <div class="flex flex-col">
+      {% render 'section-copy' %}
+    </div>
+    <div class="relative w-full ">
+      <div class="flex flex-wrap justify-between {% if section.settings.content_width %} html-wrapper {% else %}content-wrapper{% endif %}  gap-y-14 w-full   {{ section.settings.column_padding }} ">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'multicolumn-block' %}
+            <div
+
+
+              class="flex flex-wrap h-full relative overflow-hidden group w-full {% if block.settings.card_look %} shadow-ram hover:shadow-ramhov bg-white pt-8 {% endif %} {% if block.settings.full_width %} fullwidth-block {% endif %} {{ block.settings.content_position }} {{ block.settings.content_position_dt }} {{ block.settings.mobile_col_span }} {{ block.settings.mobile_row_span }} {{ block.settings.desktop_col_span }}  transition-all duration-300 ease-in {{ block.settings.desktop_col_span }}-column {% if block.settings.border_right %} overflow-visible {% endif %}"
+
+            >
+              {% if block.settings.cta_label != blank and block.settings.cta_url != blank %}
+                <a class="w-full" href="{{ block.settings.cta_url }}" >
+              {% endif %}
+              <div class="flex flex-wrap h-full w-full">
+                  {% if block.settings.heading != blank or block.settings.copy != blank %}
+                  <div class="{% if block.settings.desktop_col_span == 'md:w-full' %} w-full {% if block.settings.column_image != blank %}{% if block.settings.image_width == 'md:w-1/4' %} md:w-3/4 {% elsif block.settings.image_width == 'md:w-2/5' %} md:w-3/5 {% elsif block.settings.image_width == 'md:w-2/4' %} md:w-2/4 {% elsif block.settings.image_width == 'md:w-3/5' %} md:w-2/5 {% else %} md:w-full {% endif %} {% endif %}  {% else %} w-full {% endif %} lg:p-8 p-4 {{ block.settings.text_alignment }} {% if block.settings.image_left %} order-2 md:order-2 {% else %} order-2 md:order-1 {% endif %}">
+                    {% if block.settings.subheading != blank %}
+                      <div style="color: {{ block.settings.subheading_color }};" class="transform mt-4 transition-short w-fit leading-none border-b-2 border-green {{ section.settings.tile_font_family }} {{ section.settings.mobile_copy_font_size }} {{ section.settings.desktop_copy_font_size }} font-medium mb-2" style="padding-bottom: {{ block.settings.copy_bottom_spacing }}px;">
+                        {{ block.settings.subheading }}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.heading != blank %}
+                      <div style="color: {{ block.settings.heading_color }};" class="transform leading-tight transition-short {% if block.settings.heading_image != blank %}  flex flex-col lg:flex-row items-start lg:items-end {% endif %} {{ section.settings.tile_font_family }} {{ block.settings.mobile_heading_font_size }} {{ block.settings.desktop_heading_font_size }} font-medium">
+                        {{ block.settings.heading }}
+                        {% if block.settings.heading_image != blank %}
+
+                          <img src="{{ block.settings.heading_image | image_url: height:150  }}"  class=' w-full  lg:ml-4  h-5 lg:h-5 xl:h-7 object-contain object-left lg:object-center '/>
+
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.copy != blank %}
+                      <div style="color: {{ block.settings.text_color }};" class="transform mt-4 transition-short {{ section.settings.tile_font_family }} {{ section.settings.mobile_copy_font_size }} {{ section.settings.desktop_copy_font_size }} font-medium" style="padding-bottom: {{ block.settings.copy_bottom_spacing }}px;">
+                        {{ block.settings.copy }}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.cta_label != blank and block.settings.cta_url != blank %}
+                      <div class="btn-{{ block.id }} mt-3 px-6 py-3 md:py-0 {{block.settings.button_style}} h-11 md:h-auto lg:h-11 flex items-center font-normal justify-center text-center uppercase transition-short leading-tight {% if block.settings.button_style == 'btn-dark' %} w-fit mr-auto px-6 {% endif %}  {{ block.settings.mobile_button_font_size }} {{ block.settings.desktop_button_font_size }}"> <span>{{ block.settings.cta_label }}</span></div>
+                    {% endif %}
+                  </div>
+                  {% endif %}
+                  {% if block.settings.column_image != blank %}
+                    <div class="{% if block.settings.desktop_col_span == 'md:w-full' %} w-full {{block.settings.image_width}} {% elsif block.settings.desktop_col_span == 'md:w-1/2' %} w-full pb-p45 relative {% else %} w-full pb-80 md:pb-3/4 relative{% endif %} {% if block.settings.image_left %} order-1 md:order-1 {% else %} order-1 md:order-2 {% endif %} ">
+                      <img src="{{ block.settings.column_image | image_url: height:300  }}"  class='{% if block.settings.desktop_col_span == 'md:w-full' %} object-contain w-full{% else %} w-full absolute   object-contain object-center{% endif %} {{block.settings.image_height}}'/>
+                    </div>
+                  {% endif %}
+
+                </div>
+              {% if block.settings.cta_label != blank and block.settings.cta_url != blank %}
+                </a>
+              {% endif %}
+
+              {% if block.settings.border_right %}
+                <div class="absolute hidden md:block h-full -right-[6%] top-0 w-[1px] bg-lightGray"></div>
+              {% endif %}
+              
+            </div>
+           
+
+
+            {% when 'banner' %}
+            <div class="flex flex-wrap h-full relative overflow-hidden group w-full transition-all duration-300 ease-in">
+              <a href="{{block.settings.banner_url}}" class="block w-full">
+              <div class="relative w-full h-56 lg:h-64">
+
+                <img  class="absolute object-contain xl:object-cover w-full h-full top-0 left-0  opacity-1 transition-opacity hover:opacity-0" src="{{ block.settings.banner_image | image_url: width:2048  }}"/>
+                <img class="absolute object-contain xl:object-cover w-full h-full top-0 left-0 -z-10" src="{{ block.settings.banner_hover | image_url: width:2048  }}"/>
+
+              </div>
+              </a>
+            </div>
+
+            {% when 'html' %}
+            {%  liquid
+              assign heading_tag = block.settings.heading_tag
+              assign heading = block.settings.heading
+            %}
+            
+            {% if block.settings.heading != blank %}
+                <div style="padding-bottom: {{ block.settings.heading_bottom_spacing }}px; color: {{ block.settings.heading_color }};" class="w-full {{ block.settings.text_alignment }} {{ block.settings.mobile_heading_font_size }} {{ block.settings.desktop_heading_font_size }} {{ block.settings.heading_font_family }} font-bold -mb-10">
+                  {% if block.settings.red_line %}
+                  <div class="w-40 mx-auto h-2 border-red border-b-2 mb-4"></div>
+                {% endif %}
+                <{{ heading_tag | default: 'h2' }}>
+                    {{ heading  | remove: '<p>'  | remove: '</p>'  }}
+                </{{ heading_tag }}>
+                </div>
+            {% endif %}
+            <div class="flex flex-wrap h-full relative justify-center overflow-hidden group w-full transition-all duration-300 ease-in">
+
+              {{block.settings.html_block}}
+
+            </div>
+
+            {% style %}
+
+              .pxFormGenerator{
+                width:100%;
+              }
+              .catalog-embed{
+                width: 90%;
+                height: 420px;
+                border: none;
+
+              }
+
+              
+              
+
+              @media (min-width: 450px){
+                .catalog-embed{
+                  width: 400px;
+
+                }
+              }
+
+            {% endstyle %}
+
+            {% when 'case_studies' %}
+            <div class="flex flex-wrap h-full relative overflow-hidden group w-full transition-all duration-300 ease-in shadow-ram hover:shadow-ramhov">
+              {% if block.settings.column_image != blank %}
+                <div class=" w-full md:w-1/2 relative border-b-8 border-r-0 md:border-b-0 md:border-r-8 border-green bg-customGray">
+                  <img src="{{ block.settings.column_image | image_url: height:300  }}"  class=' {% if block.settings.desktop_col_span == 'md:w-full' %} object-contain w-full{% else %} w-full md:absolute h-full object-contain object-center{% endif %} {{block.settings.image_height}}'/>
+                </div>
+              {% endif %}
+              {% if block.settings.heading != blank or block.settings.copy != blank %}
+                  <div class="w-full md:w-1/2 relative lg:p-8 p-4 text-left bg-white">
+
+                    {% if block.settings.heading != blank %}
+                      <div style="color: {{ block.settings.heading_color }};" class="transform leading-tight transition-short {{ section.settings.tile_font_family }}  font-medium text-xl">
+                        {{ block.settings.heading }}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.copy != blank %}
+                      <div style="color: {{ block.settings.text_color }};" class="transform mt-4 transition-short {{ section.settings.tile_font_family }} {{ section.settings.mobile_copy_font_size }} font-medium" >
+                        {{ block.settings.copy }}
+                      </div>
+                    {% endif %}
+                    {% if block.settings.cta_label != blank and block.settings.cta_url != blank %}
+                      <div style="color: {{ block.settings.cta_color }};" class="btn-{{ block.id }} mt-3 font-medium uppercase transition-short {{ section.settings.mobile_copy_font_size }} "> <a class="w-full hover:underline decoration-green decoration-2 underline-offset-4" href="{{ block.settings.cta_url }}" ><span>{{ block.settings.cta_label }}</span></a></div>
+                    {% endif %}
+                  </div>
+              {% endif %}
+            </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% style %}
+
+
+  @media screen and (min-width: 1024px) {
+
+    .content-wrapper{
+      width: 66.66666667%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .html-wrapper{
+      padding-left: 16.67%;
+
+    }
+  }
+
+  .fullwidth-block{
+    margin-left: calc(-100vw / 2 + 100% / 2 - 2rem);
+      margin-right: calc(-100vw / 2 + 100% / 2 - 2rem);
+      width: calc(100vw + 2rem);
+  }
+
+
+
+
+
+
+
+ 
+
+
+  @media screen and (min-width: 768px) {
+    .fullwidth-block{
+      margin-left: calc(-100vw / 2 + 768px / 2 - 2rem);
+      margin-right: calc(-100vw / 2 + 768px / 2 - 2rem);
+      width: calc(100vw + 2rem);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .fullwidth-block{
+      margin-left: calc(-100vw / 2 + 1024px / 2 - 27%);
+      margin-right: calc(-100vw / 2 + 1024px / 2 - 28%);
+      width: 100vw;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    .fullwidth-block{
+
+      margin-left: calc(-100vw / 2 + 1280px / 2 - 26.2%);
+      margin-right: calc(-100vw / 2 + 1280px / 2 - 26.5%);
+      width: 100vw;
+    }
+  }
+
+
+  @media screen and (min-width: 750px) {
+    .md\:w-1\/2-column{
+      width:calc(50% - 1rem);
+    }
+    .md\:w-1\/3-column{
+      width:calc(33% - 1rem);
+    }
+  }
+{% endstyle %}
+{% schema %}
+{
+  "name": "RAM Contact Sales Form",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Layout"
+    },
+    {
+      "type": "text",
+      "id": "section_id",
+      "label": "Section ID"
+    },
+    {
+      "type": "text",
+      "id": "section_class",
+      "label": "Section Class"
+    },
+    {
+      "type": "color",
+      "id": "back_color",
+      "label": "Background Color"
+    },
+    {
+      "type": "checkbox",
+      "id": "content_width",
+      "label": "Content Width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Fullwidth",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "column_padding",
+      "label": "Column Spacing",
+      "default": "px-2",
+      "options": [
+        {
+          "label": "None",
+          "value": "px-0"
+        },
+        {
+          "label": "Small",
+          "value": "px-2"
+        },
+        {
+          "label": "Medium",
+          "value": "px-4"
+        },
+        {
+          "label": "Large",
+          "value": "px-6"
+        },
+        {
+          "label": "Extra Large",
+          "value": "px-8"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Column Content"
+    },
+    {
+      "type": "select",
+      "id": "tile_font_family",
+      "label": "Section Heading Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile - Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile - Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_padding",
+      "label": "Desktop - Vertical Padding",
+      "default": "md:py-12",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding",
+      "label": "Desktop - Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "default": "h2",
+      "info": "This tag is used for SEO purposes only, it will not affect visual display. [Learn more](https://www.searchenginejournal.com/heading-tags-for-seo/341817)",
+      "options": [
+        {
+          "label": "h1",
+          "value": "h1"
+        },
+        {
+          "label": "h2",
+          "value": "h2"
+        },
+        {
+          "label": "h3",
+          "value": "h3"
+        },
+        {
+          "label": "h4",
+          "value": "h4"
+        },
+        {
+          "label": "h5",
+          "value": "h5"
+        },
+        {
+          "label": "h6",
+          "value": "h6"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Copy"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Section Heading Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "copy_font_family",
+      "label": "Section Copy Font Family",
+      "default": "font-body",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Spacing"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Heading - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_bottom_spacing",
+      "label": "Copy - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Alignment"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "text-left",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-left"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Sizes"
+    },
+    {
+      "type": "select",
+      "id": "desktop_heading_font_size",
+      "label": "Desktop - Section Heading Font Size",
+      "default": "md:text-xl",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_copy_font_size",
+      "label": "Desktop - Section Copy Font Size",
+      "default": "md:text-base",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_font_size",
+      "label": "Mobile - Section Heading Font Size",
+      "default": "text-xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_copy_font_size",
+      "label": "Mobile - Section Copy Font Size",
+      "default": "text-base",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "html",
+      "name": "Html",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "red_line",
+          "label": "Heading Red Line",
+          "default": false
+        },
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "select",
+          "id": "heading_font_family",
+          "label": "Section Heading Font Family",
+          "default": "font-heading",
+          "options": [
+            {
+              "value": "font-heading",
+              "label": "Montserrat"
+            },
+            {
+              "value": "font-body",
+              "label": "Roboto"
+            }
+          ]
+        },
+        {
+          "type": "range",
+          "id": "heading_bottom_spacing",
+          "label": "Heading - Bottom Spacing",
+          "min": 0,
+          "max": 128,
+          "step": 4,
+          "default": 16,
+          "unit": "px"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text Alignment",
+          "default": "text-center",
+          "options": [
+            {
+              "label": "Left",
+              "value": "text-left"
+            },
+            {
+              "label": "Center",
+              "value": "text-center"
+            },
+            {
+              "label": "Right",
+              "value": "text-right"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "desktop_heading_font_size",
+          "label": "Desktop - Section Heading Font Size",
+          "default": "md:text-xl",
+          "options": [
+            {
+              "value": "md:text-xs",
+              "label": "X Small"
+            },
+            {
+              "value": "md:text-sm",
+              "label": "Small"
+            },
+            {
+              "value": "md:text-base",
+              "label": "Medium"
+            },
+            {
+              "value": "md:text-lg",
+              "label": "Large"
+            },
+            {
+              "value": "md:text-xl",
+              "label": "X Large"
+            },
+            {
+              "value": "md:text-2xl",
+              "label": "2X Large"
+            },
+            {
+              "value": "md:text-3xl",
+              "label": "3X Large"
+            },
+            {
+              "value": "md:text-4xl",
+              "label": "4X Large"
+            },
+            {
+              "value": "md:text-5xl",
+              "label": "5X Large"
+            },
+            {
+              "value": "md:text-6xl",
+              "label": "6X Large"
+            },
+            {
+              "value": "md:text-7xl",
+              "label": "7X Large"
+            },
+            {
+              "value": "md:text-8xl",
+              "label": "8X Large"
+            },
+            {
+              "value": "md:text-9xl",
+              "label": "9X Large"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "mobile_heading_font_size",
+          "label": "Mobile - Section Heading Font Size",
+          "default": "text-xl",
+          "options": [
+            {
+              "value": "text-xs",
+              "label": "X Small"
+            },
+            {
+              "value": "text-sm",
+              "label": "Small"
+            },
+            {
+              "value": "text-base",
+              "label": "Medium"
+            },
+            {
+              "value": "text-lg",
+              "label": "Large"
+            },
+            {
+              "value": "text-xl",
+              "label": "X Large"
+            },
+            {
+              "value": "text-2xl",
+              "label": "2X Large"
+            },
+            {
+              "value": "text-3xl",
+              "label": "3X Large"
+            },
+            {
+              "value": "text-4xl",
+              "label": "4X Large"
+            },
+            {
+              "value": "text-5xl",
+              "label": "5X Large"
+            },
+            {
+              "value": "text-6xl",
+              "label": "6X Large"
+            },
+            {
+              "value": "text-7xl",
+              "label": "7X Large"
+            },
+            {
+              "value": "text-8xl",
+              "label": "8X Large"
+            },
+            {
+              "value": "text-9xl",
+              "label": "9X Large"
+            }
+          ]
+        },
+        {
+          "type": "html",
+          "id": "html_block",
+          "label": "HTML block"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RAM Contact Sales Form",
+      "settings": {
+        "section_id": "",
+        "section_class": "",
+        "back_color": "",
+        "content_width": false,
+        "full_width": false,
+        "column_padding": "px-2",
+        "tile_font_family": "font-heading",
+        "mobile_vertical_padding": "py-8",
+        "mobile_horizontal_padding": "px-8",
+        "desktop_vertical_padding": "md:py-12",
+        "desktop_horizontal_padding": "md:px-8",
+        "heading_tag": "h2",
+        "heading": "",
+        "copy": "",
+        "heading_color": "#131313",
+        "heading_font_family": "font-heading",
+        "copy_font_family": "font-body",
+        "heading_bottom_spacing": 16,
+        "copy_bottom_spacing": 16,
+        "text_alignment": "text-left",
+        "desktop_heading_font_size": "md:text-xl",
+        "desktop_copy_font_size": "md:text-base",
+        "mobile_heading_font_size": "text-xl",
+        "mobile_copy_font_size": "text-base"
+      },
+     "blocks": [
+       {
+        "type": "html",
+        "settings": {
+          "red_line": true,
+          "heading": "<p>CONTACT SALES<\/p>",
+          "heading_font_family": "font-heading",
+          "heading_bottom_spacing": 0,
+          "text_alignment": "text-center",
+          "desktop_heading_font_size": "md:text-2xl",
+          "mobile_heading_font_size": "text-xl",
+          "html_block": "<div style=\"margin:0 auto;\" class=\"pxFormGenerator\" id=\"NRCcEj1xmk2g_uGXmjI2EQ\"><\/div>"
+        }
+       }
+     ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,345 @@
+
+<div id="section-{{ section.id }}" class="section-copy {% unless section.settings.full_width %}container {% endunless %} {{ section.settings.text_alignment }} flex flex-col py-4 md:py-12 md:px-6 px-4 md:px-0 " style="background-color:{{section.settings.bg_color}};">
+
+    <details-modal  class="{% if section.settings.full_width %}container {% endif %}" >
+      {%- if section.settings.heading != blank -%}
+          <div class="pb-2.5 flex-wrap flex items-center">
+              <span class="font-heading font-bold {{ section.settings.heading_font_size }} {{ section.settings.desktop_heading_font_size}}">
+                  {%  liquid
+                      echo section.settings.heading
+                  %}
+              </span>
+              <details>
+                <summary class="header__icon header__icon--search header__icon--summary link focus-inset list-none" aria-haspopup="dialog" aria-label="{{ 'general.search.search' | t }}">
+                  <div>
+                       <button type="button" id="notify-new-products" class="vertical-align-middle text-white border-2 border-[#343a40] border-solid bg-[#343a40] w-[250px] rounded-[3] p-1 hover:text-[#343a40] hover:bg-white md:ml-5 md:mb-0 mb-4 h-[35px] transition-all duration-300 ease-in ">NOTIFY ME</button>
+                  </div>
+                </summary>
+                <div class="subscription-modal modal__content opacity-0 block fixed inset-0 justify-center items-center " role="dialog" aria-modal="true" >
+                   <div class="modal-overlay"></div>
+                  <div class="subscription-modal__content py-8 px-10 top-2/4 left-2/4 max-w-[800px] w-full bg-white -translate-y-2/4 -translate-x-2/4 fixed w-full flex flex-col justify-center items-center z-10 bg-white" tabindex="-1">
+                    <h3 id="notify-product-form-header" class="text-[24px] text-left block w-full mb-2.5 font-medium" >Be the first to know about new RAM<sup>®</sup> Mounts products</h3>
+                    <div class="indicates-required w-full text-right text-xs"><span class="asterisk text-red">*</span> indicates required</div>
+                    {% form 'customer', class: 'newsletter-form w-full' %}
+                       <input type="hidden" name="contact[tags]" value="newsletter">
+                       <div class="newsletter-form__field-wrapper w-full">
+                        <div class="flex w-full flex-col mb-5">
+                          <label class="text-[#333] font-bold text-base mb-2.5" for="{{ formId }}-FirstName">{{ 'customer.register.first_name' | t }} <span class="asterisk text-red ">*</span></label>
+                          <input class="input" type="text" aria-required="true" required name="contact[first_name]" id="{{ section.id }}-FirstName" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocomplete="given-name">
+                        </div>
+                        <div class="flex w-full flex-col mb-5">
+                          <label class="text-[#333] font-bold text-base mb-2.5" for="{{ formId }}-LastName">{{ 'customer.register.last_name' | t }} <span class="asterisk text-red ">*</span></label>
+                          <input class="input" type="text" aria-required="true" required name="contact[last_name]" id="{{ section.id }}-LastName" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocomplete="family-name">
+                        </div>
+                         <div class="flex w-full flex-col mb-5">
+                           <label class="text-[#333] font-bold text-base mb-2.5" for="{{ section.id }}-Email">
+                             Email Address <span class="asterisk text-red ">*</span>
+                           </label>
+                           <input
+                             id="{{ section.id }}-Email"
+                             type="email"
+                             name="contact[email]"
+                             class="input"
+                             value="{{ form.email }}"
+                             aria-required="true"
+                             autocorrect="off"
+                             autocapitalize="off"
+                             autocomplete="email"
+                             {% if form.errors %}
+                               autofocus
+                               aria-invalid="true"
+                               aria-describedby="{{ section.id }}-Email"
+                             {% elsif form.posted_successfully? %}
+                               aria-describedby="{{ section.id }}-Email"
+                             {% endif %}
+                             placeholder="{{ 'newsletter.label' | t }}"
+                             required
+                           >
+
+
+                         </div>
+                         <div class="flex justify-center">
+                           <button type="submit" class="newsletter-form__button field__button mt-8 border border-[#ABB0B2] border-solid bg-[#343a40] text-white hover:bg-white hover:text-[#343a40] p-2.5" name="commit" id="Subscribe" aria-label="{{ 'newsletter.button_label' | t }}">
+                             Subscribe
+                           </button>
+                        </div>
+                         {%- if form.errors -%}
+                           <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</small>
+                         {%- endif -%}
+                       </div>
+                       {%- if form.posted_successfully? -%}
+                         <h3 class="newsletter-form__message newsletter-form__message--success form__message" id="Newsletter-success--{{ section.id }}" tabindex="-1" autofocus>{% render 'icon-success' %}{{ 'newsletter.success' | t }}</h3>
+                       {%- endif -%}
+                     {% endform %}
+                  </div>
+                </div>
+             </details>
+          </div>
+      {%- endif -%}
+
+
+      <div>
+          <span class="content rte font-sans font-light {{ section.settings.copy_font_size }}">
+              {%  liquid
+                      echo section.settings.copy
+              %}
+          </span>
+      </div>
+    </details-modal>
+</div>
+<style>
+
+
+    details[open] > .subscription-modal {
+      opacity: 1;
+      z-index: 1000;
+    }
+    .modal-overlay{
+      top: 0;
+      left: 0;
+      z-index: 1500;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,.8);
+    }
+
+
+
+</style>
+{% schema %}
+{
+    "name": "Subscription Popup",
+    "tag": "section",
+    "settings": [
+
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text Alignment",
+            "default": "text-left",
+            "options": [
+                {
+                    "value": "text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "text-right",
+                    "label": "Right"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "select",
+            "id": "desktop_heading_font_size",
+            "label": "Desktop Heading Size",
+            "default": "md:text-base",
+            "options": [
+                {
+                    "value": "md:text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "md:text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "md:text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "md:text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "md:text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "md:text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "md:text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "md:text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "md:text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "md:text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "md:text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "md:text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "md:text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "select",
+            "id": "heading_font_size",
+            "label": "Mobile Heading Font Size",
+            "default": "text-xl",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "richtext",
+            "id": "copy",
+            "label": "Copy"
+        },
+
+        {
+            "type": "select",
+            "id": "copy_font_size",
+            "label": "Copy Size",
+            "default": "text-base",
+            "options": [
+                {
+                    "value": "text-xs",
+                    "label": "X Small"
+                },
+                {
+                    "value": "text-sm",
+                    "label": "Small"
+                },
+                {
+                    "value": "text-base",
+                    "label": "Medium"
+                },
+                {
+                    "value": "text-lg",
+                    "label": "Large"
+                },
+                {
+                    "value": "text-xl",
+                    "label": "X Large"
+                },
+                {
+                    "value": "text-2xl",
+                    "label": "2X Large"
+                },
+                {
+                    "value": "text-3xl",
+                    "label": "3X Large"
+                },
+                {
+                    "value": "text-4xl",
+                    "label": "4X Large"
+                },
+                {
+                    "value": "text-5xl",
+                    "label": "5X Large"
+                },
+                {
+                    "value": "text-6xl",
+                    "label": "6X Large"
+                },
+                {
+                    "value": "text-7xl",
+                    "label": "7X Large"
+                },
+                {
+                    "value": "text-8xl",
+                    "label": "8X Large"
+                },
+                {
+                    "value": "text-9xl",
+                    "label": "9X Large"
+                }
+            ]
+        },
+        {
+            "type": "checkbox",
+            "label": "Full Width ?",
+            "id": "full_width",
+            "default": false
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#f4f4f6"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Subscription Popup"
+        }
+    ]
+}
+{% endschema %}

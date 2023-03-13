@@ -1,0 +1,968 @@
+<div class="{% unless section.settings.full_width %} container {{ section.settings.mobile_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.desktop_horizontal_padding }}{% endunless %} video-container overflow-hidden  {{section.settings.section_class}}">
+  <div class="video-section">
+    <div class="flex flex-col">
+      {% render 'section-copy' %}
+    </div>
+    <noscript>
+      <div class="video-section__media"
+        {% if section.settings.cover_image != blank %} style="padding-bottom: {{ 1 | divided_by: section.settings.cover_image.aspect_ratio | times: 100 }}%;"{% endif %}
+      >
+        <a href="{{ section.settings.video_url }}" class="video-section__poster media media--transparent media--landscape{% if section.settings.cover_image == blank %} video-section__placeholder{% endif %}">
+          {%- if section.settings.cover_image != blank -%}
+            <img
+              srcset="{%- if section.settings.cover_image.width >= 375 -%}{{ section.settings.cover_image | img_url: '375x' }} 375w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 750 -%}{{ section.settings.cover_image | img_url: '750x' }} 750w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 1100 -%}{{ section.settings.cover_image | img_url: '1100x' }} 1100w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 1500 -%}{{ section.settings.cover_image | img_url: '1500x' }} 1500w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 1780 -%}{{ section.settings.cover_image | img_url: '1780x' }} 1780w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 2000 -%}{{ section.settings.cover_image | img_url: '2000x' }} 2000w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 3000 -%}{{ section.settings.cover_image | img_url: '3000x' }} 3000w,{%- endif -%}
+                {%- if section.settings.cover_image.width >= 3840 -%}{{ section.settings.cover_image | img_url: '3840x' }} 3840w,{%- endif -%}
+                {{ section.settings.cover_image | img_url: 'master' }} {{ section.settings.cover_image.width }}w"
+              src="{{ section.settings.cover_image | img_url: '1920x' }}"
+              sizes="{% if section.settings.full_width %}100vw{% else %}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw{% endif %}"
+              alt="{{ 'sections.video.load_video' | t: description: section.settings.description | escape }}"
+              loading="lazy"
+              width="{{ section.settings.cover_image.width }}"
+              height="{{ section.settings.cover_image.height }}"
+            >
+          {%- else -%}
+            {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+          {%- endif -%}
+        </a>
+      </div>
+    </noscript>
+    <deferred-media class="video-section__media deferred-media overflow-hidden block no-js-hidden gradient global-media-settings{% if section.settings.full_width %} global-media-settings--full-width{% endif %}" data-media-id="{{ section.settings.video_url.id }}"
+      {% if section.settings.cover_image != blank %} style="padding-bottom: {{ 1 | divided_by: section.settings.cover_image.aspect_ratio | times: 100 }}%;"{% endif %}
+    >
+      <button
+        id="Deferred-Poster-Modal-{{ section.settings.video_url.id }}"
+        class="video-section__poster media deferred-media__poster flex items-center justify-center bg-transparent cursor-pointer m-0 p-0 h-full w-full block border-0 overflow-hidden media--landscape"
+        type="button"
+      >
+        {%- if section.settings.cover_image != blank -%}
+          <img
+            srcset="{%- if section.settings.cover_image.width >= 375 -%}{{ section.settings.cover_image | img_url: '375x' }} 375w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 750 -%}{{ section.settings.cover_image | img_url: '750x' }} 750w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 1100 -%}{{ section.settings.cover_image | img_url: '1100x' }} 1100w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 1500 -%}{{ section.settings.cover_image | img_url: '1500x' }} 1500w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 1780 -%}{{ section.settings.cover_image | img_url: '1780x' }} 1780w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 2000 -%}{{ section.settings.cover_image | img_url: '2000x' }} 2000w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 3000 -%}{{ section.settings.cover_image | img_url: '3000x' }} 3000w,{%- endif -%}
+              {%- if section.settings.cover_image.width >= 3840 -%}{{ section.settings.cover_image | img_url: '3840x' }} 3840w,{%- endif -%}
+              {{ section.settings.cover_image | img_url: 'master' }} {{ section.settings.cover_image.width }}w"
+            src="{{ section.settings.cover_image | img_url: '1920x' }}"
+            sizes="{% if section.settings.full_width %}100vw{% else %}(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 }}px, (min-width: 750px) calc(100vw - 10rem), 100vw{% endif %}"
+            alt="{{ 'sections.video.load_video' | t: description: section.settings.description | escape }}"
+            loading="lazy"
+            width="{{ section.settings.cover_image.width }}"
+            height="{{ section.settings.cover_image.height }}"
+            class="w-full h-full"
+          >
+        {%- else -%}
+          {{ 'collection-2' | placeholder_svg_tag: 'placeholder-svg placeholder' }}
+        {%- endif -%}
+        <span class="deferred-media__poster-button motion-reduce bg-white border-white rounded-full text-black flex items-center justify-center h-24 w-24 absolute left-2/4 top-2/4 -translate-y-1/2 -translate-x-1/2 hover:scale-110">
+            {%- render 'icon-play' -%}
+        </span>
+      </button>
+      <template>
+        {%- if section.settings.video_url.type == 'youtube' -%}
+          <iframe src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?enablejsapi=1" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen title="{{ section.settings.description | escape }}"></iframe>
+        {%- else -%}
+          <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}" class="js-vimeo" allow="autoplay; encrypted-media" allowfullscreen title="{{ section.settings.description | escape }}"></iframe>
+        {%- endif -%}
+      </template>
+    </deferred-media>
+  </div>
+</div>
+{% style %}
+  .video-section__media {
+      position: relative;
+      padding-bottom: 56.25%;
+      }
+      .deferred-media__poster-button .icon {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .video-section__media.deferred-media:after {
+        content: none;
+      }
+
+      .video-section__poster.deferred-media__poster:focus {
+        outline-offset: 0.3rem;
+      }
+
+      .video-section__media iframe {
+        border: 0;
+      }
+
+      .video-section__poster,
+      .video-section__media iframe {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      .deferred-media:not([loaded]) template {
+        z-index: -1;
+      }
+      .deferred-media[loaded] > .deferred-media__poster {
+        display: none;
+      }
+
+      .deferred-media__poster:focus-visible {
+        outline: none;
+      }
+      .deferred-media__poster:focus {
+        outline: none;
+      }
+
+      .deferred-media__poster:focus:not(:focus-visible) {
+        outline: 0;
+        box-shadow: none;
+      }
+      .placeholder {
+          background-color: rgba(18,18,18,.04);
+          color: rgba(18,18,18,.55);
+          fill: rgba(18,18,18,.55);
+          display: block;
+          max-width: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+      }
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+        padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+      }
+
+      @media screen and (min-width: 750px) {
+        .section-{{ section.id }}-padding {
+          padding-top: {{ section.settings.padding_top }}px;
+          padding-bottom: {{ section.settings.padding_bottom }}px;
+        }
+      }
+{% endstyle %}
+{% schema %}
+{
+  "name": "Video",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_class",
+      "label": "Section Class"
+    },
+    {
+      "type": "image_picker",
+      "id": "cover_image",
+      "label": "Cover Image"
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
+      "default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+      "label": "Video URL",
+      "placeholder": "t:sections.video.settings.video_url.placeholder"
+
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description"
+
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Fullwidth",
+      "default": false
+    },
+
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile - Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile - Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_padding",
+      "label": "Desktop - Vertical Padding",
+      "default": "md:py-12",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding",
+      "label": "Desktop - Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "default": "h2",
+      "info": "This tag is used for SEO purposes only, it will not affect visual display. [Learn more](https://www.searchenginejournal.com/heading-tags-for-seo/341817)",
+      "options": [
+        {
+          "label": "h1",
+          "value": "h1"
+        },
+        {
+          "label": "h2",
+          "value": "h2"
+        },
+        {
+          "label": "h3",
+          "value": "h3"
+        },
+        {
+          "label": "h4",
+          "value": "h4"
+        },
+        {
+          "label": "h5",
+          "value": "h5"
+        },
+        {
+          "label": "h6",
+          "value": "h6"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Copy"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Section Heading Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "copy_font_family",
+      "label": "Section Copy Font Family",
+      "default": "font-body",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Spacing"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Heading - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_bottom_spacing",
+      "label": "Copy - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Alignment"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-left"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Sizes"
+    },
+    {
+      "type": "select",
+      "id": "desktop_heading_font_size",
+      "label": "Desktop - Section Heading Font Size",
+      "default": "md:text-xl",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_copy_font_size",
+      "label": "Desktop - Section Copy Font Size",
+      "default": "md:text-base",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_font_size",
+      "label": "Mobile - Section Heading Font Size",
+      "default": "text-xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_copy_font_size",
+      "label": "Mobile - Section Copy Font Size",
+      "default": "text-base",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video"
+    }
+  ]
+}
+  {% endschema %}

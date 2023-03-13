@@ -1,0 +1,169 @@
+<filter-collection class="block mx-auto px-4 py-8 px-4 max-w-[1800px] ">
+    {% if search.terms != blank %}
+        <div>
+        <h1 class="text-base font-bold uppercase text-[#333] pb-4">{{ search.results_count }} Results Found For: <span class="font-normal color-black capitalize">"{{ search.terms }}"</span></h1>
+        </div>
+    {% else %}
+      <div>
+        <h1 class="text-base font-bold uppercase text-[#333] pb-4">{{ collections.all.products_count }} Results Found</h1>
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-5 lg:grid-cols-4">
+        <!-- Filter Header Bar -->
+        {% if search.terms != blank and search.results_count > 0 %}
+        <div class="md:col-span-5 lg::col-span-4">
+            <div class="flex font-body items-center justify-between py-4">
+                <button data-filter-toggle class="cursor-pointer flex items-center justify-start">
+                    <span class="block h-8 w-8 transform -translate-x-2">
+                        {% render 'icons' icon: 'filter' %}
+                    </span>
+                    <strong class="font-bold text-lg uppercase">
+                        filter
+                    </strong>
+                    <span data-chevron class="block w-5 ml-2 md:hidden translate">
+                        {% render 'icons' icon: 'chevron' %}
+                    </span>
+                </button>
+                <div class="flex items-center relative">
+                    <strong class="font-bold text-lg uppercase px-2">
+                        sort
+                    </strong>
+                    <span class="block w-5">
+                        {% render 'icons' icon: 'chevron' %}
+                    </span>
+
+                    <select data-sort-by class="absolute cursor-pointer h-full left-0 opacity-0 top-0 w-full" id="sort-by">
+                        {% assign sort_by = search.sort_by | default: search.default_sort_by %}
+
+                        {% for option in search.sort_options %}
+                            <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                                {{ option.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- End Filter Header Bar -->
+
+        <!-- Filter Sidebar -->
+        <div
+            data-sidebar
+            class="
+                md:grid-cols-2
+
+                bg-white
+                transform
+                -translate-x-full
+                fixed
+                w-full
+                duration-1000
+                z-40
+                top-0
+                bottom-0
+                overflow-y-scroll
+                left-0
+
+                p-4
+                shadow
+                transition
+                md:shadow-none
+                md:p-0
+                md:z-0
+                md:col-span-2
+                lg:col-span-1
+                md:block
+                md:static
+                md:translate-x-0
+                lg:overflow-y-auto
+            "
+            >
+            <button aria-label="close filter drawer" data-filter-toggle class="absolute top-4 right-4 md:hidden z-10">
+                <span class="block h-8 w-8">
+                    {% render 'icons' icon: 'close' %}
+                </span>
+            </button>
+            <div class="font-body grid grid-col-1  gap-2 ">
+                {% assign show = false %}
+                {% for item in search.results %}
+                  {% if item.object_type == 'page' %}
+                      {% assign show = true %}
+                  {% endif %}
+                {% endfor %}
+                {% if show %}
+                  <div class="filters border solid border-[#dcdcdc] rounded mr-4 p-4 mt-10 md:mt-0">
+                    <h2 class="uppercase font-bold text-base pb-2.5 border-b border-solid border-[#000] px-3 text-black">Recommended Pages</h2>
+                    <ul class="pl-8 text-[#333] py-2 list-disc">
+                      {% for item in search.results %}
+                       {% if item.object_type == 'page' %}
+                         <li><a class="text-red hover:underline py-2" href="{{ item.url }}" >{{ item.title }}</a></li>
+                       {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% endif %}
+                {% if search.terms != blank and search.results_count > 0 %}
+                  <div class="filters border solid border-[#dcdcdc] rounded mr-4 p-4 mt-10 md:mt-0">
+                    <div data-filter-display class="font-body grid grid-col-1 gap-2">
+                        {% render 'collection-filters' %}
+                    </div>
+                  </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- End Filter Sidebar -->
+        {% if search.terms != blank %}
+          <div data-product-grid class="md:col-span-3 lg:col-span-3">
+          {% paginate search.results by 24 %}
+                <div class="auto-rows-min md:col-span-2 grid grid-cols-1 {% if search.results.size > 0 %}sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4{% endif %} gap-4 text-center">
+                   {% if search.terms != blank and search.results_count > 0 %}
+                     {% for product in search.results %}
+                      {% if product.object_type == 'product' %}
+                        {% render 'product_tile' with product as product, brand: false %}
+                      {% endif %}
+                     {% endfor %}
+                   {% else %}
+                     {% render "mount-builder" %}
+                   {% endif %}
+                </div>
+                <div class="col-span-1 md:col-span-4">
+                    {% render 'pagination' with paginate as paginate %}
+                </div>
+
+          {% endpaginate %}
+          </div>
+        {% else %}
+            <div data-product-grid class="md:col-span-3 lg:col-span-3">
+              {% paginate collections.all.products by 24 %}
+                    <div class="auto-rows-min md:col-span-2 grid grid-cols-1 {% if collections.all.products.size > 0 %}sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4{% endif %} gap-4 text-center">
+                         {% for product in collections.all.products  %}
+                            {% render 'product_tile' with product as product, brand: false %}
+                         {% endfor %}
+
+                    </div>
+                    <div class="col-span-1 md:col-span-4">
+                        {% render 'pagination' with paginate as paginate %}
+                    </div>
+              {% endpaginate %}
+
+            </div>
+
+        {% endif %}
+    </div>
+</filter-collection>
+
+
+{% schema %}
+  {
+      "name": "Search Form",
+      "tag": "section",
+      "presets": [
+          {
+              "name": "Search Results"
+          }
+      ]
+  }
+
+  {% endschema %}

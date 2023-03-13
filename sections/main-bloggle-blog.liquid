@@ -1,0 +1,284 @@
+
+  <script async src="https://shopify-blog-app.s3.eu-west-3.amazonaws.com/lazysizes-bloggle.min.js"></script>
+  <link href="https://shopify-blog-app.s3.eu-west-3.amazonaws.com/blog_styles--rammount.min.css?v=1666893435722" type="text/css" rel="stylesheet">
+  <link href="https://shopify-blog-app.s3.eu-west-3.amazonaws.com/blog-layout.min.css" type="text/css" rel="stylesheet">
+
+<div id="bloggle--blog_layout">
+{% if blog.articles_count == 0 %}
+  <div class="bloggle--header bloggle--header-empty">
+    <h1 id="bloggle--blog-title" class="text__left ">The blog {{ blog.title }} is empty</h1>
+    <a style="max-width: 300px;margin-left: auto;margin-right: auto;margin-top: 20px;" class="button--1636212963117" href="/">Go back home</a>
+    <br /><br />
+  </div>
+{% else %}
+  <div class="bloggle--header">
+    <h1 id="bloggle--blog-title" class="text__left ">{{ blog.title }}</h1>
+  </div>
+  <div class="bloggle--sub-header left" >
+    <div class="bloggle--nav">
+      
+    </div>
+    <div class="bloggle--search">
+      <svg id="bloggle--icon_search" viewBox="0 0 18 19" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 112.85 3.5a5.784 5.784 0 018.18 8.18zm.26 1.12a6.78 6.78 0 11.72-.7l5.4 5.4a.5.5 0 11-.71.7l-5.41-5.4z" fill="currentColor"></path>
+      </svg>
+    </div>
+    <div id="bloggle--input_search_container">
+      <div id="bloggle--search_input_container">
+        <input id="bloggle--input_search" type="search" placeholder="Search in our blog..." >
+        <svg id="bloggle--icon_close" fill="none" viewBox="0 0 18 17">
+          <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+          </path>
+        </svg>
+      </div>
+      <div id="bloggle--search_results" >
+      </div>
+    </div>
+    
+  </div>
+  {% paginate blog.articles by 12 %}
+    <div class="bloggle--blog-items">
+      {% for article in blog.articles %}
+        <div class="bloggle--blog-item text__left" style="border-radius: 0px;" >
+          <a class="bloggle--blog-item-link" href="{{ article.url }}">
+            {% if article.image %}
+              <img class="bloggle--blog-item-img lazybloggle" data-src="{{ article.image | img_url:'700x' }}" alt="">
+            {% endif %}
+            <p class="bloggle--blog-item-title ">{{ article.title }}</p>
+            <p class="bloggle--blog-item-date">{{ article.published_at | time_tag: format: 'date' }}</p>
+            {% if article.excerpt.size != 0 %}
+              {% assign allWords = article.excerpt | strip_html | split: " " %}
+              {% assign excerptBuilt = "" %}
+              {% for word in allWords %}
+                {% if forloop.index <= 25 %}
+                  {% if forloop.index == 25 %}
+                    {% assign excerptBuilt = excerptBuilt | append: word %}
+                  {% else %}
+                    {% assign excerptBuilt = excerptBuilt | append: word | append: " " %}
+                  {% endif %}
+                {% else %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+              <p class="bloggle--blog-item-desc">{{ excerptBuilt }}...</p>
+            {% else %}
+              {% assign allWords = article.content | strip_html | split: " " %}
+              {% assign excerptBuilt = "" %}
+              {% for word in allWords %}
+                {% if forloop.index <= 25 %}
+                  {% if forloop.index == 25 %}
+                    {% assign excerptBuilt = excerptBuilt | append: word %}
+                  {% else %}
+                    {% assign excerptBuilt = excerptBuilt | append: word | append: " " %}
+                  {% endif %}
+                {% else %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+              <p class="bloggle--blog-item-desc">{{ excerptBuilt }}...</p>
+            {% endif %}
+             <p class="bloggle--blog-item-author">{{ article.author }}</p>
+            <button class="bloggle--blog-item-button button--1636212963117">Read post</button>
+
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="bloggle--pagination">
+        {% if paginate.pages > 1 %}
+          {% if paginate.previous %}
+            {% if paginate.pages == 1 %}
+              <a class="bloggle--pagination-item" rel="prev" href="{{ paginate.previous.url | remove: '?page=1' }}">
+                <svg aria-hidden="true" focusable="false" role="presentation"
+                     class="bloggle--paginate_icon bloggle--prev" viewBox="0 0 10 6">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                        fill="currentColor">
+                  </path>
+                </svg>
+              </a>
+            {% else %}
+              <a class="bloggle--pagination-item" rel="prev" href="{{ paginate.previous.url }}">
+                <svg aria-hidden="true" focusable="false" role="presentation"
+                     class="bloggle--paginate_icon bloggle--prev" viewBox="0 0 10 6">
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                        fill="currentColor">
+                  </path>
+                </svg>
+              </a>
+            {% endif %}
+          {% endif %}
+
+          {% for part in paginate.parts %}
+            {% if part.is_link %}
+              {% if paginate.pages == 1 %}
+                <a class="bloggle--pagination-item" href="{{ part.url | remove: '?page=1' }}">{{ part.title }}</a>
+              {% else %}
+                <a class="bloggle--pagination-item" href="{{ part.url }}">{{ part.title }}</a>
+              {% endif %}
+            {% else %}
+              <span class="bloggle--pagination-item {% if part.title == paginate.current_page %}bloggle--active{% endif %}">{{ part.title }}</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if paginate.next %}
+            <a class="bloggle--pagination-item" rel="next" href="{{ paginate.next.url }}">
+              <svg aria-hidden="true" focusable="false" role="presentation" class="bloggle--paginate_icon bloggle--next"
+                   viewBox="0 0 10 6">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                      fill="currentColor">
+                </path>
+              </svg>
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+{% endif %}
+</div>
+
+<script>
+  var canonicalUrl = "{{ canonical_url }}";
+  var searchBar = document.getElementById("bloggle--input_search_container");
+  var searchBarClose = document.getElementById("bloggle--icon_close");
+  var searcBarButton = document.getElementById("bloggle--icon_search");
+  searcBarButton.addEventListener("click", function() {
+    searchBar.classList.add("bloggle--visible");
+  })
+  searchBarClose.addEventListener("click", function() {
+    searchBar.classList.remove('bloggle--visible');
+    document.getElementById("bloggle--input_search").value = "";
+    document.getElementById("bloggle--search_results").innerHTML = "";
+  })
+  window.addEventListener('click', function(e){
+    console.log(e.target)
+    if (!document.getElementById('bloggle--input_search_container').contains(e.target) && !document.getElementById('bloggle--icon_search').contains(e.target)){
+      searchBar.classList.remove('bloggle--visible');
+    }
+  });
+
+  var barWidth = document.querySelector('.bloggle--sub-header').offsetWidth;
+  if (barWidth > 320) {
+    searchBar.style.left = "initial";
+    searchBar.style.right = "0";
+  }
+
+  var navigationLinks = document.getElementsByClassName('bloggle--nav-item');
+  if (navigationLinks.length > 0) {
+    for (let i = 0; i < navigationLinks.length ; i++) {
+      if (navigationLinks[i].getAttribute("href") == canonicalUrl) {
+        navigationLinks[i].classList.add("bloggle--active");
+      } else {
+        navigationLinks[i].classList.remove("bloggle--active");
+      }
+    }
+  }
+
+  window.addEventListener('input', function (e) {
+    var id = e.target.getAttribute("id");
+    var resultContainer = document.getElementById("bloggle--search_results");
+
+    if (id && id == "bloggle--input_search") {
+      var searchValue = e.target.value;
+      if (searchValue.length > 1) {
+        var request = new XMLHttpRequest();
+        request.responseType = 'json'
+        const suggestUrl = "https://" + window.location.hostname + (window.Shopify && window.Shopify.routes && window.Shopify.routes.root || "/" ) + "search/suggest.json?q=" + searchValue + "&resources[type]=article";
+        request.open('GET', suggestUrl);
+        request.onload = function (e) {
+          if (this.status == 200) {
+            var articles = this.response.resources.results.articles;
+            if (articles.length > 0) {
+              let resultsHtml = "";
+              for (let i = 0; i < articles.length; i++) {
+                resultsHtml = resultsHtml + '<div class="bloggle--search_result"><a class="bloggle--search_result_link" href="' + articles[i].url + '">' + articles[i].title + '</a></div>'
+              }
+              resultContainer.innerHTML = resultsHtml;
+            } else {
+              resultContainer.innerHTML = "";
+            }
+          }
+        }
+        request.send();
+      } else {
+        resultContainer.innerHTML = "";
+      }
+    }
+  });
+</script>
+
+<style>
+  .bloggle--blog-item-title, .bloggle--blog-item-date, .bloggle--blog-item-desc, .bloggle--blog-item-author {
+    color: #000000;
+  }
+  .bloggle--blog-item {
+    
+    width: calc(33.33% - 10px);
+    
+    
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .bloggle--blog-item-title {
+    margin-top: 10px;
+  }
+  .bloggle--blog-item-link {
+    text-decoration: unset;
+  }
+  .bloggle--blog-item-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+  .bloggle--blog-item:hover .bloggle--blog-item-img {
+    opacity: 0.5;
+  }
+  #bloggle--blog_layout {
+    width: 100%;
+  }
+  @media screen and (max-width: 1024px) {
+    .bloggle--blog-item {
+      
+      width: calc(50% - 7.5px);
+      
+    }
+    #bloggle--blog_layout {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .bloggle--blog-items {
+      gap: 0px;
+    }
+    #bloggle--blog_layout {
+      width: 100%;
+    }
+    .bloggle--blog-item {
+      
+      width: 100%;
+    }
+  }
+</style>
+<style>
+.bloggle--blog-item-date { 
+font-size: 12px; 
+margin-bottom: 10px; 
+} 
+
+.bloggle--blog-item-author {
+ font-size: 13px;
+ margin-top: 10px;
+ }
+
+ .bloggle--blog-item-button {
+margin-top: 10px;
+ }
+</style>
+

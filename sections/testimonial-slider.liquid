@@ -1,0 +1,1049 @@
+{%  liquid
+  assign heading_tag = section.settings.heading_tag
+  assign heading = section.settings.heading
+%}
+
+<div class="{% unless section.settings.full_width %}container{% endunless %} {% if section.settings.heading_position == 'side' %}grid grid-cols-1 md:grid-cols-2{% else %}flex flex-col{% endif %} relative {{section.settings.section_class}}">
+    <div
+        class="flex items-center {{ section.settings.mobile_vertical_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_horizontal_padding }} "
+        style="background-color: {{ section.settings.copy_bg }}; color: {{ section.settings.copy_text }}"
+    >
+        <div class="flex flex-col w-full">
+            {%  liquid
+              assign heading_tag = section.settings.heading_tag
+              assign heading = section.settings.heading
+            %}
+
+            {% if section.settings.heading != blank %}
+                <div style="padding-bottom: {{ section.settings.heading_bottom_spacing }}px;" class="{{ section.settings.text_alignment }} {{ section.settings.mobile_heading_font_size }} {{ section.settings.desktop_heading_font_size }} {{ section.settings.heading_font_family }}">
+                <{{ heading_tag | default: 'h2' }}>
+                    {{ heading  | remove: '<p>'  | remove: '</p>'  }}
+                </{{ heading_tag }}>
+                </div>
+            {% endif %}
+            {% if section.settings.copy != blank %}
+                <div style="padding-bottom: {{ section.settings.copy_bottom_spacing }}px;" class="{{ section.settings.text_alignment }} {{ section.settings.mobile_copy_font_size }} {{ section.settings.desktop_copy_font_size }} {{ section.settings.copy_font_family }}">{{ section.settings.copy }}</div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="overflow-hidden">
+        <testimonial-slider data-speed="{{ section.settings.slider_speed | times: 1000 }}">
+            <!-- Slider main container -->
+            <div class="relative h-full text-lg" data-swiper>
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    {% for block in section.blocks %}
+                        <div class="swiper-slide flex flex-col justify-center {{ section.settings.mobile_vertical_padding }} {{ section.settings.desktop_vertical_padding }} {{ section.settings.mobile_horizontal_padding }} {{ section.settings.desktop_horizontal_padding }} {{ section.settings.mobile_copy_font_size }} {{ section.settings.desktop_copy_font_size }}" style="background: {{ section.settings.review_bg }}; color: {{ section.settings.reviews_text }}; border-radius-5 rounded">
+                            <div class="p-4 flex" style="color: {{ section.settings.star_color }};">
+                                {% for i in (1..block.settings.rating) %}
+                                    <span class="block w-5 h-5">
+                                        {% render 'icons' icon: 'star' %}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                            <div class="p-4">
+                                {{ block.settings.review }}
+                            </div>
+                            <div class="p-4 font-bold">
+                                {{ block.settings.reviewer }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <!-- If we need navigation buttons -->
+                <div class="absolute bottom-8 right-8 flex items-center justify-center z-10" style="color: {{ section.settings.reviews_text }};">
+                    <button class="w-10 mx-2 disabled:opacity-20" data-swiper-button-prev>
+                        <span class="block transform rotate-180">{% render 'icons' icon: 'arrow' %}</span>
+                    </button>
+                    <button class="w-10 mx-2 disabled:opacity-20" data-swiper-button-next>
+                        <span>{% render 'icons' icon: 'arrow' %}</span>
+                    </button>
+                </div>
+            </div>
+        </testimonial-slider>
+    </div>
+</div>
+
+{% javascript %}
+    class Slider extends HTMLElement {
+        constructor() {
+            super();
+        }
+
+        connectedCallback() {
+            window.addEventListener('load', () => {
+                this.swiper = new Swiper(this.querySelector('[data-swiper]'), {
+                    // Optional parameters
+                    autoplay: {
+                        delay: Number(this.dataset.speed),
+                        disableOnInteraction: false,
+                    },
+                    direction: 'horizontal',
+                    loop: false,
+                    navigation: {
+                        nextEl: '[data-swiper-button-next]',
+                        prevEl: '[data-swiper-button-prev]',
+                    },
+                    slidesPerView: "auto",
+                    speed: Number(this.dataset.speed)
+                });
+            })
+        }
+    }
+    customElements.define('testimonial-slider', Slider);
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Testimonial Slider",
+  "tag": "section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "text",
+      "id": "section_class",
+      "label": "Section Class"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Fullwidth",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Heading Position",
+      "default": "side",
+      "options": [
+        {
+          "label": "Side",
+          "value": "side"
+        },
+        {
+          "label": "Top",
+          "value": "top"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider Speed",
+      "default": 2,
+      "min": 1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "s"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Section Styles"
+    },
+    {
+      "type": "color",
+      "id": "copy_bg",
+      "label": "Copy - Background Color",
+      "default": "#231F20"
+    },
+    {
+      "type": "color",
+      "id": "copy_text",
+      "label": "Copy - Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "reviews_text",
+      "label": "Reviews - Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "review_bg",
+      "label": "Reviews - Background Color",
+      "default": "#FBFBFB"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Ratings - Star Color",
+      "default": "#EEB531"
+    },
+    {
+      "type": "header",
+      "content": "Section Sizes"
+    },
+    {
+      "type": "select",
+      "id": "mobile_vertical_padding",
+      "label": "Mobile - Vertical Padding",
+      "default": "py-8",
+      "options": [
+        {
+          "value": "py-0",
+          "label": "None"
+        },
+        {
+          "value": "py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_horizontal_padding",
+      "label": "Mobile - Horizontal Padding",
+      "default": "px-8",
+      "options": [
+        {
+          "value": "px-0",
+          "label": "None"
+        },
+        {
+          "value": "px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_vertical_padding",
+      "label": "Desktop - Vertical Padding",
+      "default": "md:py-8",
+      "options": [
+        {
+          "value": "md:py-0",
+          "label": "None"
+        },
+        {
+          "value": "md:py-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:py-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:py-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:py-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:py-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:py-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:py-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:py-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:py-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:py-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:py-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:py-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:py-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:py-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:py-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:py-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:py-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:py-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:py-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_horizontal_padding",
+      "label": "Desktop - Horizontal Padding",
+      "default": "md:px-8",
+      "options": [
+        {
+          "value": "md:px-0",
+          "label": "None"
+        },
+        {
+          "value": "md:px-px",
+          "label": "Pixel"
+        },
+        {
+          "value": "md:px-0.5",
+          "label": "0.125rem"
+        },
+        {
+          "value": "md:px-1",
+          "label": "0.25rem"
+        },
+        {
+          "value": "p-1.5",
+          "label": "0.375rem"
+        },
+        {
+          "value": "md:px-2",
+          "label": "0.5rem"
+        },
+        {
+          "value": "md:px-2.5",
+          "label": "0.625rem"
+        },
+        {
+          "value": "md:px-3",
+          "label": "0.75rem"
+        },
+        {
+          "value": "md:px-3.5",
+          "label": "0.875rem"
+        },
+        {
+          "value": "md:px-4",
+          "label": "1rem"
+        },
+        {
+          "value": "md:px-5",
+          "label": "1.25rem"
+        },
+        {
+          "value": "md:px-6",
+          "label": "1.5rem"
+        },
+        {
+          "value": "md:px-7",
+          "label": "1.75rem"
+        },
+        {
+          "value": "md:px-8",
+          "label": "2rem"
+        },
+        {
+          "value": "md:px-9",
+          "label": "2.25rem"
+        },
+        {
+          "value": "md:px-10",
+          "label": "2.5rem"
+        },
+        {
+          "value": "md:px-11",
+          "label": "2.75rem"
+        },
+        {
+          "value": "md:px-12",
+          "label": "3rem"
+        },
+        {
+          "value": "md:px-14",
+          "label": "3.5rem"
+        },
+        {
+          "value": "md:px-16",
+          "label": "4rem"
+        },
+        {
+          "value": "md:px-20",
+          "label": "5rem"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "tile_font_family",
+      "label": "Tile Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "tile_font_size",
+      "label": "Tile Font Size",
+      "default": "text-xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading Tag",
+      "default": "h2",
+      "info": "This tag is used for SEO purposes only, it will not affect visual display. [Learn more](https://www.searchenginejournal.com/heading-tags-for-seo/341817)",
+      "options": [
+        {
+          "label": "h1",
+          "value": "h1"
+        },
+        {
+          "label": "h2",
+          "value": "h2"
+        },
+        {
+          "label": "h3",
+          "value": "h3"
+        },
+        {
+          "label": "h4",
+          "value": "h4"
+        },
+        {
+          "label": "h5",
+          "value": "h5"
+        },
+        {
+          "label": "h6",
+          "value": "h6"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "copy",
+      "label": "Copy"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Fonts"
+    },
+    {
+      "type": "select",
+      "id": "heading_font_family",
+      "label": "Section Heading Font Family",
+      "default": "font-heading",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "copy_font_family",
+      "label": "Section Copy Font Family",
+      "default": "font-body",
+      "options": [
+        {
+          "value": "font-heading",
+          "label": "Montserrat"
+        },
+        {
+          "value": "font-body",
+          "label": "Roboto"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Spacing"
+    },
+    {
+      "type": "range",
+      "id": "heading_bottom_spacing",
+      "label": "Heading - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "copy_bottom_spacing",
+      "label": "Copy - Bottom Spacing",
+      "min": 0,
+      "max": 128,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Section Content Alignment"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "text-left"
+        },
+        {
+          "label": "Center",
+          "value": "text-center"
+        },
+        {
+          "label": "Right",
+          "value": "text-right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Content Sizes"
+    },
+    {
+      "type": "select",
+      "id": "desktop_heading_font_size",
+      "label": "Desktop - Section Heading Font Size",
+      "default": "md:text-xl",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "desktop_copy_font_size",
+      "label": "Desktop - Section Copy Font Size",
+      "default": "md:text-base",
+      "options": [
+        {
+          "value": "md:text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "md:text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "md:text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "md:text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "md:text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "md:text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "md:text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "md:text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "md:text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "md:text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "md:text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "md:text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "md:text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_heading_font_size",
+      "label": "Mobile - Section Heading Font Size",
+      "default": "text-xl",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "mobile_copy_font_size",
+      "label": "Mobile - Section Copy Font Size",
+      "default": "text-base",
+      "options": [
+        {
+          "value": "text-xs",
+          "label": "X Small"
+        },
+        {
+          "value": "text-sm",
+          "label": "Small"
+        },
+        {
+          "value": "text-base",
+          "label": "Medium"
+        },
+        {
+          "value": "text-lg",
+          "label": "Large"
+        },
+        {
+          "value": "text-xl",
+          "label": "X Large"
+        },
+        {
+          "value": "text-2xl",
+          "label": "2X Large"
+        },
+        {
+          "value": "text-3xl",
+          "label": "3X Large"
+        },
+        {
+          "value": "text-4xl",
+          "label": "4X Large"
+        },
+        {
+          "value": "text-5xl",
+          "label": "5X Large"
+        },
+        {
+          "value": "text-6xl",
+          "label": "6X Large"
+        },
+        {
+          "value": "text-7xl",
+          "label": "7X Large"
+        },
+        {
+          "value": "text-8xl",
+          "label": "8X Large"
+        },
+        {
+          "value": "text-9xl",
+          "label": "9X Large"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "label": "Star Rating",
+          "id": "rating",
+          "type": "range",
+          "min": 0,
+          "max": 5,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "label": "Review",
+          "id": "review",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tortor aliquet risus non, pellentesque tempor, leo, sed sed adipiscing. Sapien elit, feugiat nulla tincidunt"
+        },
+        {
+          "type": "text",
+          "label": "Reviewer's Name",
+          "id": "reviewer",
+          "default": "Joe Blow"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial Slider",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
