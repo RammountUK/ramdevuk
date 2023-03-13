@@ -4,7 +4,7 @@
       "type": "hero",
       "settings": {
         "section_id": "",
-        "desktop_image": "shopify:\/\/shop_images\/apple_1.webp",
+        "desktop_image": "shopify:\/\/shop_images\/apple-brand-banner.jpg",
         "line_color": "#cd1e27",
         "desktop_image_height": 300,
         "content_desktop_alignment": "md:justify-start",
@@ -30,7 +30,7 @@
         "button2_hover_bg": "#000000",
         "button2_text": "#000000",
         "button2_hover_text": "#ffffff",
-        "mobile_image": "shopify:\/\/shop_images\/apple_588fac6c-b4a6-41ab-b388-0164fa878a2f.jpg",
+        "mobile_image": "shopify:\/\/shop_images\/apple_1.webp",
         "mobile_image_height": 425,
         "text_mobile_alignment": "text-left",
         "text_mobile_vertical_alignment": "justify-center",
