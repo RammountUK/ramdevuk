@@ -262,6 +262,19 @@
     },
     "7d22fc7b-c2db-44dd-a038-a1aaaa5f7831": {
       "type": "tabs",
+      "blocks": {
+        "98e45a19-c0a0-4e10-aa9e-7f64fb8b272c": {
+          "type": "tab",
+          "settings": {
+            "title": "Phone",
+            "content": "",
+            "page_content": ""
+          }
+        }
+      },
+      "block_order": [
+        "98e45a19-c0a0-4e10-aa9e-7f64fb8b272c"
+      ],
       "settings": {
         "mobile_vertical_padding": "py-8",
         "mobile_horizontal_padding": "px-8",
