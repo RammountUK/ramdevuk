@@ -270,10 +270,19 @@
             "content": "",
             "page_content": ""
           }
+        },
+        "326c36d6-b91a-4b36-9475-2fde6bd5e51c": {
+          "type": "tab",
+          "settings": {
+            "title": "Camera",
+            "content": "",
+            "page_content": ""
+          }
         }
       },
       "block_order": [
-        "98e45a19-c0a0-4e10-aa9e-7f64fb8b272c"
+        "98e45a19-c0a0-4e10-aa9e-7f64fb8b272c",
+        "326c36d6-b91a-4b36-9475-2fde6bd5e51c"
       ],
       "settings": {
         "mobile_vertical_padding": "py-8",
