@@ -4,7 +4,7 @@
       "type": "hero",
       "settings": {
         "section_id": "",
-        "desktop_image": "shopify:\/\/shop_images\/apple-brand-banner.jpg",
+        "desktop_image": "shopify:\/\/shop_images\/apple-brand-banner.webp",
         "line_color": "#cd1e27",
         "desktop_image_height": 300,
         "content_desktop_alignment": "md:justify-start",
