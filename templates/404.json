@@ -286,21 +286,12 @@
             "content": "",
             "page_content": ""
           }
-        },
-        "347f6792-0ffa-41d2-93c4-66a59ba7b6ac": {
-          "type": "tab",
-          "settings": {
-            "title": "Printer",
-            "content": "",
-            "page_content": ""
-          }
         }
       },
       "block_order": [
         "98e45a19-c0a0-4e10-aa9e-7f64fb8b272c",
         "326c36d6-b91a-4b36-9475-2fde6bd5e51c",
-        "a2d8a2c6-4e55-4bcb-8c2b-9eb38c7d3b00",
-        "347f6792-0ffa-41d2-93c4-66a59ba7b6ac"
+        "a2d8a2c6-4e55-4bcb-8c2b-9eb38c7d3b00"
       ],
       "settings": {
         "mobile_vertical_padding": "py-8",
@@ -311,8 +302,8 @@
         "copy": "<p>try one of these<\/p>",
         "heading_font_family": "font-heading",
         "copy_font_family": "font-body",
-        "heading_bottom_spacing": 16,
-        "copy_bottom_spacing": 16,
+        "heading_bottom_spacing": 0,
+        "copy_bottom_spacing": 0,
         "text_alignment": "text-center",
         "desktop_heading_font_size": "md:text-xl",
         "desktop_copy_font_size": "md:text-base",
