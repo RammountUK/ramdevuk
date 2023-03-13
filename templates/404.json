@@ -259,11 +259,32 @@
         "mobile_heading_font_size": "text-xl",
         "mobile_copy_font_size": "text-base"
       }
+    },
+    "7d22fc7b-c2db-44dd-a038-a1aaaa5f7831": {
+      "type": "tabs",
+      "settings": {
+        "mobile_vertical_padding": "py-8",
+        "mobile_horizontal_padding": "px-8",
+        "desktop_vertical_padding": "md:py-12",
+        "desktop_horizontal_padding": "md:px-8",
+        "heading": "<p>test<\/p>",
+        "copy": "<p>try one of these<\/p>",
+        "heading_font_family": "font-heading",
+        "copy_font_family": "font-body",
+        "heading_bottom_spacing": 16,
+        "copy_bottom_spacing": 16,
+        "text_alignment": "text-center",
+        "desktop_heading_font_size": "md:text-xl",
+        "desktop_copy_font_size": "md:text-base",
+        "mobile_heading_font_size": "text-xl",
+        "mobile_copy_font_size": "text-base"
+      }
     }
   },
   "order": [
     "a61bec0c-db04-4127-b095-1e35c98e658d",
     "main",
-    "edb62b7e-70d8-4693-8fdf-823c0788c0da"
+    "edb62b7e-70d8-4693-8fdf-823c0788c0da",
+    "7d22fc7b-c2db-44dd-a038-a1aaaa5f7831"
   ]
 }
