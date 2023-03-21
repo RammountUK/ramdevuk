@@ -53,7 +53,9 @@
     </style>
     {{ checkout_scripts }}
   <script src="{{ 'ascii-only.min.js' | asset_url }}" defer></script>
-  </head>
+  
+  {% render 'shogun-head' %}
+</head>
   <body>
     {{ skip_to_content_link }}
     {% section 'header' %}

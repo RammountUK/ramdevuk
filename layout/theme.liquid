@@ -103,6 +103,8 @@ tId = setInterval(function () {
         console.error("FM not loaded yet", err);
     }
 }, 300);</script>
+
+  {% render 'shogun-head' %}
 </head>
 
   <body class="flex flex-col min-h-screen w-screen font-body text-black template-{{ template | replace: '.', '-' | replace: '/', '-' }}">
