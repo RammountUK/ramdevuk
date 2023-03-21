@@ -32,7 +32,6 @@
           },
           "0d58fc98-c505-4f86-8f18-cf3330615f76": {
             "type": "meganav_images",
-            "disabled": true,
             "settings": {
               "meganav_trigger": "business",
               "position_1": "first",
