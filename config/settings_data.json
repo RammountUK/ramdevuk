@@ -27,7 +27,7 @@
             "settings": {
               "meganav_trigger": "consumer",
               "position_1": "first",
-              "side_menu": "us-menu"
+              "side_menu": ""
             }
           },
           "0d58fc98-c505-4f86-8f18-cf3330615f76": {
@@ -112,7 +112,8 @@
           "newsletter_heading": "",
           "newsletter_copy": "<p><strong>Subscribe to our mailing list<\/strong><\/p>",
           "column_text": "<p><strong>Need help? Chat with a live agent!<\/strong><br\/>M-F 9:00am to 12:00pm, 1:00pm to 4:00pm PST<\/p><p><\/p><p>Or email us at<br\/><a href=\"mailto:support@gunnars.com\">support@gunnars.com<\/a><\/p>",
-          "copyright_text": "<p>Copyright © 2022 National Products Inc. Seattle, Washington. All rights reserved.<br\/><\/p>",
+          "copyright_text": "<p>Copyright © 2023 RAM Mount UK Ltd All rights reserved. Registered in England: Company No: 05219801 VAT Registration No: GB 8689175 57<br\/><\/p>",
+          "footer_logo": "shopify:\/\/shop_images\/ram-logo-white.png",
           "show_payment_options": false,
           "show_social_icons": true,
           "footer_menu": ""
